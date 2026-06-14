@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Креативная карта Дагестана — в стиле 2ГИС</title>
+    <!-- Leaflet (библиотека карт) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #eef2f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Контейнер с панелью и картой */
+        .app {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* ===== БОКОВАЯ ПАНЕЛЬ (СПИСОК) ===== */
+        .sidebar {
+            width: 340px;
+            background: #ffffff;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            z-index: 20;
+            overflow-y: auto;
+            backdrop-filter: blur(2px);
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #1a4d2a 0%, #2a6e3a 100%);
+            color: white;
+            padding: 1.8rem 1.5rem;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            opacity: 0.85;
+        }
+
+        /* Список объектов (плитки) */
+        .objects-list {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .object-card {
+            background: #fefefe;
+            border-radius: 20px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e9edf2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .object-card:hover {
+            background: #f4faf0;
+            border-left: 5px solid #2a6e3a;
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .object-icon {
+            font-size: 28px;
+            width: 44px;
+            text-align: center;
+        }
+
+        .object-info {
+            flex: 1;
+        }
+
+        .object-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1a2c3e;
+        }
+
+        .object-category {
+            font-size: 0.7rem;
+            color: #6c7a8a;
+            margin-top: 4px;
+            display: inline-block;
+            background: #f0f2f5;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        /* ===== КАРТА ===== */
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            background: #d9e0e6;
+        }
+
+        /* Стиль для стрелок (указатели в стиле 2ГИС) */
+        .gis-arrow-marker {
+            background: transparent;
+        }
+
+        .arrow-inner {
+            background-color: #2a6e3a;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px 14px 14px 6px;
+            transform: rotate(45deg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            transition: 0.1s ease;
+        }
+
+        /* Всплывающее окно (попап) с фото */
+        .custom-popup .leaflet-popup-content-wrapper {
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.25);
+        }
+
+        .custom-popup .leaflet-popup-content {
+            margin: 0;
+            width: 280px !important;
+        }
+
+        .popup-img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            background: #f3f3f3;
+        }
+
+        .popup-text {
+            padding: 14px 16px 18px;
+        }
+
+        .popup-text h3 {
+            margin: 0 0 5px;
+            font-size: 1.2rem;
+            color: #1a4d2a;
+        }
+
+        .popup-address {
+            font-size: 0.8rem;
+            color: #3b4e5e;
+            margin: 8px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .popup-address::before {
+            content: "📍";
+            font-size: 0.9rem;
+        }
+
+        /* Адаптив */
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 270px;
+            }
+            .sidebar-header h1 {
+                font-size: 1.2rem;
+            }
+            .object-title {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>🗺️ Креативный Дагестан</h1>
+            <p>Нажми на название — карта плавно перелетит к указателю<br>⬇️ Или кликни на стрелку на карте</p>
+        </div>
+        <div class="objects-list" id="objectsList">
+            <!-- Список объектов заполнится скриптом -->
+        </div>
+    </aside>
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+</div>
+
+<script>
+    // ==================== ДАННЫЕ ОБЪЕКТОВ ====================
+    // Добавь свои фото в папку images/ и укажи правильные имена
+    const objectsData = [
+        { id:1, name:"Кубачи — ювелирное искусство", lat:42.0925, lng:47.6000, category:"Народный промысел", address:"с. Кубачи, Дахадаевский район", image:"images/kubachi.jpg" },
+        { id:2, name:"Унцукуль — насечка по дереву", lat:42.7122, lng:46.7897, category:"Народный промысел", address:"с. Унцукуль", image:"images/untsukul.jpg" },
+        { id:3, name:"Балхарская керамика", lat:42.3100, lng:47.1689, category:"Народный промысел", address:"с. Балхар, Акушинский район", image:"images/balhar.jpg" },
+        { id:4, name:"Гоцатль (художественный металл)", lat:42.5333, lng:46.8667, category:"Народный промысел", address:"с. Гоцатль, Хунзахский район", image:"images/gotsatl.jpg" },
+        { id:5, name:"Табасаранские ковры", lat:41.9833, lng:48.0000, category:"Ковроткачество", address:"Табасаранский район", image:"images/tabasarancarpet.jpg" },
+        { id:6, name:"Дербент — крепость и ремесла", lat:42.0575, lng:48.2873, category:"Культурное наследие", address:"г. Дербент, цитадель Нарын-Кала", image:"images/derbent.jpg" },
+        { id:7, name:"Музей изобразительных искусств", lat:42.9849, lng:47.5049, category:"Музей / Галерея", address:"г. Махачкала, ул. Гамзатова, 21", image:"images/mahachkala-museum.jpg" },
+        { id:8, name:"Галерея «Ковчег»", lat:42.9792, lng:47.4987, category:"Современное искусство", address:"г. Махачкала, пр. Гамидова, 12", image:"images/kovcheg.jpg" },
+        { id:9, name:"Арт-пространство «Артдвор»", lat:42.9765, lng:47.5023, category:"Креативный кластер", address:"г. Махачкала, ул. Ярагского, 45", image:"images/artdvor.jpg" },
+        { id:10, name:"Ансамбль «Лезгинка»", lat:42.9812, lng:47.5040, category:"Музыка / Танец", address:"г. Махачкала, пр. Ленина, 1", image:"images/lezginka.jpg" },
+        { id:11, name:"Дагестанская филармония", lat:42.9830, lng:47.5075, category:"Концертный зал", address:"г. Махачкала, ул. Дахадаева, 3", image:"images/philharmonia.jpg" },
+        { id:12, name:"Фестиваль «Дербентская крепость»", lat:42.0590, lng:48.2885, category:"Фестиваль", address:"г. Дербент, цитадель", image:"images/derbent-fest.jpg" },
+        { id:13, name:"Дизайн-студии Махачкалы", lat:42.9835, lng:47.4960, category:"Дизайн / Медиа", address:"г. Махачкала, пр. Гамзатова", image:"images/design-studio.jpg" },
+        { id:14, name:"Каспийск — арт-проекты", lat:42.8817, lng:47.6392, category:"Современное искусство", address:"г. Каспийск, набережная", image:"images/kaspiysk.jpg" },
+        { id:15, name:"Хасавюрт — культурный центр", lat:43.2500, lng:46.5833, category:"Городской досуг", address:"г. Хасавюрт, ул. Грозненская", image:"images/khasavyurt.jpg" }
+    ];
+
+    // ==================== НАСТРОЙКА КАРТЫ ====================
+    const map = L.map('map').setView([42.95, 47.3], 8);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB',
+        subdomains: 'abcd',
+        maxZoom: 18
+    }).addTo(map);
+
+    // ===== КАСТОМНАЯ СТРЕЛКА (стиль 2ГИС, закруглённая) =====
+    function createArrowIcon() {
+        return L.divIcon({
+            html: `<div class="arrow-inner">📍</div>`,
+            iconSize: [44, 44],
+            popupAnchor: [0, -22],
+            className: 'gis-arrow-marker'
+        });
+    }
+
+    // Хранилище маркеров
+    const markersMap = new Map(); // id -> { marker, data }
+
+    // Добавляем маркеры на карту
+    objectsData.forEach(obj => {
+        const icon = createArrowIcon();
+        const marker = L.marker([obj.lat, obj.lng], { icon: icon }).addTo(map);
+
+        // Попап с фото и адресом (если фото нет — подставится плейсхолдер)
+        const popupHtml = `
+            <div>
+                <img class="popup-img" src="${obj.image}" alt="${obj.name}" onerror="this.src='https://placehold.co/600x400?text=Фото+скоро'">
+                <div class="popup-text">
+                    <h3>${obj.name}</h3>
+                    <div class="popup-address">${obj.address}</div>
+                    <div style="margin-top:8px;"><span style="background:#eef2f5; padding:2px 8px; border-radius:30px; font-size:0.7rem;">${obj.category}</span></div>
+                </div>
+            </div>
+        `;
+        marker.bindPopup(popupHtml, { className: 'custom-popup' });
+
+        markersMap.set(obj.id, { marker, data: obj });
+    });
+
+    // ===== БОКОВОЙ СПИСОК (ПЛИТКИ) =====
+    const container = document.getElementById('objectsList');
+    objectsData.forEach(obj => {
+        const card = document.createElement('div');
+        card.className = 'object-card';
+        // Иконка в зависимости от категории
+        let iconEmoji = '📍';
+        if (obj.category.includes('Народный')) iconEmoji = '🏺';
+        else if (obj.category.includes('Музей') || obj.category.includes('Галерея')) iconEmoji = '🖼️';
+        else if (obj.category.includes('Музыка') || obj.category.includes('Танец')) iconEmoji = '🎵';
+        else if (obj.category.includes('Фестиваль')) iconEmoji = '🎪';
+        else if (obj.category.includes('Дизайн')) iconEmoji = '✏️';
+        else if (obj.category.includes('Ковроткачество')) iconEmoji = '🧶';
+
+        card.innerHTML = `
+            <div class="object-icon">${iconEmoji}</div>
+            <div class="object-info">
+                <div class="object-title">${obj.name}</div>
+                <div class="object-category">${obj.category}</div>
+            </div>
+        `;
+        card.addEventListener('click', () => {
+            const { marker, data } = markersMap.get(obj.id);
+            // Плавный перелёт к маркеру
+            map.flyTo([data.lat, data.lng], 15, { duration: 1.2 });
+            // Открываем попап после окончания анимации
+            setTimeout(() => {
+                marker.openPopup();
+            }, 1250);
+        });
+        container.appendChild(card);
+    });
+
+    // Небольшой стилистический бонус: при клике на фон карты попап закрывается сам, всё ок
+    console.log(`Карта готова. Загружено ${objectsData.length} объектов`);
+</script>
+</body>
+</html>
