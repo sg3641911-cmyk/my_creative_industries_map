@@ -2,317 +2,101 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Креативная карта Дагестана • бело-мятная эстетика</title>
-    <!-- Leaflet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Креативная карта Дагестана</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        /* ===== ГЛОБАЛЬНЫЕ СБРОСЫ ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f9f7; height: 100vh; overflow: hidden; }
+        .app { display: flex; height: 100vh; width: 100%; }
 
-        body {
-            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
-            background: #f5f9f7;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
-        .app {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-        }
-
-        /* ===== БОКОВАЯ ПАНЕЛЬ (БЕЛО-МЯТНАЯ) ===== */
         .sidebar {
-            width: 380px;
-            min-width: 320px;
+            width: 360px;
+            min-width: 300px;
             background: #ffffff;
             display: flex;
             flex-direction: column;
             z-index: 20;
             overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
             border-right: 1px solid rgba(184, 224, 210, 0.4);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.04);
         }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: #f0f5f2; }
+        .sidebar::-webkit-scrollbar-thumb { background: #b8e0d2; border-radius: 10px; }
 
-        /* Скролл */
-        .sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .sidebar::-webkit-scrollbar-track {
-            background: #f0f5f2;
-        }
-        .sidebar::-webkit-scrollbar-thumb {
-            background: #b8e0d2;
-            border-radius: 10px;
-        }
-
-        /* Шапка панели — мятная, но светлая */
         .sidebar-header {
-            background: linear-gradient(135deg, #e8f5f0 0%, #d4ede4 100%);
-            padding: 2rem 1.8rem 1.6rem;
-            border-bottom: 1px solid rgba(184, 224, 210, 0.3);
+            background: linear-gradient(135deg, #e8f5f0, #d4ede4);
+            padding: 1.8rem 1.5rem 1.4rem;
+            border-bottom: 1px solid rgba(184,224,210,0.3);
             position: sticky;
             top: 0;
             z-index: 5;
         }
-
-        .sidebar-header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #1a3a2e;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .sidebar-header .sub {
-            font-size: 0.85rem;
-            color: #3a6b5a;
-            margin-top: 8px;
-            font-weight: 400;
-            opacity: 0.8;
-            letter-spacing: 0.2px;
-        }
-
+        .sidebar-header h1 { font-size: 1.6rem; font-weight: 600; color: #1a3a2e; }
+        .sidebar-header .sub { font-size: 0.8rem; color: #3a6b5a; margin-top: 6px; opacity: 0.8; }
         .sidebar-header .sub span {
-            background: rgba(42, 110, 58, 0.08);
+            background: rgba(42,110,58,0.1);
             padding: 2px 12px;
-            border-radius: 30px;
+            border-radius: 20px;
             font-size: 0.7rem;
-            font-weight: 500;
             color: #2a6e3a;
         }
 
-        /* Список объектов */
-        .objects-list {
-            padding: 1.2rem 1.4rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex: 1;
-        }
+        .objects-list { padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 
-        /* ===== КАРТОЧКА ОБЪЕКТА (бело-мятная) ===== */
         .object-card {
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 12px 16px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 10px 14px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             border: 1px solid #eaf3ef;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+            transition: all 0.2s;
         }
-
         .object-card:hover {
             background: #f3fbf8;
             border-left: 4px solid #7dc6b0;
-            transform: translateX(4px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+            transform: translateX(3px);
         }
-
-        /* Иконка в карточке — эстетичная, в виде мини-картинки */
         .object-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            background: #eef6f2;
-            flex-shrink: 0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-        }
-
-        .object-icon img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .object-info {
-            flex: 1;
-        }
-
-        .object-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #1a3a2e;
-            line-height: 1.3;
-        }
-
-        .object-category {
-            font-size: 0.65rem;
-            color: #5a8a78;
-            margin-top: 4px;
-            display: inline-block;
-            background: #eaf5f0;
-            padding: 2px 12px;
-            border-radius: 30px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        /* ===== КАРТА ===== */
-        .map-container {
-            flex: 1;
-            position: relative;
-        }
-
-        #map {
-            height: 100%;
-            width: 100%;
-            background: #e8efe9;
-        }
-
-        /* ===== УКАЗАТЕЛЬ-КАПЛЯ (перевёрнутая капля воды) ===== */
-        .drop-marker {
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .drop-marker .drop-inner {
-            position: relative;
-            width: 40px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Сама капля через CSS */
-        .drop-shape {
-            width: 34px;
-            height: 48px;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            transform: rotate(180deg);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.7);
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            color: white;
-            transition: 0.15s ease;
+            font-weight: 300;
+            flex-shrink: 0;
         }
+        .object-title { font-weight: 600; font-size: 0.9rem; color: #1a3a2e; }
+        .object-category { font-size: 0.6rem; color: #5a8a78; background: #eaf5f0; padding: 1px 10px; border-radius: 20px; display: inline-block; margin-top: 3px; }
 
-        .drop-marker:hover .drop-shape {
-            transform: rotate(180deg) scale(1.05);
-            filter: brightness(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
+        .map-container { flex: 1; position: relative; }
+        #map { height: 100%; width: 100%; background: #e8efe9; }
 
-        /* Цвета для разных категорий (мятная гамма) */
-        .drop-green .drop-shape {
-            background: linear-gradient(135deg, #4a9e7a, #2a7a5a);
-        }
-        .drop-teal .drop-shape {
-            background: linear-gradient(135deg, #5bb8b0, #3a9a92);
-        }
-        .drop-mint .drop-shape {
-            background: linear-gradient(135deg, #7dc6b0, #5aaa90);
-        }
-        .drop-sage .drop-shape {
-            background: linear-gradient(135deg, #8ab8a0, #6a9a80);
-        }
-        .drop-olive .drop-shape {
-            background: linear-gradient(135deg, #9ab87a, #7a9a5a);
-        }
-        .drop-coral .drop-shape {
-            background: linear-gradient(135deg, #d4a08a, #c0806a);
-        }
-        .drop-lavender .drop-shape {
-            background: linear-gradient(135deg, #b8a8d4, #9a8ab8);
-        }
-
-        /* ===== ПОПАП (бело-мятный) ===== */
         .custom-popup .leaflet-popup-content-wrapper {
-            border-radius: 22px;
+            border-radius: 20px;
             padding: 0;
             overflow: hidden;
-            box-shadow: 0 16px 35px -6px rgba(0, 0, 0, 0.15);
-            background: white;
-            border: 1px solid rgba(184, 224, 210, 0.3);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            border: 1px solid rgba(184,224,210,0.3);
         }
+        .custom-popup .leaflet-popup-content { margin: 0; width: 270px !important; }
+        .custom-popup .leaflet-popup-tip { background: #fff; }
 
-        .custom-popup .leaflet-popup-content {
-            margin: 0;
-            width: 280px !important;
-        }
+        .popup-img { width: 100%; height: 150px; object-fit: cover; display: block; background: #eaf5f0; }
+        .popup-text { padding: 12px 16px 16px; }
+        .popup-text h3 { font-size: 1rem; color: #1a4d2a; margin-bottom: 4px; }
+        .popup-address { font-size: 0.75rem; color: #4a7a68; }
+        .popup-badge { background: #eaf5f0; padding: 2px 12px; border-radius: 20px; font-size: 0.6rem; color: #2a7a5a; display: inline-block; margin-top: 8px; }
 
-        .custom-popup .leaflet-popup-tip {
-            background: white;
-            box-shadow: -2px -2px 8px rgba(0, 0, 0, 0.04);
-        }
-
-        .popup-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            display: block;
-            background: #eaf5f0;
-        }
-
-        .popup-text {
-            padding: 14px 18px 18px;
-        }
-
-        .popup-text h3 {
-            margin: 0 0 4px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1a4d2a;
-        }
-
-        .popup-address {
-            font-size: 0.78rem;
-            color: #4a7a68;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 4px;
-        }
-
-        .popup-badge {
-            margin-top: 10px;
-            display: inline-block;
-            background: #eaf5f0;
-            padding: 3px 14px;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #2a7a5a;
-        }
-
-        /* ===== АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ===== */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .object-card {
-            animation: fadeUp 0.3s ease forwards;
-            opacity: 0;
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .object-card { animation: fadeUp 0.3s ease forwards; opacity: 0; }
         .object-card:nth-child(1) { animation-delay: 0.02s; }
         .object-card:nth-child(2) { animation-delay: 0.04s; }
         .object-card:nth-child(3) { animation-delay: 0.06s; }
@@ -332,430 +116,158 @@
         .object-card:nth-child(17) { animation-delay: 0.34s; }
         .object-card:nth-child(18) { animation-delay: 0.36s; }
 
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 290px;
-                min-width: 240px;
-            }
-            .sidebar-header h1 {
-                font-size: 1.3rem;
-            }
-            .object-title {
-                font-size: 0.85rem;
-            }
-            .object-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 18px;
-            }
-            .object-icon img {
-                width: 24px;
-                height: 24px;
-            }
-            .custom-popup .leaflet-popup-content {
-                width: 240px !important;
-            }
-            .popup-text h3 {
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .sidebar {
-                width: 260px;
-                min-width: 200px;
-            }
-            .sidebar-header {
-                padding: 1.2rem 1rem;
-            }
-            .objects-list {
-                padding: 0.8rem 1rem;
-            }
-            .object-card {
-                padding: 8px 12px;
-            }
-        }
-
-        /* ===== КНОПКИ ЗУМА В МЯТНОМ СТИЛЕ ===== */
-        .leaflet-control-zoom {
-            border: none !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
-        }
+        .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important; }
         .leaflet-control-zoom a {
-            background: white !important;
+            background: #fff !important;
             color: #3a8a72 !important;
-            border-radius: 12px !important;
-            margin: 5px !important;
-            width: 34px !important;
-            height: 34px !important;
-            line-height: 34px !important;
-            font-weight: 600;
-            transition: 0.1s ease;
-            border: 1px solid rgba(184, 224, 210, 0.3) !important;
+            border-radius: 10px !important;
+            margin: 4px !important;
+            width: 32px !important;
+            height: 32px !important;
+            line-height: 32px !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(184,224,210,0.3) !important;
         }
-        .leaflet-control-zoom a:hover {
-            background: #e8f5f0 !important;
-            color: #1a5a42 !important;
-        }
+        .leaflet-control-zoom a:hover { background: #e8f5f0 !important; color: #1a5a42 !important; }
+        .leaflet-control-scale { background: rgba(255,255,255,0.8); border-radius: 16px; padding: 1px 10px; font-size: 9px; color: #3a6b5a; border: 1px solid rgba(184,224,210,0.2); }
 
-        /* Шкала масштаба */
-        .leaflet-control-scale {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(4px);
-            border-radius: 20px;
-            padding: 2px 12px;
-            font-size: 10px;
-            font-weight: 500;
-            color: #3a6b5a;
-            border: 1px solid rgba(184, 224, 210, 0.2);
+        @media (max-width: 768px) {
+            .sidebar { width: 280px; min-width: 220px; }
+            .sidebar-header h1 { font-size: 1.2rem; }
+            .object-title { font-size: 0.8rem; }
+            .object-icon { width: 32px; height: 32px; font-size: 14px; }
+            .custom-popup .leaflet-popup-content { width: 220px !important; }
+        }
+        @media (max-width: 500px) {
+            .sidebar { width: 240px; min-width: 180px; }
+            .sidebar-header { padding: 1rem; }
+            .sidebar-header h1 { font-size: 1rem; }
+            .objects-list { padding: 0.6rem 0.8rem; }
+            .object-card { padding: 6px 10px; gap: 8px; }
+            .object-title { font-size: 0.7rem; }
+            .object-icon { width: 28px; height: 28px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
-
 <div class="app">
-    <!-- БОКОВАЯ ПАНЕЛЬ (бело-мятная) -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <h1>🌿 Креативный Дагестан</h1>
-            <div class="sub">
-                <span>✦ 18 объектов</span> &nbsp;·&nbsp; нажми на название — карта покажет место
-            </div>
+            <div class="sub"><span>✦ 18 объектов</span> · нажми на название — карта покажет место</div>
         </div>
-        <div class="objects-list" id="objectsList">
-            <!-- Список заполняется из JavaScript -->
-        </div>
+        <div class="objects-list" id="objectsList"></div>
     </aside>
-
-    <!-- КАРТА -->
     <div class="map-container">
         <div id="map"></div>
     </div>
 </div>
 
 <script>
-    // ============================================================
-    // 1. ДАННЫЕ ОБЪЕКТОВ (с иконками-изображениями по тематике)
-    // ============================================================
-    const objectsData = [
-        {
-            id: 1,
-            name: "Кубачи — ювелирное искусство",
-            lat: 42.0925,
-            lng: 47.6000,
-            category: "Народный промысел",
-            address: "с. Кубачи, Дахадаевский район",
-            image: "images/kubachi.jpg",
-            icon: "💎",
-            iconColor: "#4a9e7a"
-        },
-        {
-            id: 2,
-            name: "Унцукуль — насечка по дереву",
-            lat: 42.7122,
-            lng: 46.7897,
-            category: "Народный промысел",
-            address: "с. Унцукуль",
-            image: "images/untsukul.jpg",
-            icon: "🪵",
-            iconColor: "#5aaa90"
-        },
-        {
-            id: 3,
-            name: "Балхарская керамика",
-            lat: 42.3100,
-            lng: 47.1689,
-            category: "Народный промысел",
-            address: "с. Балхар, Акушинский район",
-            image: "images/balhar.jpg",
-            icon: "🏺",
-            iconColor: "#7dc6b0"
-        },
-        {
-            id: 4,
-            name: "Гоцатль — художественный металл",
-            lat: 42.5333,
-            lng: 46.8667,
-            category: "Народный промысел",
-            address: "с. Гоцатль, Хунзахский район",
-            image: "images/gotsatl.jpg",
-            icon: "⚒️",
-            iconColor: "#6a9a80"
-        },
-        {
-            id: 5,
-            name: "Табасаранские ковры",
-            lat: 41.9833,
-            lng: 48.0000,
-            category: "Ковроткачество",
-            address: "Табасаранский район",
-            image: "images/tabasarancarpet.jpg",
-            icon: "🧶",
-            iconColor: "#8ab8a0"
-        },
-        {
-            id: 6,
-            name: "Дербент — крепость и ремесла",
-            lat: 42.0575,
-            lng: 48.2873,
-            category: "Культурное наследие",
-            address: "г. Дербент, цитадель Нарын-Кала",
-            image: "images/derbent.jpg",
-            icon: "🏛️",
-            iconColor: "#9ab87a"
-        },
-        {
-            id: 7,
-            name: "Музей изобразительных искусств",
-            lat: 42.9849,
-            lng: 47.5049,
-            category: "Музей / Галерея",
-            address: "г. Махачкала, ул. Гамзатова, 21",
-            image: "images/mahachkala-museum.jpg",
-            icon: "🖼️",
-            iconColor: "#d4a08a"
-        },
-        {
-            id: 8,
-            name: "Галерея «Ковчег»",
-            lat: 42.9792,
-            lng: 47.4987,
-            category: "Современное искусство",
-            address: "г. Махачкала, пр. Гамидова, 12",
-            image: "images/kovcheg.jpg",
-            icon: "🎨",
-            iconColor: "#c0806a"
-        },
-        {
-            id: 9,
-            name: "Арт-пространство «Артдвор»",
-            lat: 42.9765,
-            lng: 47.5023,
-            category: "Креативный кластер",
-            address: "г. Махачкала, ул. Ярагского, 45",
-            image: "images/artdvor.jpg",
-            icon: "✨",
-            iconColor: "#5bb8b0"
-        },
-        {
-            id: 10,
-            name: "Ансамбль «Лезгинка»",
-            lat: 42.9812,
-            lng: 47.5040,
-            category: "Музыка / Танец",
-            address: "г. Махачкала, пр. Ленина, 1",
-            image: "images/lezginka.jpg",
-            icon: "💃",
-            iconColor: "#b8a8d4"
-        },
-        {
-            id: 11,
-            name: "Дагестанская филармония",
-            lat: 42.9830,
-            lng: 47.5075,
-            category: "Концертный зал",
-            address: "г. Махачкала, ул. Дахадаева, 3",
-            image: "images/philharmonia.jpg",
-            icon: "🎵",
-            iconColor: "#9a8ab8"
-        },
-        {
-            id: 12,
-            name: "Фестиваль «Дербентская крепость»",
-            lat: 42.0590,
-            lng: 48.2885,
-            category: "Фестиваль",
-            address: "г. Дербент, цитадель",
-            image: "images/derbent-fest.jpg",
-            icon: "🎪",
-            iconColor: "#d4a08a"
-        },
-        {
-            id: 13,
-            name: "Дизайн-студии Махачкалы",
-            lat: 42.9835,
-            lng: 47.4960,
-            category: "Дизайн / Медиа",
-            address: "г. Махачкала, пр. Гамзатова",
-            image: "images/design-studio.jpg",
-            icon: "✏️",
-            iconColor: "#5bb8b0"
-        },
-        {
-            id: 14,
-            name: "Каспийск — арт-проекты",
-            lat: 42.8817,
-            lng: 47.6392,
-            category: "Современное искусство",
-            address: "г. Каспийск, набережная",
-            image: "images/kaspiysk.jpg",
-            icon: "🎭",
-            iconColor: "#7dc6b0"
-        },
-        {
-            id: 15,
-            name: "Хасавюрт — культурный центр",
-            lat: 43.2500,
-            lng: 46.5833,
-            category: "Городской досуг",
-            address: "г. Хасавюрт, ул. Грозненская",
-            image: "images/khasavyurt.jpg",
-            icon: "🏙️",
-            iconColor: "#8ab8a0"
-        },
-        {
-            id: 16,
-            name: "Буйнакск — творческие объединения",
-            lat: 42.8167,
-            lng: 47.1167,
-            category: "Культура",
-            address: "г. Буйнакск",
-            image: "images/buinaksk.jpg",
-            icon: "📚",
-            iconColor: "#6a9a80"
-        },
-        {
-            id: 17,
-            name: "Кизляр — народные промыслы",
-            lat: 43.8467,
-            lng: 46.7125,
-            category: "Культурное наследие",
-            address: "г. Кизляр",
-            image: "images/kizlyar.jpg",
-            icon: "🏺",
-            iconColor: "#5aaa90"
-        },
-        {
-            id: 18,
-            name: "Дагестанское книжное издательство",
-            lat: 42.9801,
-            lng: 47.5002,
-            category: "Издательство / Литература",
-            address: "г. Махачкала",
-            image: "images/book-publishing.jpg",
-            icon: "📖",
-            iconColor: "#4a9e7a"
-        }
-    ];
+const objectsData = [
+    { id:1, name:"Кубачи — ювелирное искусство", lat:42.0925, lng:47.6000, category:"Народный промысел", address:"с. Кубачи, Дахадаевский район", image:"images/kubachi.jpg", color:"#4a9e7a" },
+    { id:2, name:"Унцукуль — насечка по дереву", lat:42.7122, lng:46.7897, category:"Народный промысел", address:"с. Унцукуль", image:"images/untsukul.jpg", color:"#5aaa90" },
+    { id:3, name:"Балхарская керамика", lat:42.3100, lng:47.1689, category:"Народный промысел", address:"с. Балхар, Акушинский район", image:"images/balhar.jpg", color:"#7dc6b0" },
+    { id:4, name:"Гоцатль — художественный металл", lat:42.5333, lng:46.8667, category:"Народный промысел", address:"с. Гоцатль, Хунзахский район", image:"images/gotsatl.jpg", color:"#6a9a80" },
+    { id:5, name:"Табасаранские ковры", lat:41.9833, lng:48.0000, category:"Ковроткачество", address:"Табасаранский район", image:"images/tabasarancarpet.jpg", color:"#8ab8a0" },
+    { id:6, name:"Дербент — крепость и ремесла", lat:42.0575, lng:48.2873, category:"Культурное наследие", address:"г. Дербент, цитадель Нарын-Кала", image:"images/derbent.jpg", color:"#9ab87a" },
+    { id:7, name:"Музей изобразительных искусств", lat:42.9849, lng:47.5049, category:"Музей / Галерея", address:"г. Махачкала, ул. Гамзатова, 21", image:"images/mahachkala-museum.jpg", color:"#d4a08a" },
+    { id:8, name:"Галерея «Ковчег»", lat:42.9792, lng:47.4987, category:"Современное искусство", address:"г. Махачкала, пр. Гамидова, 12", image:"images/kovcheg.jpg", color:"#c0806a" },
+    { id:9, name:"Арт-пространство «Артдвор»", lat:42.9765, lng:47.5023, category:"Креативный кластер", address:"г. Махачкала, ул. Ярагского, 45", image:"images/artdvor.jpg", color:"#5bb8b0" },
+    { id:10, name:"Ансамбль «Лезгинка»", lat:42.9812, lng:47.5040, category:"Музыка / Танец", address:"г. Махачкала, пр. Ленина, 1", image:"images/lezginka.jpg", color:"#b8a8d4" },
+    { id:11, name:"Дагестанская филармония", lat:42.9830, lng:47.5075, category:"Концертный зал", address:"г. Махачкала, ул. Дахадаева, 3", image:"images/philharmonia.jpg", color:"#9a8ab8" },
+    { id:12, name:"Фестиваль «Дербентская крепость»", lat:42.0590, lng:48.2885, category:"Фестиваль", address:"г. Дербент, цитадель", image:"images/derbent-fest.jpg", color:"#d4a08a" },
+    { id:13, name:"Дизайн-студии Махачкалы", lat:42.9835, lng:47.4960, category:"Дизайн / Медиа", address:"г. Махачкала, пр. Гамзатова", image:"images/design-studio.jpg", color:"#5bb8b0" },
+    { id:14, name:"Каспийск — арт-проекты", lat:42.8817, lng:47.6392, category:"Современное искусство", address:"г. Каспийск, набережная", image:"images/kaspiysk.jpg", color:"#7dc6b0" },
+    { id:15, name:"Хасавюрт — культурный центр", lat:43.2500, lng:46.5833, category:"Городской досуг", address:"г. Хасавюрт", image:"images/khasavyurt.jpg", color:"#8ab8a0" },
+    { id:16, name:"Буйнакск — творческие объединения", lat:42.8167, lng:47.1167, category:"Культура", address:"г. Буйнакск", image:"images/buinaksk.jpg", color:"#6a9a80" },
+    { id:17, name:"Кизляр — народные промыслы", lat:43.8467, lng:46.7125, category:"Культурное наследие", address:"г. Кизляр", image:"images/kizlyar.jpg", color:"#5aaa90" },
+    { id:18, name:"Дагестанское книжное издательство", lat:42.9801, lng:47.5002, category:"Издательство", address:"г. Махачкала", image:"images/book-publishing.jpg", color:"#4a9e7a" }
+];
 
-    // ============================================================
-    // 2. НАСТРОЙКА КАРТЫ (только Дагестан)
-    // ============================================================
-    const map = L.map('map', {
-        center: [42.95, 47.3],
-        zoom: 8,
-        minZoom: 7,
-        maxZoom: 14,
-        zoomControl: true,
-        fadeAnimation: true,
-        zoomAnimation: true
+// КАРТА — ТОЛЬКО ДАГЕСТАН
+const map = L.map('map', {
+    center: [42.5, 47.3],
+    zoom: 8,
+    minZoom: 7,
+    maxZoom: 12,
+    zoomControl: true
+});
+
+// ЖЁСТКИЕ ГРАНИЦЫ ДАГЕСТАНА
+const dagestanBounds = [[40.8, 45.0], [44.8, 50.0]];
+map.setMaxBounds(dagestanBounds);
+map.on('drag', function() { map.panInsideBounds(dagestanBounds, { animate: true }); });
+map.on('zoomend', function() { if (map.getZoom() < 7) map.setZoom(7); });
+
+// ПРИЯТНАЯ ПОДЛОЖКА
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap © CartoDB',
+    subdomains: 'abcd',
+    maxZoom: 18,
+    minZoom: 7
+}).addTo(map);
+
+// КАПЛЯ С ОСТРЫМ КОНЧИКОМ (SVG)
+function createDropIcon(color) {
+    return L.divIcon({
+        html: `
+            <svg width="30" height="42" viewBox="0 0 30 42" style="display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.2));">
+                <path d="M15 0 C15 0, 30 22, 30 30 C30 38.4, 23.4 42, 15 42 C6.6 42, 0 38.4, 0 30 C0 22, 15 0, 15 0 Z" 
+                      fill="${color}" stroke="white" stroke-width="1.5"/>
+                <circle cx="15" cy="27" r="3" fill="white" opacity="0.3"/>
+            </svg>
+        `,
+        iconSize: [30, 42],
+        popupAnchor: [0, -22],
+        className: 'drop-marker'
     });
+}
 
-    // Используем стиль CartoDB Voyager — приятные глазам цвета
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OSM</a> © CartoDB',
-        subdomains: 'abcd',
-        maxZoom: 18,
-        minZoom: 7
-    }).addTo(map);
-
-    // ============================================================
-    // 3. УКАЗАТЕЛЬ-КАПЛЯ (перевёрнутая капля воды)
-    // ============================================================
-    function createDropIcon(color, emoji) {
-        return L.divIcon({
-            html: `
-                <div class="drop-inner">
-                    <div class="drop-shape" style="background: ${color};">
-                        ${emoji}
-                    </div>
-                </div>
-            `,
-            iconSize: [40, 56],
-            popupAnchor: [0, -28],
-            className: 'drop-marker'
-        });
-    }
-
-    // Хранилище
-    const markersMap = new Map();
-
-    // Добавляем маркеры
-    objectsData.forEach(obj => {
-        const icon = createDropIcon(obj.iconColor, obj.icon);
-        const marker = L.marker([obj.lat, obj.lng], { icon }).addTo(map);
-
-        const popupHtml = `
-            <div>
-                <img class="popup-img" src="${obj.image}" alt="${obj.name}" 
-                     onerror="this.src='https://placehold.co/600x400/ebf5f0/3a7a62?text=📸+Фото+скоро'">
-                <div class="popup-text">
-                    <h3>${obj.name}</h3>
-                    <div class="popup-address">📍 ${obj.address}</div>
-                    <span class="popup-badge">${obj.category}</span>
-                </div>
+// ДОБАВЛЯЕМ МАРКЕРЫ
+const markersMap = new Map();
+objectsData.forEach(obj => {
+    const marker = L.marker([obj.lat, obj.lng], { icon: createDropIcon(obj.color) }).addTo(map);
+    const popupHtml = `
+        <div>
+            <img class="popup-img" src="${obj.image}" alt="${obj.name}" onerror="this.src='https://placehold.co/600x400/eaf5f0/3a7a62?text=Фото'">
+            <div class="popup-text">
+                <h3>${obj.name}</h3>
+                <div class="popup-address">📍 ${obj.address}</div>
+                <span class="popup-badge">${obj.category}</span>
             </div>
-        `;
+        </div>
+    `;
+    marker.bindPopup(popupHtml, { className: 'custom-popup', maxWidth: 300 });
+    markersMap.set(obj.id, { marker, data: obj });
+});
 
-        marker.bindPopup(popupHtml, {
-            className: 'custom-popup',
-            maxWidth: 300,
-            minWidth: 260
-        });
+// СПИСОК
+const container = document.getElementById('objectsList');
+const symbols = { "Народный промысел":"✦", "Ковроткачество":"◈", "Культурное наследие":"◈", "Музей / Галерея":"◈", "Современное искусство":"◈", "Креативный кластер":"◈", "Музыка / Танец":"♪", "Концертный зал":"♪", "Фестиваль":"✦", "Дизайн / Медиа":"◇", "Городской досуг":"◇", "Культура":"◇", "Издательство":"◇" };
 
-        markersMap.set(obj.id, { marker, data: obj });
+objectsData.forEach(obj => {
+    const card = document.createElement('div');
+    card.className = 'object-card';
+    const sym = symbols[obj.category] || "•";
+    card.innerHTML = `
+        <div class="object-icon" style="background:${obj.color}22; border:1px solid ${obj.color}44; color:${obj.color};">${sym}</div>
+        <div class="object-info">
+            <div class="object-title">${obj.name}</div>
+            <div class="object-category">${obj.category}</div>
+        </div>
+    `;
+    card.addEventListener('click', () => {
+        const { marker, data } = markersMap.get(obj.id);
+        map.flyTo([data.lat, data.lng], 12, { duration: 1.0 });
+        setTimeout(() => marker.openPopup(), 1100);
     });
+    container.appendChild(card);
+});
 
-    // ============================================================
-    // 4. ГЕНЕРАЦИЯ СПИСКА (с иконками-изображениями)
-    // ============================================================
-    const container = document.getElementById('objectsList');
-
-    objectsData.forEach(obj => {
-        const card = document.createElement('div');
-        card.className = 'object-card';
-
-        // Вместо эмодзи — красивая иконка в виде картинки (эмодзи в круге)
-        card.innerHTML = `
-            <div class="object-icon" style="background: ${obj.iconColor}22; border: 1px solid ${obj.iconColor}33;">
-                <span style="font-size: 20px;">${obj.icon}</span>
-            </div>
-            <div class="object-info">
-                <div class="object-title">${obj.name}</div>
-                <div class="object-category">${obj.category}</div>
-            </div>
-        `;
-
-        card.addEventListener('click', () => {
-            const { marker, data } = markersMap.get(obj.id);
-            map.flyTo([data.lat, data.lng], 14, {
-                duration: 1.0,
-                easeLinearity: 0.4
-            });
-            setTimeout(() => {
-                marker.openPopup();
-            }, 1100);
-        });
-
-        container.appendChild(card);
-    });
-
-    // ============================================================
-    // 5. ФИКСЫ И ДОПОЛНЕНИЯ
-    // ============================================================
-    // Шкала масштаба
-    L.control.scale({ metric: true, imperial: false, position: 'bottomright' }).addTo(map);
-
-    // Пересчёт размера карты при загрузке
-    setTimeout(() => map.invalidateSize(), 300);
-
-    window.addEventListener('resize', () => {
-        setTimeout(() => map.invalidateSize(), 200);
-    });
-
-    console.log('🌿 Карта загружена! Объектов:', objectsData.length);
+L.control.scale({ metric: true, imperial: false, position: 'bottomright' }).addTo(map);
+setTimeout(() => map.invalidateSize(), 300);
+window.addEventListener('resize', () => setTimeout(() => map.invalidateSize(), 200));
 </script>
-
 </body>
 </html>
