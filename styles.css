@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    font-family: 'Inter', 'Segoe UI', -apple-system, 'Roboto', sans-serif;
     background: #f5f9f7;
     height: 100vh;
     overflow: hidden;
@@ -17,6 +17,7 @@ body {
     width: 100%;
 }
 
+/* ===== ПАНЕЛЬ ===== */
 .sidebar {
     width: 380px;
     min-width: 320px;
@@ -26,25 +27,18 @@ body {
     z-index: 20;
     overflow-y: auto;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
-    border-right: 1px solid rgba(184, 224, 210, 0.4);
+    border-right: 1px solid rgba(184, 224, 210, 0.3);
 }
 
 .sidebar::-webkit-scrollbar {
     width: 4px;
 }
-
 .sidebar::-webkit-scrollbar-track {
     background: #f0f5f2;
 }
-
 .sidebar::-webkit-scrollbar-thumb {
     background: #b8e0d2;
     border-radius: 10px;
-}
-
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #b8e0d2 #f0f5f2;
 }
 
 .sidebar-header {
@@ -118,8 +112,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    background: #eef6f2;
+    font-size: 20px;
     flex-shrink: 0;
 }
 
@@ -156,41 +149,24 @@ body {
     background: #e8efe9;
 }
 
+/* ===== КАПЛЯ (ОСТРЫЙ КОНЧИК) ===== */
 .drop-marker {
     background: transparent;
     cursor: pointer;
 }
 
-.drop-marker .drop-inner {
-    position: relative;
-    width: 40px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.drop-shape {
-    width: 34px;
-    height: 48px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    transform: rotate(180deg);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: white;
+.drop-marker:hover svg path {
+    transform-origin: center;
     transition: 0.15s ease;
 }
 
-.drop-marker:hover .drop-shape {
-    transform: rotate(180deg) scale(1.05);
-    filter: brightness(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+.drop-marker:hover svg {
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.3));
+    transform: scale(1.08);
+    transition: 0.15s ease;
 }
 
+/* ===== ПОПАП ===== */
 .custom-popup .leaflet-popup-content-wrapper {
     border-radius: 22px;
     padding: 0;
@@ -298,13 +274,10 @@ body {
     .object-icon {
         width: 36px;
         height: 36px;
-        font-size: 18px;
+        font-size: 16px;
     }
     .custom-popup .leaflet-popup-content {
         width: 240px !important;
-    }
-    .popup-text h3 {
-        font-size: 0.95rem;
     }
 }
 
@@ -332,7 +305,7 @@ body {
     .object-icon {
         width: 32px;
         height: 32px;
-        font-size: 16px;
+        font-size: 14px;
     }
 }
 
