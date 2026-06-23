@@ -1,16 +1,14 @@
-// ==================== ДАННЫЕ ОБЪЕКТОВ КРЕАТИВНЫХ ИНДУСТРИЙ ДАГЕСТАНА ====================
-// Добавь свои фото в папку images/ и укажи правильные имена файлов
-
 const objectsData = [
     {
-        id: 1,
-        name: "Кубачи — ювелирное искусство",
-        lat: 42.0925,
-        lng: 47.6000,
-        category: "Народный промысел",
-        address: "с. Кубачи, Дахадаевский район",
-        image: "images/kubachi.jpg",
-        description: "Всемирно известное село мастеров серебряного дела, гравировка, чернение по металлу"
+        id: 1,                          // Уникальный идентификатор объекта
+        name: "Кубачи — ювелирное искусство",  // Название (отображается в списке и попапе)
+        lat: 42.0925,                   // Широта (географическая координата)
+        lng: 47.6000,                   // Долгота (географическая координата)
+        category: "Народный промысел",  // Категория (для группировки и отображения)
+        address: "с. Кубачи, Дахадаевский район",  // Адрес (отображается в попапе)
+        image: "images/kubachi.jpg",    // Путь к фотографии объекта
+        icon: "💎",                     // Эмодзи-иконка (отображается в списке и на карте)
+        iconColor: "#4a9e7a"            // Цвет капли на карте (в мятной гамме)
     },
     {
         id: 2,
@@ -20,7 +18,8 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Унцукуль, Унцукульский район",
         image: "images/untsukul.jpg",
-        description: "Уникальная техника инкрустации металлом и перламутром по дереву"
+        icon: "🪵",
+        iconColor: "#5aaa90"
     },
     {
         id: 3,
@@ -30,7 +29,8 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Балхар, Акушинский район",
         image: "images/balhar.jpg",
-        description: "Архаичная керамика ручной лепки без гончарного круга"
+        icon: "🏺",
+        iconColor: "#7dc6b0"
     },
     {
         id: 4,
@@ -40,7 +40,8 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Гоцатль, Хунзахский район",
         image: "images/gotsatl.jpg",
-        description: "Центр обработки металла, чеканка, древние традиции"
+        icon: "⚒️",
+        iconColor: "#6a9a80"
     },
     {
         id: 5,
@@ -50,7 +51,8 @@ const objectsData = [
         category: "Ковроткачество",
         address: "Табасаранский район",
         image: "images/tabasarancarpet.jpg",
-        description: "Сложные орнаменты, яркие краски, ручное ковроткачество"
+        icon: "🧶",
+        iconColor: "#8ab8a0"
     },
     {
         id: 6,
@@ -60,7 +62,8 @@ const objectsData = [
         category: "Культурное наследие",
         address: "г. Дербент, цитадель Нарын-Кала",
         image: "images/derbent.jpg",
-        description: "Объект Всемирного наследия ЮНЕСКО, концентрация ремесленных мастерских"
+        icon: "🏛️",
+        iconColor: "#9ab87a"
     },
     {
         id: 7,
@@ -70,7 +73,8 @@ const objectsData = [
         category: "Музей / Галерея",
         address: "г. Махачкала, ул. М. Гамзатова, 21",
         image: "images/mahachkala-museum.jpg",
-        description: "Крупнейший художественный музей, площадка для современного искусства"
+        icon: "🖼️",
+        iconColor: "#d4a08a"
     },
     {
         id: 8,
@@ -80,7 +84,8 @@ const objectsData = [
         category: "Современное искусство",
         address: "г. Махачкала, пр. Гамидова, 12",
         image: "images/kovcheg.jpg",
-        description: "Частная галерея, работы молодых дагестанских художников"
+        icon: "🎨",
+        iconColor: "#c0806a"
     },
     {
         id: 9,
@@ -90,17 +95,19 @@ const objectsData = [
         category: "Креативный кластер",
         address: "г. Махачкала, ул. Ярагского, 45",
         image: "images/artdvor.jpg",
-        description: "Галерея, мастерские и коворкинг для креативных индустрий"
+        icon: "✨",
+        iconColor: "#5bb8b0"
     },
     {
         id: 10,
-        name: "Ансамбль «Лезгинка»",
+        name: "Государственный ансамбль танца «Лезгинка»",
         lat: 42.9812,
         lng: 47.5040,
         category: "Музыка / Танец",
         address: "г. Махачкала, пр. Ленина, 1",
         image: "images/lezginka.jpg",
-        description: "Всемирно известный танцевальный коллектив, культурный символ Дагестана"
+        icon: "💃",
+        iconColor: "#b8a8d4"
     },
     {
         id: 11,
@@ -110,7 +117,8 @@ const objectsData = [
         category: "Концертный зал",
         address: "г. Махачкала, ул. Дахадаева, 3",
         image: "images/philharmonia.jpg",
-        description: "Концерты академической, народной и современной музыки"
+        icon: "🎵",
+        iconColor: "#9a8ab8"
     },
     {
         id: 12,
@@ -120,7 +128,8 @@ const objectsData = [
         category: "Фестиваль",
         address: "г. Дербент, цитадель Нарын-Кала",
         image: "images/derbent-fest.jpg",
-        description: "Ежегодный фестиваль музыки, театра, ремесел"
+        icon: "🎪",
+        iconColor: "#d4a08a"
     },
     {
         id: 13,
@@ -130,7 +139,8 @@ const objectsData = [
         category: "Дизайн / Медиа",
         address: "г. Махачкала, пр. Расула Гамзатова",
         image: "images/design-studio.jpg",
-        description: "Графический дизайн, брендинг, веб-разработка"
+        icon: "✏️",
+        iconColor: "#5bb8b0"
     },
     {
         id: 14,
@@ -140,7 +150,8 @@ const objectsData = [
         category: "Современное искусство",
         address: "г. Каспийск, набережная",
         image: "images/kaspiysk.jpg",
-        description: "Молодёжные инициативы, граффити-фестивали"
+        icon: "🎭",
+        iconColor: "#7dc6b0"
     },
     {
         id: 15,
@@ -150,7 +161,8 @@ const objectsData = [
         category: "Городской досуг",
         address: "г. Хасавюрт, ул. Грозненская",
         image: "images/khasavyurt.jpg",
-        description: "Концертные площадки, дома культуры, фестивали"
+        icon: "🏙️",
+        iconColor: "#8ab8a0"
     },
     {
         id: 16,
@@ -158,9 +170,10 @@ const objectsData = [
         lat: 42.8167,
         lng: 47.1167,
         category: "Культура",
-        address: "г. Буйнакск, центр",
+        address: "г. Буйнакск",
         image: "images/buinaksk.jpg",
-        description: "Дома культуры, изостудии, литературные объединения"
+        icon: "📚",
+        iconColor: "#6a9a80"
     },
     {
         id: 17,
@@ -170,7 +183,8 @@ const objectsData = [
         category: "Культурное наследие",
         address: "г. Кизляр",
         image: "images/kizlyar.jpg",
-        description: "Этнокультурный центр, народные умельцы"
+        icon: "🏺",
+        iconColor: "#5aaa90"
     },
     {
         id: 18,
@@ -180,158 +194,231 @@ const objectsData = [
         category: "Издательство / Литература",
         address: "г. Махачкала",
         image: "images/book-publishing.jpg",
-        description: "Выпуск литературы на языках народов Дагестана"
+        icon: "📖",
+        iconColor: "#4a9e7a"
     }
 ];
 
-// ==================== НАСТРОЙКА КАРТЫ ====================
+/* ================================================================
+   2. ИНИЦИАЛИЗАЦИЯ КАРТЫ
+   Создаём объект карты с помощью библиотеки Leaflet
+   ================================================================ */
 
-// Создаём карту с центром по Дагестану
-const map = L.map('map').setView([42.95, 47.3], 8);
+// L.map() — создаёт новый объект карты
+// Параметры: 
+//   - 'map' — ID элемента в HTML, куда будет вставлена карта
+//   - { ... } — настройки карты (центр, зум, ограничения)
+const map = L.map('map', {
+    center: [42.95, 47.3],      // Центр карты: широта, долгота (центр Дагестана)
+    zoom: 8,                    // Начальный уровень приближения (8 — видно всю республику)
+    minZoom: 7,                 // Минимальный зум (нельзя отдалить дальше, чтобы не видеть соседние регионы)
+    maxZoom: 14,                // Максимальный зум (детализация до улиц)
+    zoomControl: true,          // Показывать кнопки +/- для управления зумом
+    fadeAnimation: true,        // Плавная анимация при переключении слоёв
+    zoomAnimation: true         // Плавная анимация при зуме
+});
 
-// Добавляем красивый базовый слой (светлая карта от CartoDB)
+/* ================================================================
+   3. БАЗОВЫЙ СЛОЙ КАРТЫ (подложка)
+   Тайловый слой от CartoDB — лёгкая, приятная для глаз карта
+   ================================================================ */
+
+// L.tileLayer() — добавляет слой с картографическими тайлами (плитками)
+// Параметры:
+//   - URL шаблона тайлов (с подстановкой {z}, {x}, {y})
+//   - атрибуция (кто автор карты)
+//   - поддомены для ускорения загрузки
+//   - настройки зума
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CartoDB</a>',
-    subdomains: 'abcd',
-    maxZoom: 18,
-    minZoom: 7
-}).addTo(map);
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CartoDB</a>',
+    subdomains: 'abcd',         // 4 поддомена для параллельной загрузки тайлов
+    maxZoom: 18,                // Максимальный зум для этого слоя
+    minZoom: 7                  // Минимальный зум
+}).addTo(map);                  // .addTo(map) — добавляет слой на карту
 
-// ===== ФУНКЦИЯ СОЗДАНИЯ КАСТОМНОЙ СТРЕЛКИ (стиль 2ГИС, закруглённая) =====
-function createArrowIcon(category = "default") {
-    // Можно менять цвет в зависимости от категории
-    let bgColor = "#2a6e3a"; // базовый зелёный
-    
-    if (category.includes("Народный")) bgColor = "#c97e0a";
-    else if (category.includes("Музей") || category.includes("Галерея")) bgColor = "#9b59b6";
-    else if (category.includes("Музыка") || category.includes("Танец")) bgColor = "#e74c3c";
-    else if (category.includes("Фестиваль")) bgColor = "#e67e22";
-    else if (category.includes("Дизайн")) bgColor = "#3498db";
-    else if (category.includes("Издательство")) bgColor = "#1abc9c";
-    
+/* ================================================================
+   4. ФУНКЦИЯ СОЗДАНИЯ УКАЗАТЕЛЯ-КАПЛИ
+   Возвращает кастомную иконку в форме перевёрнутой капли воды
+   ================================================================ */
+
+// Функция принимает цвет и эмодзи, возвращает готовый объект иконки
+function createDropIcon(color, emoji) {
+    // L.divIcon() — создаёт иконку на основе HTML/CSS (а не изображения)
     return L.divIcon({
-        html: `<div style="
-            background-color: ${bgColor};
-            width: 44px;
-            height: 44px;
-            border-radius: 14px 14px 14px 6px;
-            transform: rotate(45deg);
-            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-            border: 2px solid white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: white;
-            transition: all 0.1s ease;
-            cursor: pointer;
-        ">📍</div>`,
-        iconSize: [44, 44],
-        popupAnchor: [0, -22],
-        className: 'gis-arrow-marker'
+        // HTML-код иконки
+        // .drop-inner — контейнер для позиционирования
+        // .drop-shape — сама фигура капли (стили заданы в CSS)
+        html: `
+            <div class="drop-inner">
+                <div class="drop-shape" style="background: ${color};">
+                    ${emoji}
+                </div>
+            </div>
+        `,
+        iconSize: [40, 56],     // Размер иконки (ширина, высота)
+        popupAnchor: [0, -28],  // Смещение попапа относительно иконки (чтобы не перекрывать)
+        className: 'drop-marker' // CSS-класс для стилизации (задан в styles.css)
     });
 }
 
-// Хранилище маркеров для быстрого доступа
-const markersMap = new Map(); // id -> { marker, data }
+/* ================================================================
+   5. ХРАНИЛИЩЕ МАРКЕРОВ
+   Объект Map (коллекция) для быстрого доступа к маркерам по ID объекта
+   ================================================================ */
 
-// Добавляем все маркеры на карту
+// new Map() — встроенный объект JavaScript для хранения пар ключ-значение
+// Ключ — id объекта, значение — объект с маркером и данными
+const markersMap = new Map();
+
+/* ================================================================
+   6. ДОБАВЛЕНИЕ МАРКЕРОВ НА КАРТУ
+   Проходим по каждому объекту и создаём маркер с каплей-иконкой
+   ================================================================ */
+
+// objectsData.forEach() — перебираем все объекты в массиве
 objectsData.forEach(obj => {
-    const icon = createArrowIcon(obj.category);
-    const marker = L.marker([obj.lat, obj.lng], { icon: icon }).addTo(map);
+    // 6.1. Создаём иконку-каплю с цветом и эмодзи объекта
+    const icon = createDropIcon(obj.iconColor, obj.icon);
     
-    // Формируем красивое всплывающее окно с фото и адресом
+    // 6.2. Создаём маркер в указанных координатах с нашей иконкой
+    // L.marker() — создаёт маркер на карте
+    const marker = L.marker([obj.lat, obj.lng], { icon }).addTo(map);
+
+    // 6.3. Формируем HTML-код для всплывающего окна (попапа)
+    // Используем шаблонные строки (``) для вставки данных объекта
     const popupHtml = `
-        <div style="width: 100%;">
-            <img src="${obj.image}" alt="${obj.name}" 
-                 style="width: 100%; height: 170px; object-fit: cover; display: block; background: #f0f0f0;"
-                 onerror="this.src='https://placehold.co/600x400?text=📸+Фото+скоро'">
-            <div style="padding: 14px 16px 18px;">
-                <h3 style="margin: 0 0 6px 0; font-size: 1.2rem; color: #1a4d2a;">${obj.name}</h3>
-                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #3b4e5e; margin-bottom: 8px;">
-                    <span>📍</span> ${obj.address}
-                </div>
-                <div style="margin-top: 8px;">
-                    <span style="background: #eef2f5; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 500;">${obj.category}</span>
-                </div>
-                <p style="margin-top: 12px; font-size: 0.85rem; color: #555; line-height: 1.4;">${obj.description || ''}</p>
+        <div>
+            <!-- Фото объекта (если не загрузится — показываем плейсхолдер) -->
+            <img class="popup-img" src="${obj.image}" alt="${obj.name}" 
+                 onerror="this.src='https://placehold.co/600x400/ebf5f0/3a7a62?text=📸+Фото+скоро'">
+            <div class="popup-text">
+                <h3>${obj.name}</h3>                       <!-- Название -->
+                <div class="popup-address">📍 ${obj.address}</div>  <!-- Адрес -->
+                <span class="popup-badge">${obj.category}</span>    <!-- Категория (в виде бейджа) -->
             </div>
         </div>
     `;
-    
+
+    // 6.4. Привязываем попап к маркеру
+    // .bindPopup() — привязывает HTML-контент к маркеру, показывается по клику
+    // className: 'custom-popup' — для кастомной стилизации (задана в CSS)
     marker.bindPopup(popupHtml, {
         className: 'custom-popup',
-        maxWidth: 300,
-        minWidth: 280
+        maxWidth: 300,          // Максимальная ширина попапа
+        minWidth: 260           // Минимальная ширина попапа
     });
-    
+
+    // 6.5. Сохраняем маркер в хранилище для быстрого доступа по ID
+    // markersMap.set(ключ, значение) — добавляем запись в коллекцию
     markersMap.set(obj.id, { marker, data: obj });
 });
 
-// ===== ГЕНЕРАЦИЯ БОКОВОГО СПИСКА (ПЛИТКИ) =====
+/* ================================================================
+   7. ГЕНЕРАЦИЯ БОКОВОГО СПИСКА (ПАНЕЛИ С КАРТОЧКАМИ)
+   Создаём HTML-элементы для каждого объекта в панели слева
+   ================================================================ */
 
-// Функция для получения эмодзи по категории
-function getEmojiForCategory(category) {
-    if (category.includes("Народный")) return "🏺";
-    if (category.includes("Ковроткачество")) return "🧶";
-    if (category.includes("Музей") || category.includes("Галерея")) return "🖼️";
-    if (category.includes("Музыка") || category.includes("Танец")) return "🎵";
-    if (category.includes("Фестиваль")) return "🎪";
-    if (category.includes("Дизайн") || category.includes("Медиа")) return "✏️";
-    if (category.includes("Издательство") || category.includes("Литература")) return "📚";
-    if (category.includes("Культурное наследие")) return "🏛️";
-    return "📍";
-}
-
-// Заполняем список
+// Находим контейнер для списка по ID (элемент <div id="objectsList"> в HTML)
 const container = document.getElementById('objectsList');
-if (container) {
-    objectsData.forEach(obj => {
-        const card = document.createElement('div');
-        card.className = 'object-card';
-        card.innerHTML = `
-            <div class="object-icon">${getEmojiForCategory(obj.category)}</div>
-            <div class="object-info">
-                <div class="object-title">${obj.name}</div>
-                <div class="object-category">${obj.category}</div>
-            </div>
-        `;
+
+// Перебираем все объекты
+objectsData.forEach(obj => {
+    // 7.1. Создаём элемент <div> для карточки объекта
+    const card = document.createElement('div');
+    card.className = 'object-card';  // CSS-класс для стилизации
+
+    // 7.2. Заполняем содержимое карточки
+    // Используем шаблонную строку для вставки данных
+    // Фон иконки — с прозрачностью цвета объекта (22 — прозрачность в HEX)
+    card.innerHTML = `
+        <div class="object-icon" style="background: ${obj.iconColor}22; border: 1px solid ${obj.iconColor}33;">
+            <span style="font-size: 20px;">${obj.icon}</span>
+        </div>
+        <div class="object-info">
+            <div class="object-title">${obj.name}</div>
+            <div class="object-category">${obj.category}</div>
+        </div>
+    `;
+
+    // 7.3. Добавляем обработчик события "клик" на карточку
+    // При клике на карточку — карта плавно летит к маркеру и открывает попап
+    card.addEventListener('click', () => {
+        // Достаём из хранилища маркер и данные по ID объекта
+        const { marker, data } = markersMap.get(obj.id);
         
-        // Обработчик клика: плавный перелёт к маркеру + открытие попапа
-        card.addEventListener('click', () => {
-            const { marker, data } = markersMap.get(obj.id);
-            map.flyTo([data.lat, data.lng], 15, {
-                duration: 1.2,        // длительность анимации 1.2 секунды
-                easeLinearity: 0.5
-            });
-            // Открываем попап после завершения полёта
-            setTimeout(() => {
-                marker.openPopup();
-            }, 1250);
+        // .flyTo() — плавный перелёт карты к указанным координатам
+        // Параметры: [широта, долгота], уровень зума, настройки анимации
+        map.flyTo([data.lat, data.lng], 14, {
+            duration: 1.0,          // Длительность анимации в секундах
+            easeLinearity: 0.4      // Сглаживание движения (0 — линейно, 1 — с ускорением)
         });
         
-        container.appendChild(card);
+        // Через 1.1 секунды (чуть больше времени полёта) открываем попап
+        // setTimeout() — выполняет код через указанное количество миллисекунд
+        setTimeout(() => {
+            marker.openPopup();      // .openPopup() — программно открывает попап маркера
+        }, 1100);                    // 1100 мс = 1.1 секунды
     });
-}
 
-// ===== ДОПОЛНИТЕЛЬНЫЕ ФИШКИ =====
+    // 7.4. Добавляем готовую карточку в контейнер списка
+    container.appendChild(card);
+});
 
-// Добавляем масштаб на карту (для удобства)
-L.control.scale({ metric: true, imperial: false, position: 'bottomright' }).addTo(map);
+/* ================================================================
+   8. ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
+   ================================================================ */
 
-// Выводим в консоль информацию для разработчика
-console.log(`✅ Карта креативных индустрий Дагестана загружена`);
-console.log(`📌 Всего объектов: ${objectsData.length}`);
-console.log(`📍 Категории: Народные промыслы, Галереи, Музыка, Фестивали, Дизайн и другие`);
+// 8.1. Добавляем шкалу масштаба в правый нижний угол
+// L.control.scale() — создаёт линейку для измерения расстояний на карте
+// metric: true — показывать в метрах/километрах
+// imperial: false — не показывать в милях/футах
+L.control.scale({
+    metric: true,
+    imperial: false,
+    position: 'bottomright'      // Позиция на карте
+}).addTo(map);
 
-// Если карта не отображается корректно — пересчитываем размер
+/* ================================================================
+   9. ФИКСЫ РАЗМЕРА КАРТЫ (АДАПТИВНОСТЬ)
+   ================================================================ */
+
+// 9.1. При загрузке страницы карта может отображаться некорректно
+//      .invalidateSize() — пересчитывает размер карты, чтобы она правильно вписалась
+//      Задержка 300 мс — даём браузеру время на полную загрузку
 setTimeout(() => {
     map.invalidateSize();
-}, 250);
+}, 300);
 
-// Обработка ресайза окна (адаптив)
+// 9.2. При изменении размера окна (поворот экрана, ресайз) — пересчитываем размер карты
+//      window.addEventListener('resize', ...) — слушаем событие изменения размера окна
 window.addEventListener('resize', () => {
+    // Небольшая задержка, чтобы браузер успел обновить размеры
     setTimeout(() => {
         map.invalidateSize();
     }, 200);
 });
+
+/* ================================================================
+   10. ЛОГ В КОНСОЛЬ ДЛЯ РАЗРАБОТЧИКА
+   ================================================================ */
+
+// Выводим информацию в консоль браузера (для отладки)
+// Открывается через F12 → вкладка Console
+console.log('🌿 Карта креативных индустрий Дагестана загружена!');
+console.log(`📌 Всего объектов на карте: ${objectsData.length}`);
+console.log('📍 Категории: Народные промыслы, Галереи, Музыка, Фестивали, Дизайн и другие');
+
+/* ================================================================
+   💡 КАК ЭТО ВСЁ РАБОТАЕТ (КРАТКОЕ ОПИСАНИЕ)
+   ================================================================
+   
+   1. Данные объектов хранятся в массиве objectsData
+   2. Карта создаётся через Leaflet с центром на Дагестане
+   3. Для каждого объекта создаётся маркер-капля с уникальным цветом и эмодзи
+   4. К каждому маркеру привязан попап с фото, названием, адресом и категорией
+   5. В боковой панели генерируются карточки с названиями
+   6. При клике на карточку — карта плавно летит к объекту и открывает попап
+   7. При клике на сам маркер-каплю — тоже открывается попап
+   8. Карта адаптивна: корректно отображается на разных размерах экрана
+   9. Все стили вынесены в отдельный файл styles.css
+   ================================================================ */
