@@ -7,7 +7,7 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Кубачи, Дахадаевский район",
         image: "images/kubachi.jpg",
-        icon: "💎",
+        icon: "✦",
         iconColor: "#4a9e7a"
     },
     {
@@ -18,7 +18,7 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Унцукуль, Унцукульский район",
         image: "images/untsukul.jpg",
-        icon: "🪵",
+        icon: "✦",
         iconColor: "#5aaa90"
     },
     {
@@ -29,7 +29,7 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Балхар, Акушинский район",
         image: "images/balhar.jpg",
-        icon: "🏺",
+        icon: "✦",
         iconColor: "#7dc6b0"
     },
     {
@@ -40,7 +40,7 @@ const objectsData = [
         category: "Народный промысел",
         address: "с. Гоцатль, Хунзахский район",
         image: "images/gotsatl.jpg",
-        icon: "⚒️",
+        icon: "✦",
         iconColor: "#6a9a80"
     },
     {
@@ -51,7 +51,7 @@ const objectsData = [
         category: "Ковроткачество",
         address: "Табасаранский район",
         image: "images/tabasarancarpet.jpg",
-        icon: "🧶",
+        icon: "◈",
         iconColor: "#8ab8a0"
     },
     {
@@ -62,7 +62,7 @@ const objectsData = [
         category: "Культурное наследие",
         address: "г. Дербент, цитадель Нарын-Кала",
         image: "images/derbent.jpg",
-        icon: "🏛️",
+        icon: "◈",
         iconColor: "#9ab87a"
     },
     {
@@ -73,7 +73,7 @@ const objectsData = [
         category: "Музей / Галерея",
         address: "г. Махачкала, ул. М. Гамзатова, 21",
         image: "images/mahachkala-museum.jpg",
-        icon: "🖼️",
+        icon: "◈",
         iconColor: "#d4a08a"
     },
     {
@@ -84,7 +84,7 @@ const objectsData = [
         category: "Современное искусство",
         address: "г. Махачкала, пр. Гамидова, 12",
         image: "images/kovcheg.jpg",
-        icon: "🎨",
+        icon: "◈",
         iconColor: "#c0806a"
     },
     {
@@ -95,7 +95,7 @@ const objectsData = [
         category: "Креативный кластер",
         address: "г. Махачкала, ул. Ярагского, 45",
         image: "images/artdvor.jpg",
-        icon: "✨",
+        icon: "◈",
         iconColor: "#5bb8b0"
     },
     {
@@ -106,7 +106,7 @@ const objectsData = [
         category: "Музыка / Танец",
         address: "г. Махачкала, пр. Ленина, 1",
         image: "images/lezginka.jpg",
-        icon: "💃",
+        icon: "♪",
         iconColor: "#b8a8d4"
     },
     {
@@ -117,7 +117,7 @@ const objectsData = [
         category: "Концертный зал",
         address: "г. Махачкала, ул. Дахадаева, 3",
         image: "images/philharmonia.jpg",
-        icon: "🎵",
+        icon: "♪",
         iconColor: "#9a8ab8"
     },
     {
@@ -128,7 +128,7 @@ const objectsData = [
         category: "Фестиваль",
         address: "г. Дербент, цитадель Нарын-Кала",
         image: "images/derbent-fest.jpg",
-        icon: "🎪",
+        icon: "✦",
         iconColor: "#d4a08a"
     },
     {
@@ -139,7 +139,7 @@ const objectsData = [
         category: "Дизайн / Медиа",
         address: "г. Махачкала, пр. Расула Гамзатова",
         image: "images/design-studio.jpg",
-        icon: "✏️",
+        icon: "◇",
         iconColor: "#5bb8b0"
     },
     {
@@ -150,7 +150,7 @@ const objectsData = [
         category: "Современное искусство",
         address: "г. Каспийск, набережная",
         image: "images/kaspiysk.jpg",
-        icon: "🎭",
+        icon: "◇",
         iconColor: "#7dc6b0"
     },
     {
@@ -161,7 +161,7 @@ const objectsData = [
         category: "Городской досуг",
         address: "г. Хасавюрт, ул. Грозненская",
         image: "images/khasavyurt.jpg",
-        icon: "🏙️",
+        icon: "◇",
         iconColor: "#8ab8a0"
     },
     {
@@ -172,7 +172,7 @@ const objectsData = [
         category: "Культура",
         address: "г. Буйнакск",
         image: "images/buinaksk.jpg",
-        icon: "📚",
+        icon: "◇",
         iconColor: "#6a9a80"
     },
     {
@@ -183,7 +183,7 @@ const objectsData = [
         category: "Культурное наследие",
         address: "г. Кизляр",
         image: "images/kizlyar.jpg",
-        icon: "🏺",
+        icon: "✦",
         iconColor: "#5aaa90"
     },
     {
@@ -194,73 +194,84 @@ const objectsData = [
         category: "Издательство / Литература",
         address: "г. Махачкала",
         image: "images/book-publishing.jpg",
-        icon: "📖",
+        icon: "◇",
         iconColor: "#4a9e7a"
     }
 ];
 
 /* ================================================================
-   НАСТРОЙКА КАРТЫ С ОГРАНИЧЕНИЕМ ТОЛЬКО ДАГЕСТАНОМ
+   НАСТРОЙКА КАРТЫ — ТОЛЬКО ДАГЕСТАН
    ================================================================ */
 
 const map = L.map('map', {
-    center: [42.75, 47.3],
+    center: [42.5, 47.3],
     zoom: 8,
     minZoom: 7,
-    maxZoom: 13,
+    maxZoom: 12,
     zoomControl: true,
     fadeAnimation: true,
-    zoomAnimation: true
+    zoomAnimation: true,
+    worldCopyJump: false
 });
 
 /* ================================================================
-   ОГРАНИЧЕНИЕ КАРТЫ ТОЛЬКО ТЕРРИТОРИЕЙ ДАГЕСТАНА
-   Пользователь не сможет уйти за пределы этих границ
+   ЖЁСТКОЕ ОГРАНИЧЕНИЕ — ТОЛЬКО ДАГЕСТАН, БЕЗ УКРАИНЫ И СОСЕДЕЙ
    ================================================================ */
 
 const dagestanBounds = [
-    [41.0, 45.5],  // Юго-западная граница (нижняя левая точка)
-    [44.5, 49.5]   // Северо-восточная граница (верхняя правая точка)
+    [40.8, 45.0],
+    [44.8, 50.0]
 ];
 
 map.setMaxBounds(dagestanBounds);
 map.on('drag', function() {
     map.panInsideBounds(dagestanBounds, { animate: true });
 });
+map.on('zoomend', function() {
+    if (map.getZoom() < 7) {
+        map.setZoom(7);
+    }
+});
 
 /* ================================================================
-   БАЗОВЫЙ СЛОЙ КАРТЫ
+   ПРИЯТНАЯ ПОДЛОЖКА КАРТЫ — НЕ СЕРАЯ
    ================================================================ */
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CartoDB</a>',
+    attribution: '© OpenStreetMap © CartoDB',
     subdomains: 'abcd',
     maxZoom: 18,
     minZoom: 7
 }).addTo(map);
 
 /* ================================================================
-   ФУНКЦИЯ СОЗДАНИЯ УКАЗАТЕЛЯ-КАПЛИ
+   КАПЛЯ С ОСТРЫМ КОНЧИКОМ (РЕАЛЬНАЯ КАПЛЯ ВОДЫ)
    ================================================================ */
 
-function createDropIcon(color, emoji) {
+function createDropIcon(color, symbol) {
     return L.divIcon({
         html: `
-            <div class="drop-inner">
-                <div class="drop-shape" style="background: ${color};">
-                    ${emoji}
-                </div>
+            <div style="position: relative; width: 32px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                <svg width="32" height="44" viewBox="0 0 32 44" style="display: block;">
+                    <defs>
+                        <filter id="shadow_${color.replace('#', '')}" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.25"/>
+                        </filter>
+                    </defs>
+                    <path d="M16 0 C16 0, 32 24, 32 32 C32 40.8, 25.2 44, 16 44 C6.8 44, 0 40.8, 0 32 C0 24, 16 0, 16 0 Z" 
+                          fill="${color}" 
+                          filter="url(#shadow_${color.replace('#', '')})"
+                          stroke="white" 
+                          stroke-width="1.5"/>
+                    <text x="16" y="30" text-anchor="middle" font-size="14" fill="white" font-family="Georgia, serif" font-weight="400">${symbol}</text>
+                </svg>
             </div>
         `,
-        iconSize: [40, 56],
-        popupAnchor: [0, -28],
+        iconSize: [32, 44],
+        popupAnchor: [0, -22],
         className: 'drop-marker'
     });
 }
-
-/* ================================================================
-   ДОБАВЛЕНИЕ МАРКЕРОВ НА КАРТУ
-   ================================================================ */
 
 const markersMap = new Map();
 
@@ -271,7 +282,7 @@ objectsData.forEach(obj => {
     const popupHtml = `
         <div>
             <img class="popup-img" src="${obj.image}" alt="${obj.name}" 
-                 onerror="this.src='https://placehold.co/600x400/ebf5f0/3a7a62?text=📸+Фото+скоро'">
+                 onerror="this.src='https://placehold.co/600x400/ebf5f0/3a7a62?text=Фото+скоро'">
             <div class="popup-text">
                 <h3>${obj.name}</h3>
                 <div class="popup-address">📍 ${obj.address}</div>
@@ -290,18 +301,36 @@ objectsData.forEach(obj => {
 });
 
 /* ================================================================
-   ГЕНЕРАЦИЯ БОКОВОГО СПИСКА
+   СПИСОК ОБЪЕКТОВ
    ================================================================ */
 
 const container = document.getElementById('objectsList');
+
+const categorySymbols = {
+    "Народный промысел": "✦",
+    "Ковроткачество": "◈",
+    "Культурное наследие": "◈",
+    "Музей / Галерея": "◈",
+    "Современное искусство": "◈",
+    "Креативный кластер": "◈",
+    "Музыка / Танец": "♪",
+    "Концертный зал": "♪",
+    "Фестиваль": "✦",
+    "Дизайн / Медиа": "◇",
+    "Городской досуг": "◇",
+    "Культура": "◇",
+    "Издательство / Литература": "◇"
+};
 
 objectsData.forEach(obj => {
     const card = document.createElement('div');
     card.className = 'object-card';
 
+    const symbol = categorySymbols[obj.category] || "•";
+
     card.innerHTML = `
-        <div class="object-icon" style="background: ${obj.iconColor}22; border: 1px solid ${obj.iconColor}33;">
-            <span style="font-size: 20px;">${obj.icon}</span>
+        <div class="object-icon" style="background: ${obj.iconColor}22; border: 1px solid ${obj.iconColor}44; color: ${obj.iconColor}; font-size: 18px; font-weight: 300;">
+            ${symbol}
         </div>
         <div class="object-info">
             <div class="object-title">${obj.name}</div>
@@ -311,7 +340,7 @@ objectsData.forEach(obj => {
 
     card.addEventListener('click', () => {
         const { marker, data } = markersMap.get(obj.id);
-        map.flyTo([data.lat, data.lng], 13, {
+        map.flyTo([data.lat, data.lng], 12, {
             duration: 1.0,
             easeLinearity: 0.4
         });
@@ -324,7 +353,7 @@ objectsData.forEach(obj => {
 });
 
 /* ================================================================
-   ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
+   ДОПОЛНИТЕЛЬНО
    ================================================================ */
 
 L.control.scale({
@@ -332,10 +361,6 @@ L.control.scale({
     imperial: false,
     position: 'bottomright'
 }).addTo(map);
-
-/* ================================================================
-   ФИКСЫ РАЗМЕРА КАРТЫ
-   ================================================================ */
 
 setTimeout(() => {
     map.invalidateSize();
