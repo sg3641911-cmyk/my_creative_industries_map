@@ -416,15 +416,7 @@ objectsData.forEach(obj => {
 });
 
 // ============================================================
-// 10. ОБРАБОТЧИКИ ДЛЯ КАПЕЛЬ (анимация)
-// ============================================================
-document.addEventListener('DOMContentLoaded', function() {
-    // Добавляем CSS-класс для анимации при наведении через стили
-    // Уже реализовано в CSS через .drop-marker:hover svg
-});
-
-// ============================================================
-// 11. ГЕНЕРАЦИЯ КАРТОЧЕК В СПИСКЕ
+// 10. ГЕНЕРАЦИЯ КАРТОЧЕК В СПИСКЕ
 // ============================================================
 const container = document.getElementById('objectsList');
 
@@ -445,7 +437,7 @@ const categorySymbols = {
     "Издательство / Литература": "◇"
 };
 
-objectsData.forEach((obj, index) => {
+objectsData.forEach((obj) => {
     const card = document.createElement('div');
     card.className = 'object-card';
     card.dataset.category = obj.category;
@@ -478,7 +470,7 @@ objectsData.forEach((obj, index) => {
 });
 
 // ============================================================
-// 12. ФИЛЬТРАЦИЯ
+// 11. ФИЛЬТРАЦИЯ
 // ============================================================
 let currentFilter = 'Все';
 
@@ -508,14 +500,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 // ============================================================
-// 13. ПРОВЕРКА ФОТО ПРИ ЗАГРУЗКЕ (скрытие битых ссылок)
-// ============================================================
-document.addEventListener('DOMContentLoaded', function() {
-    // Фото скрываются автоматически через onerror
-});
-
-// ============================================================
-// 14. АДАПТИВ: ПЕРЕСЧЁТ РАЗМЕРА КАРТЫ
+// 12. АДАПТИВ: ПЕРЕСЧЁТ РАЗМЕРА КАРТЫ
 // ============================================================
 setTimeout(() => {
     map.invalidateSize();
@@ -528,31 +513,57 @@ window.addEventListener('resize', function() {
 });
 
 // ============================================================
-// 15. СКРЫТИЕ ЭКРАНА ЗАГРУЗКИ
-// ============================================================
-window.addEventListener('load', function() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    if (loadingScreen) {
-        setTimeout(() => {
-            loadingScreen.classList.add('hide');
-            // Полное удаление через 1 секунду после анимации
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 1000);
-        }, 500);
-    }
-});
-
-// ============================================================
-// 16. ЛОГ В КОНСОЛЬ
-// ============================================================
-console.log('🏔️ Креативная карта Дагестана загружена!');
-console.log(`📌 Всего объектов: ${objectsData.length}`);
-console.log('📍 Категории: Народные промыслы, Ковроткачество, Музеи, Музыка, Фестивали, Дизайн и другие');
-
-// ============================================================
-// 17. ДОПОЛНИТЕЛЬНО: КЛИК НА КАРТУ ДЛЯ ЗАКРЫТИЯ ПОПАПА
+// 13. ЗАКРЫТИЕ ПОПАПА ПРИ КЛИКЕ НА КАРТУ
 // ============================================================
 map.on('click', function() {
     map.closePopup();
 });
+
+// ============================================================
+// 14. СКРЫТИЕ ЭКРАНА ЗАГРУЗКИ (ПЛАВНОЕ)
+// ============================================================
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        loadingScreen.classList.add('hide');
+        setTimeout(function() {
+            loadingScreen.style.display = 'none';
+        }, 800);
+        console.log('✅ Экран загрузки скрыт');
+        return true;
+    }
+    return false;
+}
+
+// Способ 1: Ждём, пока карта будет готова
+map.whenReady(function() {
+    // Даём 1.5 секунды на загрузку тайлов
+    setTimeout(function() {
+        hideLoadingScreen();
+    }, 1500);
+});
+
+// Способ 2: Запасной вариант — скрываем через 3 секунды
+setTimeout(function() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen && !loadingScreen.classList.contains('hide')) {
+        hideLoadingScreen();
+    }
+}, 3000);
+
+// Способ 3: При полной загрузке страницы
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen && !loadingScreen.classList.contains('hide')) {
+            hideLoadingScreen();
+        }
+    }, 1000);
+});
+
+// ============================================================
+// 15. ЛОГ В КОНСОЛЬ
+// ============================================================
+console.log('🏔️ Креативная карта Дагестана загружена!');
+console.log(`📌 Всего объектов: ${objectsData.length}`);
+console.log('📍 Категории: Народные промыслы, Ковроткачество, Музеи, Музыка, Фестивали, Дизайн и другие');
