@@ -1,773 +1,558 @@
-/**
- * Creative Map of Dagestan — Main Application
- * Карта креативных индустрий Республики Дагестан
- * 
- * @version 1.0.0
- * @author Generated for Creative Dagestan Project
- */
+// ============================================================
+// 1. ДАННЫЕ ОБЪЕКТОВ (18)
+// ============================================================
+const objectsData = [
+    {
+        id: 1,
+        name: "Кубачи — ювелирное искусство",
+        shortName: "Кубачи",
+        lat: 42.0925,
+        lng: 47.6000,
+        category: "Народный промысел",
+        address: "с. Кубачи, Дахадаевский район",
+        image: [
+            "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/97c60bcb-dbb0-4086-8215-6e8ebd273ab0/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/900x/",
+            "https://kulturologia.ru/blogs/211118/41378/"
+        ],
+        symbol: "✦",
+        color: "#4a9e7a",
+        description: "Всемирно известное село мастеров серебряного дела. Уникальная техника гравировки и чернения по металлу."
+    },
+    {
+        id: 2,
+        name: "Унцукуль — насечка по дереву",
+        shortName: "Унцукуль",
+        lat: 42.7122,
+        lng: 46.7897,
+        category: "Народный промысел",
+        address: "с. Унцукуль, Унцукульский район",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_qLUsssOey_9ntRwExVkcmBVuLeO3xGEzx5T8WBGVn1yXhdkXkKc8E-g&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROcLkT2PFiyuKVUrvUz1B4nB6Q9wE3dmzSpdBM9tmduQ6shv130X4fMsA&s=10"
+        ],
+        symbol: "✦",
+        color: "#5aaa90",
+        description: "Уникальная техника инкрустации металлом и перламутром по дереву. Традиционный промысел Дагестана."
+    },
+    {
+        id: 3,
+        name: "Балхарская керамика",
+        shortName: "Балхар",
+        lat: 42.3100,
+        lng: 47.1689,
+        category: "Народный промысел",
+        address: "с. Балхар, Акушинский район",
+        image: [
+            "https://ic.pics.livejournal.com/islam_dag_mir/60544360/218158/218158_1000.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHOn3eD3cEGRKSowJ0fUZmVAtRyuGPT-Ucai5tpbvG8fTER0KDwBiNCXOI&s=10"
+        ],
+        symbol: "✦",
+        color: "#7dc6b0",
+        description: "Архаичная керамика ручной лепки без использования гончарного круга. Уникальная технология, передаваемая из поколения в поколение."
+    },
+    {
+        id: 4,
+        name: "Гоцатль — художественный металл",
+        shortName: "Гоцатль",
+        lat: 42.5333,
+        lng: 46.8667,
+        category: "Народный промысел",
+        address: "с. Гоцатль, Хунзахский район",
+        image: [
+            "https://chernovik.net/sites/default/files/photo/2014/07/25/img_5349.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBVKty50sbnZYkuuiOVwyByJte4SzdGP-9DKOPVCcKjA&s=10"
+        ],
+        symbol: "✦",
+        color: "#6a9a80",
+        description: "Центр обработки металла, чеканка, художественная ковка. Древние традиции металлообработки."
+    },
+    {
+        id: 5,
+        name: "Табасаранские ковры",
+        shortName: "Табасаранские ковры",
+        lat: 41.9833,
+        lng: 48.0000,
+        category: "Ковроткачество",
+        address: "Табасаранский район",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdU3GDY96UHyaRvZO7c8iwe6tlD1XQo4K6w0iia_ayq1JaTpXqHG2JBs&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW6xgAvsWLy43T7T4xcx055fXpSjyLVPNVyGm-kv9Gig&s=10"
+        ],
+        symbol: "◈",
+        color: "#8ab8a0",
+        description: "Знаменитые табасаранские ковры с уникальными орнаментами и яркими красками. Ручное ковроткачество."
+    },
+    {
+        id: 6,
+        name: "Дербент — крепость и ремесла",
+        shortName: "Дербент",
+        lat: 42.0575,
+        lng: 48.2873,
+        category: "Культурное наследие",
+        address: "г. Дербент, цитадель Нарын-Кала",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkBVT0JbvjihxVMfTFzteratj6TZ0URmjTTlMHDPNQ8Io766YU2Pg0b0&s=10"
+        ],
+        symbol: "◈",
+        color: "#9ab87a",
+        description: "Объект Всемирного наследия ЮНЕСКО. Древнейший город России, центр ремесел и культурного наследия."
+    },
+    {
+        id: 7,
+        name: "Дагестанский музей изобразительных искусств",
+        shortName: "Музей ИЗО",
+        lat: 42.9849,
+        lng: 47.5049,
+        category: "Музей / Галерея",
+        address: "г. Махачкала, ул. М. Гамзатова, 21",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4ZYrk1BeMLtq52DQSmi2BmHGLwsM6qV3i_Vpnd6Dzw&s=10"
+        ],
+        symbol: "◈",
+        color: "#d4a08a",
+        description: "Крупнейший художественный музей Дагестана. Площадка для современного искусства и выставок."
+    },
+    {
+        id: 8,
+        name: "Галерея «Ковчег»",
+        shortName: "Галерея «Ковчег»",
+        lat: 42.9792,
+        lng: 47.4987,
+        category: "Современное искусство",
+        address: "г. Махачкала, пр. Гамидова, 12",
+        image: [
+            "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&h=400&fit=crop"
+        ],
+        symbol: "◈",
+        color: "#c0806a",
+        description: "Частная галерея современного дагестанского искусства. Площадка для молодых художников."
+    },
+    {
+        id: 9,
+        name: "Арт-пространство «Артдвор»",
+        shortName: "Артдвор",
+        lat: 42.9765,
+        lng: 47.5023,
+        category: "Креативный кластер",
+        address: "г. Махачкала, ул. Ярагского, 45",
+        image: [
+            "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop"
+        ],
+        symbol: "◈",
+        color: "#5bb8b0",
+        description: "Галерея, мастерские и коворкинг для креативных индустрий. Пространство для творчества и коллабораций."
+    },
+    {
+        id: 10,
+        name: "Государственный ансамбль танца «Лезгинка»",
+        shortName: "Лезгинка",
+        lat: 42.9812,
+        lng: 47.5040,
+        category: "Музыка / Танец",
+        address: "г. Махачкала, пр. Ленина, 1",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1wFGjP9VspoO6d0GuTJlLMOyAx8yko68ATCC_6Mb9--Q_kTV2f62kKZe4&s=10"
+        ],
+        symbol: "♪",
+        color: "#b8a8d4",
+        description: "Всемирно известный танцевальный коллектив, культурный символ Дагестана. Лауреат международных конкурсов."
+    },
+    {
+        id: 11,
+        name: "Дагестанская государственная филармония",
+        shortName: "Филармония",
+        lat: 42.9830,
+        lng: 47.5075,
+        category: "Концертный зал",
+        address: "г. Махачкала, ул. Дахадаева, 3",
+        image: [
+            "https://avatars.mds.yandex.net/get-altay/1363376/2a00000162d25352462636470a8dc4f4f591/L_height"
+        ],
+        symbol: "♪",
+        color: "#9a8ab8",
+        description: "Главная концертная площадка республики. Концерты академической, народной и современной музыки."
+    },
+    {
+        id: 12,
+        name: "Фестиваль «Дербентская крепость»",
+        shortName: "Фестиваль",
+        lat: 42.0590,
+        lng: 48.2885,
+        category: "Фестиваль",
+        address: "г. Дербент, цитадель Нарын-Кала",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiKme-ug68JzwXvC20Z2lf8Ta9_yOU9JOidf0i3GnhKw&s=10"
+        ],
+        symbol: "✦",
+        color: "#d4a08a",
+        description: "Ежегодный фестиваль музыки, театра и ремесел в древнейшей крепости России. Собирает тысячи зрителей."
+    },
+    {
+        id: 13,
+        name: "Дизайн-студии Махачкалы",
+        shortName: "Дизайн-студии",
+        lat: 42.9835,
+        lng: 47.4960,
+        category: "Дизайн / Медиа",
+        address: "г. Махачкала, пр. Расула Гамзатова",
+        image: [
+            "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop"
+        ],
+        symbol: "◇",
+        color: "#5bb8b0",
+        description: "Студии графического дизайна, брендинга и веб-разработки. Современное креативное предпринимательство."
+    },
+    {
+        id: 14,
+        name: "Каспийск — арт-проекты",
+        shortName: "Каспийск",
+        lat: 42.8817,
+        lng: 47.6392,
+        category: "Современное искусство",
+        address: "г. Каспийск, набережная",
+        image: [
+            "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&h=400&fit=crop"
+        ],
+        symbol: "◈",
+        color: "#7dc6b0",
+        description: "Молодёжные арт-инициативы, граффити-фестивали и современные уличные проекты на побережье Каспия."
+    },
+    {
+        id: 15,
+        name: "Хасавюрт — культурный центр",
+        shortName: "Хасавюрт",
+        lat: 43.2500,
+        lng: 46.5833,
+        category: "Городской досуг",
+        address: "г. Хасавюрт, ул. Грозненская",
+        image: [
+            "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&h=400&fit=crop"
+        ],
+        symbol: "◇",
+        color: "#8ab8a0",
+        description: "Концертные площадки, дома культуры и фестивальные события второго по величине города Дагестана."
+    },
+    {
+        id: 16,
+        name: "Буйнакск — творческие объединения",
+        shortName: "Буйнакск",
+        lat: 42.8167,
+        lng: 47.1167,
+        category: "Культура",
+        address: "г. Буйнакск, центр",
+        image: [
+            "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop"
+        ],
+        symbol: "◇",
+        color: "#6a9a80",
+        description: "Дома культуры, изостудии, литературные и театральные объединения города с богатыми культурными традициями."
+    },
+    {
+        id: 17,
+        name: "Кизляр — народные промыслы",
+        shortName: "Кизляр",
+        lat: 43.8467,
+        lng: 46.7125,
+        category: "Культурное наследие",
+        address: "г. Кизляр, центр",
+        image: [
+            "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop"
+        ],
+        symbol: "◈",
+        color: "#5aaa90",
+        description: "Этнокультурный центр с богатыми традициями народных промыслов и ремесел на севере Дагестана."
+    },
+    {
+        id: 18,
+        name: "Дагестанское книжное издательство",
+        shortName: "Издательство",
+        lat: 42.9801,
+        lng: 47.5002,
+        category: "Издательство / Литература",
+        address: "г. Махачкала, ул. Гамзатова",
+        image: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK2TXCnxledbC5UneeSESH5cguZlRMheX1gQ4454USUw&s"
+        ],
+        symbol: "◇",
+        color: "#4a9e7a",
+        description: "Выпуск литературы на языках народов Дагестана. Сохранение и развитие национальной книжной культуры."
+    }
+];
 
-(function(global) {
-    'use strict';
+// ============================================================
+// 2. НАСТРОЙКА КАРТЫ
+// ============================================================
+const map = L.map('map', {
+    center: [42.5, 47.3],
+    zoom: 8,
+    minZoom: 7,
+    maxZoom: 13,
+    zoomControl: true,
+    fadeAnimation: true,
+    zoomAnimation: true
+});
 
-    // ═══════════════════════════════════════════════════════════════
-    // CONFIGURATION
-    // ═══════════════════════════════════════════════════════════════
+// ============================================================
+// 3. ЖЁСТКИЕ ГРАНИЦЫ — ТОЛЬКО ДАГЕСТАН
+// ============================================================
+const dagestanBounds = [
+    [40.8, 45.0],
+    [44.8, 50.0]
+];
+map.setMaxBounds(dagestanBounds);
 
-    const CONFIG = {
-        // Map bounds — strictly Dagestan only
-        bounds: {
-            southWest: [40.8, 45.0],
-            northEast: [44.8, 50.0],
-            center: [42.5, 47.3]
-        },
+map.on('drag', function() {
+    map.panInsideBounds(dagestanBounds, { animate: true });
+});
 
-        // Zoom levels
-        zoom: {
-            initial: 8,
-            min: 7,
-            max: 13,
-            focus: 12
-        },
+map.on('zoomend', function() {
+    if (map.getZoom() < 7) {
+        map.setZoom(7);
+    }
+    if (map.getZoom() > 13) {
+        map.setZoom(13);
+    }
+});
 
-        // Animation timings (seconds)
-        animation: {
-            flyToDuration: 1.2,
-            flyToDelay: 1.3,
-            cardStagger: 0.03,
-            hoverScale: 1.12,
-            transitionSpeed: 0.25
-        },
+// ============================================================
+// 4. ПОДЛОЖКА КАРТЫ (СВЕТЛАЯ, НЕ СЕРАЯ)
+// ============================================================
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CartoDB</a>',
+    subdomains: 'abcd',
+    maxZoom: 18,
+    minZoom: 7
+}).addTo(map);
 
-        // Tile layer
-        tiles: {
-            url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd'
-        },
+// ============================================================
+// 5. ШКАЛА МАСШТАБА
+// ============================================================
+L.control.scale({
+    metric: true,
+    imperial: false,
+    position: 'bottomright'
+}).addTo(map);
 
-        // Marker dimensions
-        marker: {
-            width: 36,
-            height: 50,
-            hoverWidth: 42,
-            hoverHeight: 58,
-            anchorX: 18,
-            anchorY: 46,
-            hoverAnchorX: 21,
-            hoverAnchorY: 52
-        },
-
-        // Popup dimensions
-        popup: {
-            width: 300,
-            imageHeight: 170
-        },
-
-        // Color palette
-        colors: {
-            bg: '#f5f9f7',
-            white: '#ffffff',
-            mintLight: '#e8f5f0',
-            mintMedium: '#d4ede4',
-            mintDark: '#b8e0d2',
-            mintAccent: '#7dc6b0',
-            greenDark: '#1a3a2e',
-            greenMedium: '#3a6b5a',
-            greenLight: '#5a8a78',
-            greenBadge: '#2a6e3a',
-            border: 'rgba(184, 224, 210, 0.3)'
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // DATA — 18 Creative Objects
-    // ═══════════════════════════════════════════════════════════════
-
-    const OBJECTS_DATA = [
-        {
-            id: 1,
-            name: "Кубачи — ювелирное искусство",
-            lat: 42.0925,
-            lng: 47.6000,
-            category: "Народный промысел",
-            address: "с. Кубачи, Дахадаевский район",
-            image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&h=400&fit=crop",
-            color: "#4a9e7a",
-            symbol: "✦",
-            description: "Древний центр ювелирного искусства с уникальными техниками чеканки и гравировки."
-        },
-        {
-            id: 2,
-            name: "Унцукуль — насечка по дереву",
-            lat: 42.7122,
-            lng: 46.7897,
-            category: "Народный промысел",
-            address: "с. Унцукуль, Унцукульский район",
-            image: "https://images.unsplash.com/photo-1543512601-f0c9b5e1c4e2?w=600&h=400&fit=crop",
-            color: "#5aaa90",
-            symbol: "✦",
-            description: "Уникальная техника художественной насечки по дереву, передающаяся из поколения в поколение."
-        },
-        {
-            id: 3,
-            name: "Балхарская керамика",
-            lat: 42.3100,
-            lng: 47.1689,
-            category: "Народный промысел",
-            address: "с. Балхар, Акушинский район",
-            image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&h=400&fit=crop",
-            color: "#7dc6b0",
-            symbol: "✦",
-            description: "Традиционная керамика с характерными орнаментами и глазурью."
-        },
-        {
-            id: 4,
-            name: "Гоцатль — художественный металл",
-            lat: 42.5333,
-            lng: 46.8667,
-            category: "Народный промысел",
-            address: "с. Гоцатль, Хунзахский район",
-            image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=400&fit=crop",
-            color: "#6a9a80",
-            symbol: "✦",
-            description: "Центр художественной обработки металла и ковки."
-        },
-        {
-            id: 5,
-            name: "Табасаранские ковры",
-            lat: 41.9833,
-            lng: 48.0000,
-            category: "Ковроткачество",
-            address: "Табасаранский район",
-            image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop",
-            color: "#8ab8a0",
-            symbol: "◈",
-            description: "Уникальные ковры с характерными геометрическими узорами табасаранского народа."
-        },
-        {
-            id: 6,
-            name: "Дербент — крепость и ремесла",
-            lat: 42.0575,
-            lng: 48.2873,
-            category: "Культурное наследие",
-            address: "г. Дербент, цитадель Нарын-Кала",
-            image: "https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=600&h=400&fit=crop",
-            color: "#9ab87a",
-            symbol: "◈",
-            description: "Древнейшая крепость России и центр традиционных ремёсел."
-        },
-        {
-            id: 7,
-            name: "Дагестанский музей изобразительных искусств",
-            lat: 42.9849,
-            lng: 47.5049,
-            category: "Музей / Галерея",
-            address: "г. Махачкала, ул. М. Гамзатова, 21",
-            image: "https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=600&h=400&fit=crop",
-            color: "#d4a08a",
-            symbol: "◈",
-            description: "Крупнейшее собрание произведений дагестанских художников."
-        },
-        {
-            id: 8,
-            name: "Галерея «Ковчег»",
-            lat: 42.9792,
-            lng: 47.4987,
-            category: "Современное искусство",
-            address: "г. Махачкала, пр. Гамидова, 12",
-            image: "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&h=400&fit=crop",
-            color: "#c0806a",
-            symbol: "◈",
-            description: "Современная галерея, представляющая работы молодых дагестанских художников."
-        },
-        {
-            id: 9,
-            name: "Арт-пространство «Артдвор»",
-            lat: 42.9765,
-            lng: 47.5023,
-            category: "Креативный кластер",
-            address: "г. Махачкала, ул. Ярагского, 45",
-            image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop",
-            color: "#5bb8b0",
-            symbol: "◈",
-            description: "Креативное пространство для мастерских, выставок и культурных событий."
-        },
-        {
-            id: 10,
-            name: "Государственный ансамбль танца «Лезгинка»",
-            lat: 42.9812,
-            lng: 47.5040,
-            category: "Музыка / Танец",
-            address: "г. Махачкала, пр. Ленина, 1",
-            image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&h=400&fit=crop",
-            color: "#b8a8d4",
-            symbol: "♪",
-            description: "Легендарный ансамбль, прославляющий дагестанские танцы на мировой сцене."
-        },
-        {
-            id: 11,
-            name: "Дагестанская государственная филармония",
-            lat: 42.9830,
-            lng: 47.5075,
-            category: "Концертный зал",
-            address: "г. Махачкала, ул. Дахадаева, 3",
-            image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&h=400&fit=crop",
-            color: "#9a8ab8",
-            symbol: "♪",
-            description: "Главная концертная площадка республики."
-        },
-        {
-            id: 12,
-            name: "Фестиваль «Дербентская крепость»",
-            lat: 42.0590,
-            lng: 48.2885,
-            category: "Фестиваль",
-            address: "г. Дербент, цитадель Нарын-Кала",
-            image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=400&fit=crop",
-            color: "#d4a08a",
-            symbol: "✦",
-            description: "Ежегодный фестиваль культуры и искусств на территории древней крепости."
-        },
-        {
-            id: 13,
-            name: "Дизайн-студии Махачкалы",
-            lat: 42.9835,
-            lng: 47.4960,
-            category: "Дизайн / Медиа",
-            address: "г. Махачкала, пр. Расула Гамзатова",
-            image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop",
-            color: "#5bb8b0",
-            symbol: "◇",
-            description: "Кластер современных дизайн-студий и медиа-агентств."
-        },
-        {
-            id: 14,
-            name: "Каспийск — арт-проекты",
-            lat: 42.8817,
-            lng: 47.6392,
-            category: "Современное искусство",
-            address: "г. Каспийск, набережная",
-            image: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&h=400&fit=crop",
-            color: "#7dc6b0",
-            symbol: "◈",
-            description: "Уличные арт-инсталляции и современные арт-проекты на набережной."
-        },
-        {
-            id: 15,
-            name: "Хасавюрт — культурный центр",
-            lat: 43.2500,
-            lng: 46.5833,
-            category: "Городской досуг",
-            address: "г. Хасавюрт, ул. Грозненская",
-            image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&h=400&fit=crop",
-            color: "#8ab8a0",
-            symbol: "◇",
-            description: "Культурный центр с театром, выставочными залами и творческими мастерскими."
-        },
-        {
-            id: 16,
-            name: "Буйнакск — творческие объединения",
-            lat: 42.8167,
-            lng: 47.1167,
-            category: "Культура",
-            address: "г. Буйнакск, центр",
-            image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop",
-            color: "#6a9a80",
-            symbol: "◇",
-            description: "Объединения мастеров народных промыслов и современных художников."
-        },
-        {
-            id: 17,
-            name: "Кизляр — народные промыслы",
-            lat: 43.8467,
-            lng: 46.7125,
-            category: "Культурное наследие",
-            address: "г. Кизляр, центр",
-            image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop",
-            color: "#5aaa90",
-            symbol: "◈",
-            description: "Исторический центр традиционных ремёсел и культурного наследия."
-        },
-        {
-            id: 18,
-            name: "Дагестанское книжное издательство",
-            lat: 42.9801,
-            lng: 47.5002,
-            category: "Издательство / Литература",
-            address: "г. Махачкала, ул. Гамзатова",
-            image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop",
-            color: "#4a9e7a",
-            symbol: "◇",
-            description: "Главное издательство республики, издающее книги на языках народов Дагестана."
-        }
-    ];
-
-    // ═══════════════════════════════════════════════════════════════
-    // SVG MARKER GENERATOR
-    // ═══════════════════════════════════════════════════════════════
-
-    const MarkerFactory = {
-        /**
-         * Creates a teardrop-shaped SVG marker icon
-         * @param {string} color - Fill color (hex)
-         * @param {string} symbol - Inner symbol character
-         * @param {boolean} isHover - Whether to create hover (larger) version
-         * @returns {string} Base64-encoded SVG data URL
-         */
-        create(color, symbol, isHover = false) {
-            const w = isHover ? CONFIG.marker.hoverWidth : CONFIG.marker.width;
-            const h = isHover ? CONFIG.marker.hoverHeight : CONFIG.marker.height;
-            const shadowBlur = isHover ? 5 : 3;
-            const shadowOpacity = isHover ? 0.3 : 0.2;
-            const strokeWidth = isHover ? 2.5 : 2;
-            const symbolSize = isHover ? 16 : 14;
-
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
-                <defs>
-                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feDropShadow dx="0" dy="3" stdDeviation="${shadowBlur}" flood-color="rgba(0,0,0,${shadowOpacity})"/>
-                    </filter>
-                </defs>
-                <path d="M${w/2} 2 C${w/2} 2, ${w-2} ${h*0.48}, ${w-2} ${h*0.64} C${w-2} ${h*0.816}, ${w*0.775} ${h-4}, ${w/2} ${h-4} C${w*0.225} ${h-4}, 2 ${h*0.816}, 2 ${h*0.64} C2 ${h*0.48}, ${w/2} 2, ${w/2} 2 Z" 
+// ============================================================
+// 6. СОЗДАНИЕ КАПЛИ С ОСТРЫМ КОНЧИКОМ (SVG)
+// ============================================================
+function createDropIcon(color, symbol) {
+    return L.divIcon({
+        html: `
+            <svg width="36" height="50" viewBox="0 0 36 50" style="display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.15));">
+                <path d="M18 2 C18 2, 34 24, 34 32 C34 40.8, 26.8 46, 18 46 C9.2 46, 2 40.8, 2 32 C2 24, 18 2, 18 2 Z" 
                       fill="${color}" 
                       stroke="white" 
-                      stroke-width="${strokeWidth}"
-                      filter="url(#shadow)"/>
-                <ellipse cx="${w/2}" cy="${h*0.64}" rx="${w*0.33}" ry="${h*0.2}" fill="rgba(255,255,255,0.15)"/>
-                <circle cx="${w*0.33}" cy="${h*0.52}" r="${isHover ? 3 : 2.5}" fill="white" opacity="0.35"/>
-                <circle cx="${w*0.25}" cy="${h*0.44}" r="${isHover ? 1.5 : 1.2}" fill="white" opacity="0.2"/>
-                <text x="${w/2}" y="${h*0.68}" text-anchor="middle" fill="white" font-size="${symbolSize}" font-weight="600" font-family="serif">${symbol}</text>
-            </svg>`;
+                      stroke-width="2"/>
+                <ellipse cx="18" cy="32" rx="12" ry="10" fill="rgba(255,255,255,0.12)"/>
+                <circle cx="12" cy="26" r="2.5" fill="white" opacity="0.35"/>
+                <circle cx="9" cy="22" r="1.2" fill="white" opacity="0.2"/>
+                <text x="18" y="34" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="Georgia, serif">${symbol}</text>
+            </svg>
+        `,
+        iconSize: [36, 50],
+        popupAnchor: [0, -25],
+        className: 'drop-marker'
+    });
+}
 
-            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
-        },
+// ============================================================
+// 7. ХРАНИЛИЩЕ МАРКЕРОВ
+// ============================================================
+const markersMap = new Map();
 
-        /**
-         * Creates both normal and hover icons for an object
-         * @param {Object} obj - Object data
-         * @returns {Object} { normal: L.Icon, hover: L.Icon }
-         */
-        createPair(obj) {
-            const normalUrl = this.create(obj.color, obj.symbol, false);
-            const hoverUrl = this.create(obj.color, obj.symbol, true);
+// ============================================================
+// 8. СОЗДАНИЕ ПОПАПА
+// ============================================================
+function createPopupHtml(obj) {
+    const hasPhoto = obj.image && obj.image.length > 0;
+    const images = Array.isArray(obj.image) ? obj.image : [obj.image];
+    const isSingle = images.length === 1;
+    const gridClass = isSingle ? 'single' : '';
+    const validImages = images.filter(img => img && img.trim() !== '');
 
-            return {
-                normal: L.icon({
-                    iconUrl: normalUrl,
-                    iconSize: [CONFIG.marker.width, CONFIG.marker.height],
-                    iconAnchor: [CONFIG.marker.anchorX, CONFIG.marker.anchorY],
-                    popupAnchor: [0, -CONFIG.marker.anchorY]
-                }),
-                hover: L.icon({
-                    iconUrl: hoverUrl,
-                    iconSize: [CONFIG.marker.hoverWidth, CONFIG.marker.hoverHeight],
-                    iconAnchor: [CONFIG.marker.hoverAnchorX, CONFIG.marker.hoverAnchorY],
-                    popupAnchor: [0, -CONFIG.marker.hoverAnchorY]
-                })
-            };
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // POPUP BUILDER
-    // ═══════════════════════════════════════════════════════════════
-
-    const PopupBuilder = {
-        /**
-         * Generates popup HTML content
-         * @param {Object} obj - Object data
-         * @returns {string} HTML string
-         */
-        build(obj) {
-            return `
-                <img class="popup-img" 
-                     src="${obj.image}" 
-                     alt="${obj.name}" 
-                     loading="lazy"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.marginTop='0';">
-                <div class="popup-text">
-                    <h3>${obj.name}</h3>
-                    <div class="popup-address">
-                        <span class="pin-icon">&#128205;</span>
-                        <span>${obj.address}</span>
-                    </div>
-                    <span class="popup-badge" style="background: ${obj.color}18; color: ${obj.color};">
-                        ${obj.category}
-                    </span>
-                    ${obj.description ? `<p class="popup-desc">${obj.description}</p>` : ''}
-                </div>
-            `;
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // SIDEBAR MANAGER
-    // ═══════════════════════════════════════════════════════════════
-
-    const SidebarManager = {
-        elements: {},
-        activeCardId: null,
-
-        /**
-         * Initialize sidebar elements
-         */
-        init() {
-            this.elements.list = document.getElementById('objectsList');
-            this.elements.filter = document.getElementById('categoryFilter');
-            this.elements.headerCount = document.querySelector('.count-badge');
-        },
-
-        /**
-         * Render object cards with optional filter
-         * @param {string} filter - Category filter or 'all'
-         */
-        render(filter = 'all') {
-            const filtered = filter === 'all' 
-                ? OBJECTS_DATA 
-                : OBJECTS_DATA.filter(o => o.category === filter);
-
-            this.elements.list.innerHTML = '';
-
-            filtered.forEach((obj, index) => {
-                const card = this.createCard(obj, index);
-                this.elements.list.appendChild(card);
-            });
-
-            // Update count
-            if (this.elements.headerCount) {
-                this.elements.headerCount.textContent = `✦ ${filtered.length} объектов`;
-            }
-        },
-
-        /**
-         * Create a single card element
-         * @param {Object} obj - Object data
-         * @param {number} index - Card index for animation delay
-         * @returns {HTMLElement} Card element
-         */
-        createCard(obj, index) {
-            const card = document.createElement('div');
-            card.className = 'object-card';
-            card.dataset.id = obj.id;
-            card.style.animationDelay = `${index * CONFIG.animation.cardStagger}s`;
-
-            card.innerHTML = `
-                <div class="object-icon" style="background: ${obj.color}18; color: ${obj.color};">
-                    ${obj.symbol}
-                </div>
-                <div class="object-info">
-                    <div class="object-title">${obj.name}</div>
-                    <span class="object-category">${obj.category}</span>
-                </div>
-            `;
-
-            card.addEventListener('click', () => {
-                App.flyToObject(obj.id);
-            });
-
-            return card;
-        },
-
-        /**
-         * Highlight a card and scroll it into view
-         * @param {number} id - Object ID
-         */
-        highlight(id) {
-            // Remove active from all
-            document.querySelectorAll('.object-card').forEach(c => c.classList.remove('active'));
-
-            // Add active to target
-            const card = document.querySelector(`.object-card[data-id="${id}"]`);
-            if (card) {
-                card.classList.add('active');
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                this.activeCardId = id;
-            }
-        },
-
-        /**
-         * Initialize category filter chips
-         */
-        initFilters() {
-            const categories = [...new Set(OBJECTS_DATA.map(o => o.category))];
-
-            categories.forEach(cat => {
-                const chip = document.createElement('div');
-                chip.className = 'filter-chip';
-                chip.dataset.category = cat;
-                chip.textContent = cat;
-                chip.addEventListener('click', () => this.handleFilterClick(chip, cat));
-                this.elements.filter.appendChild(chip);
-            });
-
-            // "All" handler
-            this.elements.filter.querySelector('[data-category="all"]')
-                .addEventListener('click', () => this.handleFilterClick(
-                    this.elements.filter.querySelector('[data-category="all"]'), 
-                    'all'
-                ));
-        },
-
-        /**
-         * Handle filter chip click
-         * @param {HTMLElement} chip - Clicked chip
-         * @param {string} category - Category value
-         */
-        handleFilterClick(chip, category) {
-            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            this.render(category);
-            App.filterMarkers(category);
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // MAP MANAGER
-    // ═══════════════════════════════════════════════════════════════
-
-    const MapManager = {
-        map: null,
-        markers: new Map(),
-
-        /**
-         * Initialize Leaflet map
-         */
-        init() {
-            const { bounds, zoom } = CONFIG;
-
-            this.map = L.map('map', {
-                center: bounds.center,
-                zoom: zoom.initial,
-                minZoom: zoom.min,
-                maxZoom: zoom.max,
-                maxBounds: [bounds.southWest, bounds.northEast],
-                maxBoundsViscosity: 1.0,
-                zoomControl: false,
-                attributionControl: false
-            });
-
-            // Add controls
-            L.control.zoom({ position: 'topright' }).addTo(this.map);
-            L.control.scale({ 
-                position: 'bottomright', 
-                metric: true, 
-                imperial: false 
-            }).addTo(this.map);
-
-            // Add tile layer
-            L.tileLayer(CONFIG.tiles.url, {
-                attribution: CONFIG.tiles.attribution,
-                subdomains: CONFIG.tiles.subdomains,
-                maxZoom: 18,
-                minZoom: zoom.min
-            }).addTo(this.map);
-
-            // Enforce boundaries
-            this.enforceBoundaries();
-        },
-
-        /**
-         * Add hard boundary enforcement
-         */
-        enforceBoundaries() {
-            const { bounds } = CONFIG;
-
-            this.map.on('drag', () => {
-                this.map.panInsideBounds([bounds.southWest, bounds.northEast], { animate: true });
-            });
-
-            this.map.on('zoomend', () => {
-                if (this.map.getZoom() < CONFIG.zoom.min) {
-                    this.map.setZoom(CONFIG.zoom.min);
-                }
-            });
-        },
-
-        /**
-         * Create and add all markers
-         */
-        createMarkers() {
-            OBJECTS_DATA.forEach(obj => {
-                const icons = MarkerFactory.createPair(obj);
-
-                const marker = L.marker([obj.lat, obj.lng], { icon: icons.normal });
-
-                // Bind popup
-                const popup = L.popup({
-                    className: 'custom-popup',
-                    closeButton: true,
-                    autoPan: true,
-                    autoPanPadding: [20, 20]
-                }).setContent(PopupBuilder.build(obj));
-
-                marker.bindPopup(popup);
-
-                // Hover effects
-                marker.on('mouseover', () => marker.setIcon(icons.hover));
-                marker.on('mouseout', () => marker.setIcon(icons.normal));
-
-                // Click handler
-                marker.on('click', () => {
-                    SidebarManager.highlight(obj.id);
-                });
-
-                marker.addTo(this.map);
-                this.markers.set(obj.id, { marker, data: obj, icons });
-            });
-        },
-
-        /**
-         * Fly to object location and open popup
-         * @param {number} id - Object ID
-         */
-        flyTo(id) {
-            const entry = this.markers.get(id);
-            if (!entry) return;
-
-            const { marker, data } = entry;
-
-            this.map.flyTo([data.lat, data.lng], CONFIG.zoom.focus, {
-                duration: CONFIG.animation.flyToDuration,
-                easeLinearity: 0.4
-            });
-
-            setTimeout(() => {
-                marker.openPopup();
-            }, CONFIG.animation.flyToDelay * 1000);
-        },
-
-        /**
-         * Filter visible markers
-         * @param {string} category - Category filter or 'all'
-         */
-        filter(category) {
-            this.markers.forEach(({ marker, data }) => {
-                const visible = category === 'all' || data.category === category;
-                if (visible) {
-                    marker.addTo(this.map);
-                } else {
-                    marker.remove();
-                }
-            });
-        },
-
-        /**
-         * Get map instance
-         * @returns {L.Map}
-         */
-        getMap() {
-            return this.map;
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // MOBILE MANAGER
-    // ═══════════════════════════════════════════════════════════════
-
-    const MobileManager = {
-        isOpen: true,
-
-        /**
-         * Initialize mobile toggle button
-         */
-        init() {
-            const toggle = document.getElementById('mobileToggle');
-            const sidebar = document.getElementById('sidebar');
-
-            if (!toggle || !sidebar) return;
-
-            toggle.addEventListener('click', () => {
-                this.isOpen = !this.isOpen;
-                sidebar.style.transform = this.isOpen ? 'translateY(0)' : 'translateY(100%)';
-                toggle.textContent = this.isOpen ? '📋' : '🗺️';
-            });
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // LOADING SCREEN
-    // ═══════════════════════════════════════════════════════════════
-
-    const LoadingScreen = {
-        /**
-         * Hide loading screen with fade animation
-         */
-        hide() {
-            const screen = document.getElementById('loadingScreen');
-            if (screen) {
-                setTimeout(() => {
-                    screen.classList.add('hidden');
-                }, 800);
-            }
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // MAIN APPLICATION
-    // ═══════════════════════════════════════════════════════════════
-
-    const App = {
-        /**
-         * Initialize the entire application
-         */
-        init() {
-            SidebarManager.init();
-            MapManager.init();
-            MapManager.createMarkers();
-            SidebarManager.render();
-            SidebarManager.initFilters();
-            MobileManager.init();
-            LoadingScreen.hide();
-
-            console.log('🌿 Креативный Дагестан — карта загружена');
-        },
-
-        /**
-         * Fly to object (public API)
-         * @param {number} id - Object ID
-         */
-        flyToObject(id) {
-            SidebarManager.highlight(id);
-            MapManager.flyTo(id);
-        },
-
-        /**
-         * Filter markers (public API)
-         * @param {string} category - Category filter
-         */
-        filterMarkers(category) {
-            MapManager.filter(category);
-        },
-
-        /**
-         * Get all objects data (public API)
-         * @returns {Array}
-         */
-        getObjects() {
-            return OBJECTS_DATA;
-        },
-
-        /**
-         * Get map instance (public API)
-         * @returns {L.Map}
-         */
-        getMap() {
-            return MapManager.getMap();
-        }
-    };
-
-    // ═══════════════════════════════════════════════════════════════
-    // EXPORT
-    // ═══════════════════════════════════════════════════════════════
-
-    // Auto-init on DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => App.init());
-    } else {
-        App.init();
+    let galleryHtml = '';
+    if (validImages.length > 0) {
+        galleryHtml = `
+            <div class="popup-gallery ${gridClass}">
+                ${validImages.map(img => `
+                    <img class="popup-img" src="${img}" alt="${obj.name}" 
+                         onerror="this.style.display='none'" 
+                         onload="this.classList.add('loaded')">
+                `).join('')}
+            </div>
+        `;
     }
 
-    // Expose to global scope
-    global.CreativeDagestan = App;
+    return `
+        <div>
+            ${galleryHtml}
+            <div class="popup-text">
+                <h3>${obj.name}</h3>
+                <div class="popup-address">📍 ${obj.address}</div>
+                <span class="popup-badge">${obj.category}</span>
+                ${obj.description ? `<p class="popup-description">${obj.description}</p>` : ''}
+            </div>
+        </div>
+    `;
+}
 
-})(window);
+// ============================================================
+// 9. ДОБАВЛЕНИЕ МАРКЕРОВ НА КАРТУ
+// ============================================================
+objectsData.forEach(obj => {
+    const icon = createDropIcon(obj.color, obj.symbol);
+    const marker = L.marker([obj.lat, obj.lng], { icon }).addTo(map);
+
+    const popupHtml = createPopupHtml(obj);
+
+    marker.bindPopup(popupHtml, {
+        className: 'custom-popup',
+        maxWidth: 320,
+        minWidth: 260
+    });
+
+    markersMap.set(obj.id, { marker, data: obj });
+});
+
+// ============================================================
+// 10. ОБРАБОТЧИКИ ДЛЯ КАПЕЛЬ (анимация)
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем CSS-класс для анимации при наведении через стили
+    // Уже реализовано в CSS через .drop-marker:hover svg
+});
+
+// ============================================================
+// 11. ГЕНЕРАЦИЯ КАРТОЧЕК В СПИСКЕ
+// ============================================================
+const container = document.getElementById('objectsList');
+
+// Карта символов по категориям
+const categorySymbols = {
+    "Народный промысел": "✦",
+    "Ковроткачество": "◈",
+    "Культурное наследие": "◈",
+    "Музей / Галерея": "◈",
+    "Современное искусство": "◈",
+    "Креативный кластер": "◈",
+    "Музыка / Танец": "♪",
+    "Концертный зал": "♪",
+    "Фестиваль": "✦",
+    "Дизайн / Медиа": "◇",
+    "Городской досуг": "◇",
+    "Культура": "◇",
+    "Издательство / Литература": "◇"
+};
+
+objectsData.forEach((obj, index) => {
+    const card = document.createElement('div');
+    card.className = 'object-card';
+    card.dataset.category = obj.category;
+    card.dataset.id = obj.id;
+
+    const symbol = categorySymbols[obj.category] || "•";
+
+    card.innerHTML = `
+        <div class="object-icon" style="background: ${obj.color}22; border: 1px solid ${obj.color}44; color: ${obj.color}; font-family: Georgia, serif;">
+            ${symbol}
+        </div>
+        <div class="object-info">
+            <div class="object-title">${obj.shortName}</div>
+            <div class="object-category">${obj.category}</div>
+        </div>
+    `;
+
+    card.addEventListener('click', function() {
+        const { marker, data } = markersMap.get(obj.id);
+        map.flyTo([data.lat, data.lng], 12, {
+            duration: 1.2,
+            easeLinearity: 0.35
+        });
+        setTimeout(() => {
+            marker.openPopup();
+        }, 1300);
+    });
+
+    container.appendChild(card);
+});
+
+// ============================================================
+// 12. ФИЛЬТРАЦИЯ
+// ============================================================
+let currentFilter = 'Все';
+
+function filterObjects(category) {
+    currentFilter = category;
+    const cards = document.querySelectorAll('.object-card');
+    const buttons = document.querySelectorAll('.filter-btn');
+
+    buttons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === category);
+    });
+
+    cards.forEach(card => {
+        if (category === 'Все' || card.dataset.category === category) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+// Навешиваем обработчики на кнопки фильтра
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        filterObjects(this.dataset.category);
+    });
+});
+
+// ============================================================
+// 13. ПРОВЕРКА ФОТО ПРИ ЗАГРУЗКЕ (скрытие битых ссылок)
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Фото скрываются автоматически через onerror
+});
+
+// ============================================================
+// 14. АДАПТИВ: ПЕРЕСЧЁТ РАЗМЕРА КАРТЫ
+// ============================================================
+setTimeout(() => {
+    map.invalidateSize();
+}, 400);
+
+window.addEventListener('resize', function() {
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 300);
+});
+
+// ============================================================
+// 15. СКРЫТИЕ ЭКРАНА ЗАГРУЗКИ
+// ============================================================
+window.addEventListener('load', function() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hide');
+            // Полное удаление через 1 секунду после анимации
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 1000);
+        }, 500);
+    }
+});
+
+// ============================================================
+// 16. ЛОГ В КОНСОЛЬ
+// ============================================================
+console.log('🏔️ Креативная карта Дагестана загружена!');
+console.log(`📌 Всего объектов: ${objectsData.length}`);
+console.log('📍 Категории: Народные промыслы, Ковроткачество, Музеи, Музыка, Фестивали, Дизайн и другие');
+
+// ============================================================
+// 17. ДОПОЛНИТЕЛЬНО: КЛИК НА КАРТУ ДЛЯ ЗАКРЫТИЯ ПОПАПА
+// ============================================================
+map.on('click', function() {
+    map.closePopup();
+});
