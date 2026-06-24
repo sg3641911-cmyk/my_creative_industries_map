@@ -15,85 +15,166 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* ═══════════════════════════════════════════════════════════════
+           CSS CUSTOM PROPERTIES (Design Tokens)
+           ═══════════════════════════════════════════════════════════════ */
         :root {
-            --color-bg: #f5f9f7;
-            --color-white: #ffffff;
-            --color-mint-light: #e8f5f0;
-            --color-mint-medium: #d4ede4;
-            --color-mint-dark: #b8e0d2;
-            --color-mint-accent: #7dc6b0;
-            --color-green-dark: #1a3a2e;
-            --color-green-medium: #3a6b5a;
-            --color-green-light: #5a8a78;
-            --color-green-badge: #2a6e3a;
-            --color-border: rgba(184, 224, 210, 0.3);
-            --color-shadow: rgba(0, 0, 0, 0.04);
+            --cd-bg:                    #f5f9f7;
+            --cd-white:                 #ffffff;
+            --cd-mint-light:            #e8f5f0;
+            --cd-mint-medium:           #d4ede4;
+            --cd-mint-dark:             #b8e0d2;
+            --cd-mint-accent:           #7dc6b0;
+            --cd-green-dark:            #1a3a2e;
+            --cd-green-medium:          #3a6b5a;
+            --cd-green-light:           #5a8a78;
+            --cd-green-badge:           #2a6e3a;
+            --cd-border:                rgba(184, 224, 210, 0.3);
+            --cd-shadow-sm:             rgba(0, 0, 0, 0.02);
+            --cd-shadow-md:             rgba(0, 0, 0, 0.04);
+            --cd-shadow-lg:             rgba(0, 0, 0, 0.06);
+            --cd-shadow-xl:             rgba(0, 0, 0, 0.08);
+
+            --cd-font-family:           'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --cd-font-size-xs:          0.65rem;
+            --cd-font-size-sm:          0.72rem;
+            --cd-font-size-md:          0.75rem;
+            --cd-font-size-base:        0.85rem;
+            --cd-font-size-lg:          0.92rem;
+            --cd-font-size-xl:          1.05rem;
+            --cd-font-size-2xl:         1.15rem;
+            --cd-font-size-3xl:         1.3rem;
+            --cd-font-size-4xl:         1.8rem;
+            --cd-font-weight-normal:    400;
+            --cd-font-weight-medium:    500;
+            --cd-font-weight-semibold:  600;
+            --cd-font-weight-bold:      700;
+            --cd-line-height-tight:    1.2;
+            --cd-line-height-normal:   1.3;
+            --cd-line-height-relaxed:  1.4;
+            --cd-line-height-loose:    1.5;
+            --cd-letter-spacing-tight:  -0.5px;
+            --cd-letter-spacing-normal: -0.2px;
+            --cd-letter-spacing-wide:   0.2px;
+            --cd-letter-spacing-wider:  0.3px;
+            --cd-letter-spacing-widest: 0.5px;
+
+            --cd-space-1:               4px;
+            --cd-space-2:               6px;
+            --cd-space-3:               8px;
+            --cd-space-4:               10px;
+            --cd-space-5:               12px;
+            --cd-space-6:               14px;
+            --cd-space-7:               16px;
+            --cd-space-8:               18px;
+            --cd-space-9:               20px;
+            --cd-space-10:              24px;
+
+            --cd-radius-sm:             10px;
+            --cd-radius-md:             14px;
+            --cd-radius-lg:             18px;
+            --cd-radius-xl:             20px;
+            --cd-radius-2xl:            22px;
+            --cd-radius-3xl:            24px;
+            --cd-radius-full:           9999px;
+
+            --cd-transition-fast:       0.15s ease;
+            --cd-transition-normal:     0.2s ease;
+            --cd-transition-slow:       0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --cd-transition-slower:     0.3s ease;
+
+            --cd-z-base:                1;
+            --cd-z-dropdown:            10;
+            --cd-z-sticky:              100;
+            --cd-z-sidebar:             1000;
+            --cd-z-modal:               1001;
+            --cd-z-loading:             9999;
+
+            --cd-sidebar-width:         480px;
+            --cd-sidebar-min-width:     420px;
+            --cd-sidebar-tablet:        340px;
+            --cd-sidebar-mobile:        100%;
         }
 
-        * {
+        /* ═══════════════════════════════════════════════════════════════
+           RESET & BASE
+           ═══════════════════════════════════════════════════════════════ */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--color-bg);
-            color: var(--color-green-dark);
+            font-family: var(--cd-font-family);
+            background: var(--cd-bg);
+            color: var(--cd-green-dark);
             overflow: hidden;
             height: 100vh;
             width: 100vw;
+            line-height: var(--cd-line-height-normal);
         }
 
-        /* ===== LAYOUT ===== */
-        .app-container {
+        /* ═══════════════════════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-app {
             display: flex;
             height: 100vh;
             width: 100vw;
         }
 
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            width: 380px;
-            min-width: 320px;
-            background: var(--color-white);
+        /* ═══════════════════════════════════════════════════════════════
+           SIDEBAR
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-sidebar {
+            width: var(--cd-sidebar-width);
+            min-width: var(--cd-sidebar-min-width);
+            background: var(--cd-white);
             display: flex;
             flex-direction: column;
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.06);
-            z-index: 1000;
+            box-shadow: 4px 0 24px var(--cd-shadow-lg);
+            z-index: var(--cd-z-sidebar);
             position: relative;
         }
 
-        .sidebar-header {
-            background: linear-gradient(135deg, #e8f5f0 0%, #d4ede4 100%);
-            padding: 2rem 1.8rem 1.6rem;
-            border-bottom: 1px solid rgba(184, 224, 210, 0.3);
+        .cd-sidebar__header {
+            background: linear-gradient(135deg, var(--cd-mint-light) 0%, var(--cd-mint-medium) 100%);
+            padding: 1.4rem 1.2rem 1.2rem;
+            border-bottom: 1px solid var(--cd-border);
             position: sticky;
             top: 0;
-            z-index: 5;
+            z-index: var(--cd-z-sticky);
             flex-shrink: 0;
         }
 
-        .sidebar-header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #1a3a2e;
-            letter-spacing: -0.5px;
+        .cd-sidebar__title {
+            font-size: var(--cd-font-size-4xl);
+            font-weight: var(--cd-font-weight-semibold);
+            color: var(--cd-green-dark);
+            letter-spacing: var(--cd-letter-spacing-tight);
             display: flex;
             align-items: center;
-            gap: 10px;
-            line-height: 1.2;
+            gap: 8px;
+            line-height: var(--cd-line-height-tight);
         }
 
-        .sidebar-header .leaf-icon {
-            font-size: 1.6rem;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+        .cd-sidebar__title-icon {
+            font-size: 1.4rem;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+            flex-shrink: 0;
         }
 
-        .sidebar-header .sub {
-            font-size: 0.85rem;
-            color: #3a6b5a;
-            margin-top: 10px;
+        .cd-sidebar__subtitle {
+            font-size: var(--cd-font-size-base);
+            color: var(--cd-green-medium);
+            margin-top: var(--cd-space-3);
             opacity: 0.85;
             display: flex;
             align-items: center;
@@ -101,270 +182,351 @@
             flex-wrap: wrap;
         }
 
-        .sidebar-header .sub .count-badge {
+        .cd-sidebar__count {
             background: rgba(42, 110, 58, 0.1);
             padding: 3px 12px;
-            border-radius: 30px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: #2a6e3a;
-            letter-spacing: 0.3px;
+            border-radius: var(--cd-radius-full);
+            font-size: var(--cd-font-size-sm);
+            font-weight: var(--cd-font-weight-semibold);
+            color: var(--cd-green-badge);
+            letter-spacing: var(--cd-letter-spacing-wider);
+            flex-shrink: 0;
         }
 
-        .sidebar-header .sub .hint {
-            font-size: 0.78rem;
+        .cd-sidebar__hint {
+            font-size: var(--cd-font-size-md);
             opacity: 0.7;
         }
 
-        .objects-list {
+        /* ═══════════════════════════════════════════════════════════════
+           CATEGORY FILTER
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-filter {
+            display: flex;
+            gap: var(--cd-space-2);
+            padding: 0 1rem 0.6rem;
+            overflow-x: auto;
+            flex-shrink: 0;
+            scrollbar-width: none;
+        }
+
+        .cd-filter::-webkit-scrollbar { display: none; }
+
+        .cd-filter__chip {
+            padding: 5px 14px;
+            border-radius: var(--cd-radius-full);
+            font-size: var(--cd-font-size-sm);
+            font-weight: var(--cd-font-weight-medium);
+            cursor: pointer;
+            border: 1px solid #e0ece6;
+            background: var(--cd-white);
+            color: var(--cd-green-light);
+            transition: all var(--cd-transition-normal);
+            white-space: nowrap;
+            letter-spacing: var(--cd-letter-spacing-wide);
+            user-select: none;
+        }
+
+        .cd-filter__chip:hover {
+            background: #f3fbf8;
+            border-color: var(--cd-mint-dark);
+        }
+
+        .cd-filter__chip--active,
+        .cd-filter__chip.cd-filter__chip--active {
+            background: var(--cd-green-dark);
+            color: var(--cd-white);
+            border-color: var(--cd-green-dark);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           OBJECTS LIST
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-objects {
             flex: 1;
             overflow-y: auto;
-            padding: 1.2rem 1.2rem 1.5rem;
+            padding: 0.8rem 1rem 1rem;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
-        /* Custom scrollbar */
-        .objects-list::-webkit-scrollbar {
-            width: 5px;
-        }
-        .objects-list::-webkit-scrollbar-track {
-            background: #f0f5f2;
-        }
-        .objects-list::-webkit-scrollbar-thumb {
-            background: #b8e0d2;
-            border-radius: 10px;
-        }
+        .cd-objects::-webkit-scrollbar { width: 5px; }
+        .cd-objects::-webkit-scrollbar-track { background: #f0f5f2; }
+        .cd-objects::-webkit-scrollbar-thumb { background: var(--cd-mint-dark); border-radius: var(--cd-radius-sm); }
 
-        /* ===== OBJECT CARD ===== */
-        .object-card {
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 14px 18px;
+        /* ═══════════════════════════════════════════════════════════════
+           OBJECT CARD
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-card {
+            background: var(--cd-white);
+            border-radius: var(--cd-radius-lg);
+            padding: 10px 14px;
             cursor: pointer;
             border: 1px solid #eaf3ef;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 1px 4px var(--cd-shadow-sm);
             display: flex;
-            align-items: center;
-            gap: 14px;
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            align-items: flex-start;
+            gap: 10px;
+            transition: all var(--cd-transition-slow);
             position: relative;
             overflow: hidden;
         }
 
-        .object-card::before {
+        .cd-card::before {
             content: '';
             position: absolute;
             left: 0;
             top: 0;
             bottom: 0;
             width: 0;
-            background: var(--color-mint-accent);
-            transition: width 0.25s ease;
-            border-radius: 18px 0 0 18px;
+            background: var(--cd-mint-accent);
+            transition: width var(--cd-transition-normal);
+            border-radius: var(--cd-radius-lg) 0 0 var(--cd-radius-lg);
         }
 
-        .object-card:hover {
+        .cd-card:hover {
             background: #f3fbf8;
             transform: translateX(4px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-            border-color: #d4ede4;
+            box-shadow: 0 6px 20px var(--cd-shadow-lg);
+            border-color: var(--cd-mint-medium);
         }
 
-        .object-card:hover::before {
-            width: 4px;
-        }
+        .cd-card:hover::before { width: 4px; }
 
-        .object-card.active {
+        .cd-card--active,
+        .cd-card.cd-card--active {
             background: #f3fbf8;
-            border-color: var(--color-mint-accent);
+            border-color: var(--cd-mint-accent);
             box-shadow: 0 4px 16px rgba(125, 198, 176, 0.15);
         }
 
-        .object-card.active::before {
-            width: 4px;
-        }
+        .cd-card--active::before,
+        .cd-card.cd-card--active::before { width: 4px; }
 
-        .object-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
+        .cd-card__icon {
+            width: 34px;
+            height: 34px;
+            border-radius: var(--cd-radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 16px;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: transform var(--cd-transition-normal);
+            margin-top: 2px;
         }
 
-        .object-card:hover .object-icon {
-            transform: scale(1.08);
-        }
+        .cd-card:hover .cd-card__icon { transform: scale(1.05); }
 
-        .object-info {
+        .cd-card__content {
             flex: 1;
             min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--cd-space-2);
         }
 
-        .object-title {
-            font-weight: 600;
-            font-size: 0.92rem;
-            color: #1a3a2e;
-            line-height: 1.3;
-            letter-spacing: -0.2px;
+        .cd-card__title {
+            font-weight: var(--cd-font-weight-semibold);
+            font-size: var(--cd-font-size-md);
+            color: var(--cd-green-dark);
+            line-height: 1.25;
+            letter-spacing: var(--cd-letter-spacing-normal);
+            word-break: normal;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
         }
 
-        .object-category {
-            font-size: 0.68rem;
-            color: #5a8a78;
-            background: #eaf5f0;
-            padding: 3px 12px;
-            border-radius: 30px;
+        .cd-card__category {
+            font-size: 0.6rem;
+            color: var(--cd-green-light);
+            background: var(--cd-mint-light);
+            padding: 1px 8px;
+            border-radius: var(--cd-radius-full);
             display: inline-block;
-            margin-top: 5px;
-            font-weight: 500;
-            letter-spacing: 0.2px;
+            font-weight: var(--cd-font-weight-medium);
+            letter-spacing: var(--cd-letter-spacing-wide);
+            align-self: flex-start;
         }
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ═══════════════════════════════════════════════════════════════
+           CARD APPEARANCE ANIMATION
+           ═══════════════════════════════════════════════════════════════ */
+        @keyframes cd-fade-up {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .object-card {
-            animation: fadeUp 0.4s ease forwards;
+        .cd-card {
+            animation: cd-fade-up 0.4s ease forwards;
             opacity: 0;
         }
 
-        .object-card:nth-child(1) { animation-delay: 0.02s; }
-        .object-card:nth-child(2) { animation-delay: 0.05s; }
-        .object-card:nth-child(3) { animation-delay: 0.08s; }
-        .object-card:nth-child(4) { animation-delay: 0.11s; }
-        .object-card:nth-child(5) { animation-delay: 0.14s; }
-        .object-card:nth-child(6) { animation-delay: 0.17s; }
-        .object-card:nth-child(7) { animation-delay: 0.20s; }
-        .object-card:nth-child(8) { animation-delay: 0.23s; }
-        .object-card:nth-child(9) { animation-delay: 0.26s; }
-        .object-card:nth-child(10) { animation-delay: 0.29s; }
-        .object-card:nth-child(11) { animation-delay: 0.32s; }
-        .object-card:nth-child(12) { animation-delay: 0.35s; }
-        .object-card:nth-child(13) { animation-delay: 0.38s; }
-        .object-card:nth-child(14) { animation-delay: 0.41s; }
-        .object-card:nth-child(15) { animation-delay: 0.44s; }
-        .object-card:nth-child(16) { animation-delay: 0.47s; }
-        .object-card:nth-child(17) { animation-delay: 0.50s; }
-        .object-card:nth-child(18) { animation-delay: 0.53s; }
+        .cd-card:nth-child(1)  { animation-delay: 0.02s; }
+        .cd-card:nth-child(2)  { animation-delay: 0.05s; }
+        .cd-card:nth-child(3)  { animation-delay: 0.08s; }
+        .cd-card:nth-child(4)  { animation-delay: 0.11s; }
+        .cd-card:nth-child(5)  { animation-delay: 0.14s; }
+        .cd-card:nth-child(6)  { animation-delay: 0.17s; }
+        .cd-card:nth-child(7)  { animation-delay: 0.20s; }
+        .cd-card:nth-child(8)  { animation-delay: 0.23s; }
+        .cd-card:nth-child(9)  { animation-delay: 0.26s; }
+        .cd-card:nth-child(10) { animation-delay: 0.29s; }
+        .cd-card:nth-child(11) { animation-delay: 0.32s; }
+        .cd-card:nth-child(12) { animation-delay: 0.35s; }
+        .cd-card:nth-child(13) { animation-delay: 0.38s; }
+        .cd-card:nth-child(14) { animation-delay: 0.41s; }
+        .cd-card:nth-child(15) { animation-delay: 0.44s; }
+        .cd-card:nth-child(16) { animation-delay: 0.47s; }
+        .cd-card:nth-child(17) { animation-delay: 0.50s; }
+        .cd-card:nth-child(18) { animation-delay: 0.53s; }
 
-        /* ===== MAP CONTAINER ===== */
-        .map-wrapper {
+        /* ═══════════════════════════════════════════════════════════════
+           MAP
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-map-wrapper {
             flex: 1;
             position: relative;
             overflow: hidden;
         }
 
-        #map {
+        .cd-map {
             width: 100%;
             height: 100%;
         }
 
-        /* ===== CUSTOM POPUP ===== */
-        .custom-popup .leaflet-popup-content-wrapper {
-            border-radius: 22px;
+        /* ═══════════════════════════════════════════════════════════════
+           CUSTOM POPUP
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-popup .leaflet-popup-content-wrapper {
+            border-radius: var(--cd-radius-2xl);
             padding: 0;
             overflow: hidden;
             box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.18);
-            background: white;
-            border: 1px solid rgba(184, 224, 210, 0.3);
+            background: var(--cd-white);
+            border: 1px solid var(--cd-border);
         }
 
-        .custom-popup .leaflet-popup-content {
+        .cd-popup .leaflet-popup-content {
             margin: 0;
-            width: 300px !important;
+            width: 320px !important;
         }
 
-        .custom-popup .leaflet-popup-tip {
-            background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .cd-popup .leaflet-popup-tip {
+            background: var(--cd-white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .popup-img {
+        .cd-popup__image {
             width: 100%;
-            height: 170px;
+            height: 180px;
             object-fit: cover;
+            object-position: center;
             display: block;
-            background: linear-gradient(135deg, #eaf5f0 0%, #e0f0ea 100%);
+            background: linear-gradient(135deg, var(--cd-mint-light) 0%, #e0f0ea 100%);
         }
 
-        .popup-text {
-            padding: 16px 20px 20px;
+        .cd-popup__gallery {
+            display: flex;
+            width: 100%;
+            height: 180px;
+            gap: 2px;
+            background: linear-gradient(135deg, var(--cd-mint-light) 0%, #e0f0ea 100%);
         }
 
-        .popup-text h3 {
-            font-size: 1.05rem;
-            font-weight: 700;
+        .cd-popup__gallery-img {
+            flex: 1;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            min-width: 0;
+        }
+
+        .cd-popup__gallery-img:first-child {
+            border-radius: var(--cd-radius-2xl) 0 0 0;
+        }
+
+        .cd-popup__gallery-img:last-child {
+            border-radius: 0 var(--cd-radius-2xl) 0 0;
+        }
+
+        .cd-popup__content {
+            padding: var(--cd-space-7) var(--cd-space-9) var(--cd-space-9);
+        }
+
+        .cd-popup__title {
+            font-size: var(--cd-font-size-lg);
+            font-weight: var(--cd-font-weight-bold);
             color: #1a4d2a;
-            margin-bottom: 6px;
-            line-height: 1.3;
-            letter-spacing: -0.2px;
+            margin-bottom: var(--cd-space-2);
+            line-height: var(--cd-line-height-normal);
+            letter-spacing: var(--cd-letter-spacing-normal);
+            word-break: normal;
+            overflow-wrap: break-word;
         }
 
-        .popup-address {
-            font-size: 0.78rem;
+        .cd-popup__address {
+            font-size: var(--cd-font-size-md);
             color: #4a7a68;
             display: flex;
-            align-items: center;
-            gap: 6px;
-            line-height: 1.4;
+            align-items: flex-start;
+            gap: var(--cd-space-2);
+            line-height: var(--cd-line-height-relaxed);
         }
 
-        .popup-address .pin-icon {
+        .cd-popup__pin {
             font-size: 0.9rem;
             flex-shrink: 0;
+            margin-top: 1px;
         }
 
-        .popup-badge {
-            background: #eaf5f0;
+        .cd-popup__badge {
+            background: var(--cd-mint-light);
             padding: 4px 14px;
-            border-radius: 30px;
-            font-size: 0.68rem;
-            font-weight: 600;
+            border-radius: var(--cd-radius-full);
+            font-size: 0.6rem;
+            font-weight: var(--cd-font-weight-semibold);
             color: #2a7a5a;
             display: inline-block;
-            margin-top: 10px;
-            letter-spacing: 0.3px;
+            margin-top: var(--cd-space-4);
+            letter-spacing: var(--cd-letter-spacing-wider);
         }
 
-        /* ===== LEAFLET CONTROLS CUSTOMIZATION ===== */
+        .cd-popup__desc {
+            font-size: var(--cd-font-size-md);
+            color: var(--cd-green-light);
+            margin-top: var(--cd-space-4);
+            line-height: var(--cd-line-height-loose);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LEAFLET CONTROLS
+           ═══════════════════════════════════════════════════════════════ */
         .leaflet-control-zoom {
             border: none !important;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 2px 12px var(--cd-shadow-xl) !important;
         }
 
         .leaflet-control-zoom a {
-            background: white !important;
+            background: var(--cd-white) !important;
             color: #3a8a72 !important;
-            border-radius: 14px !important;
-            margin: 6px !important;
+            border-radius: var(--cd-radius-md) !important;
+            margin: var(--cd-space-2) !important;
             width: 36px !important;
             height: 36px !important;
             line-height: 36px !important;
-            font-weight: 600 !important;
-            border: 1px solid rgba(184, 224, 210, 0.4) !important;
+            font-weight: var(--cd-font-weight-semibold) !important;
+            border: 1px solid var(--cd-border) !important;
             font-size: 18px !important;
-            transition: all 0.2s ease;
+            transition: all var(--cd-transition-normal);
         }
 
         .leaflet-control-zoom a:hover {
-            background: #e8f5f0 !important;
+            background: var(--cd-mint-light) !important;
             color: #1a5a42 !important;
             transform: scale(1.05);
         }
@@ -373,579 +535,865 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            border-radius: 20px;
+            border-radius: var(--cd-radius-full);
             padding: 3px 14px;
             font-size: 10px;
-            font-weight: 500;
-            color: #3a6b5a;
+            font-weight: var(--cd-font-weight-medium);
+            color: var(--cd-green-medium);
             border: 1px solid rgba(184, 224, 210, 0.25);
-            font-family: 'Inter', sans-serif;
+            font-family: var(--cd-font-family);
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ═══════════════════════════════════════════════════════════════
+           LOADING SCREEN
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--cd-bg) 0%, var(--cd-mint-light) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: var(--cd-z-loading);
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .cd-loading--hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .cd-loading__icon {
+            font-size: 3rem;
+            margin-bottom: var(--cd-space-7);
+            animation: cd-pulse 1.5s ease-in-out infinite;
+        }
+
+        .cd-loading__title {
+            font-size: 1.1rem;
+            font-weight: var(--cd-font-weight-medium);
+            color: var(--cd-green-medium);
+            letter-spacing: var(--cd-letter-spacing-widest);
+        }
+
+        .cd-loading__subtitle {
+            font-size: var(--cd-font-size-base);
+            color: #7a9a8a;
+            margin-top: var(--cd-space-2);
+        }
+
+        @keyframes cd-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MOBILE TOGGLE
+           ═══════════════════════════════════════════════════════════════ */
+        .cd-mobile-toggle {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: var(--cd-z-modal);
+            background: var(--cd-white);
+            border: 1px solid var(--cd-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--cd-green-medium);
+            transition: all var(--cd-transition-normal);
+        }
+
+        .cd-mobile-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE — Tablets
+           ═══════════════════════════════════════════════════════════════ */
         @media (max-width: 768px) {
-            .sidebar {
-                width: 300px;
-                min-width: 260px;
+            .cd-sidebar {
+                width: var(--cd-sidebar-tablet);
+                min-width: 320px;
             }
-            .sidebar-header h1 {
-                font-size: 1.3rem;
-            }
-            .sidebar-header {
-                padding: 1.4rem 1.2rem 1.2rem;
-            }
-            .object-title {
-                font-size: 0.85rem;
-            }
-            .object-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-            }
-            .custom-popup .leaflet-popup-content {
-                width: 260px !important;
-            }
-            .popup-text h3 {
-                font-size: 0.95rem;
-            }
-            .popup-img {
-                height: 150px;
-            }
+
+            .cd-sidebar__title { font-size: var(--cd-font-size-3xl); }
+            .cd-sidebar__header { padding: 1.4rem 1.2rem 1.2rem; }
+            .cd-card__title { font-size: var(--cd-font-size-base); }
+            .cd-card__icon { width: 38px; height: 38px; font-size: 17px; }
+            .cd-popup .leaflet-popup-content { width: 280px !important; }
+            .cd-popup__title { font-size: var(--cd-font-size-base); }
+            .cd-popup__image { height: 160px; }
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE — Phones
+           ═══════════════════════════════════════════════════════════════ */
         @media (max-width: 500px) {
-            .sidebar {
-                width: 100%;
+            .cd-sidebar {
+                width: var(--cd-sidebar-mobile);
                 min-width: unset;
                 position: absolute;
                 bottom: 0;
                 left: 0;
                 right: 0;
                 height: 45vh;
-                border-radius: 24px 24px 0 0;
-                box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+                border-radius: var(--cd-radius-3xl) var(--cd-radius-3xl) 0 0;
+                box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
+                transition: transform var(--cd-transition-slower);
             }
-            .app-container {
-                flex-direction: column;
-            }
-            .map-wrapper {
-                height: 55vh;
-            }
-            .sidebar-header {
-                padding: 1.2rem 1rem;
-            }
-            .sidebar-header h1 {
-                font-size: 1.15rem;
-            }
-            .objects-list {
-                padding: 0.8rem 1rem;
-            }
-            .object-card {
-                padding: 10px 14px;
-                gap: 12px;
-            }
-            .object-title {
-                font-size: 0.82rem;
-            }
-            .object-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-        }
 
-        /* ===== LOADING SCREEN ===== */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #f5f9f7 0%, #e8f5f0 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loading-leaf {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        .loading-text {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #3a6b5a;
-            letter-spacing: 0.5px;
-        }
-
-        .loading-sub {
-            font-size: 0.8rem;
-            color: #7a9a8a;
-            margin-top: 6px;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-        }
-
-        /* ===== CATEGORY FILTER ===== */
-        .category-filter {
-            display: flex;
-            gap: 6px;
-            padding: 0 1.2rem 0.8rem;
-            overflow-x: auto;
-            flex-shrink: 0;
-            scrollbar-width: none;
-        }
-
-        .category-filter::-webkit-scrollbar {
-            display: none;
-        }
-
-        .filter-chip {
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: 1px solid #e0ece6;
-            background: white;
-            color: #5a8a78;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            letter-spacing: 0.2px;
-        }
-
-        .filter-chip:hover {
-            background: #f3fbf8;
-            border-color: #b8e0d2;
-        }
-
-        .filter-chip.active {
-            background: #1a3a2e;
-            color: white;
-            border-color: #1a3a2e;
-        }
-
-        /* ===== MOBILE TOGGLE ===== */
-        .mobile-toggle {
-            display: none;
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1001;
-            background: white;
-            border: 1px solid rgba(184, 224, 210, 0.4);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #3a6b5a;
-        }
-
-        @media (max-width: 500px) {
-            .mobile-toggle {
-                display: flex;
-            }
+            .cd-app { flex-direction: column; }
+            .cd-map-wrapper { height: 55vh; }
+            .cd-sidebar__header { padding: 1.2rem 1rem; }
+            .cd-sidebar__title { font-size: var(--cd-font-size-2xl); }
+            .cd-objects { padding: 0.8rem 1rem; }
+            .cd-card { padding: var(--cd-space-4) var(--cd-space-5); gap: 8px; }
+            .cd-card__title { font-size: var(--cd-font-size-md); }
+            .cd-card__icon { width: 34px; height: 34px; font-size: 15px; }
+            .cd-mobile-toggle { display: flex; }
         }
     </style>
 <base target="_blank">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-leaf">🌿</div>
-        <div class="loading-text">Креативный Дагестан</div>
-        <div class="loading-sub">Загрузка карты...</div>
+    <!-- ═══════════════════════════════════════════════════════════════
+         LOADING SCREEN
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="cd-loading" id="loadingScreen">
+        <div class="cd-loading__icon">&#127807;</div>
+        <div class="cd-loading__title">Креативный Дагестан</div>
+        <div class="cd-loading__subtitle">Загрузка карты...</div>
     </div>
 
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h1>
-                    <span class="leaf-icon">🌿</span>
+    <!-- ═══════════════════════════════════════════════════════════════
+         MAIN APP CONTAINER
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="cd-app">
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             SIDEBAR — Object List Panel
+             ═══════════════════════════════════════════════════════════════ -->
+        <aside class="cd-sidebar" id="sidebar">
+
+            <!-- Sidebar Header -->
+            <div class="cd-sidebar__header">
+                <h1 class="cd-sidebar__title">
+                    <span class="cd-sidebar__title-icon">&#127807;</span>
                     Креативный<br>Дагестан
                 </h1>
-                <div class="sub">
-                    <span class="count-badge">✦ 18 объектов</span>
-                    <span class="hint">нажми на название — карта покажет место</span>
+                <div class="cd-sidebar__subtitle">
+                    <span class="cd-sidebar__count">&#10022; 18 объектов</span>
+                    <span class="cd-sidebar__hint">нажми на название — карта покажет место</span>
                 </div>
             </div>
 
-            <div class="category-filter" id="categoryFilter">
-                <div class="filter-chip active" data-category="all">Все</div>
+            <!-- Category Filter Chips -->
+            <div class="cd-filter" id="categoryFilter">
+                <div class="cd-filter__chip cd-filter__chip--active" data-category="all">Все</div>
             </div>
 
-            <div class="objects-list" id="objectsList"></div>
+            <!-- Objects List (populated by JS) -->
+            <div class="cd-objects" id="objectsList"></div>
         </aside>
 
-        <!-- Map -->
-        <div class="map-wrapper">
-            <div id="map"></div>
+        <!-- ═══════════════════════════════════════════════════════════════
+             MAP CONTAINER
+             ═══════════════════════════════════════════════════════════════ -->
+        <div class="cd-map-wrapper">
+            <div class="cd-map" id="map"></div>
         </div>
 
-        <!-- Mobile Toggle -->
-        <button class="mobile-toggle" id="mobileToggle">📋</button>
+        <!-- ═══════════════════════════════════════════════════════════════
+             MOBILE TOGGLE BUTTON
+             ═══════════════════════════════════════════════════════════════ -->
+        <button class="cd-mobile-toggle" id="mobileToggle">&#128203;</button>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         EXTERNAL SCRIPTS
+         ═══════════════════════════════════════════════════════════════ -->
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         APPLICATION JAVASCRIPT
+         ═══════════════════════════════════════════════════════════════ -->
     <script>
-    (function() {
+    (function(global) {
         'use strict';
 
-        // ===== DATA =====
-        const objectsData = [
-            { id: 1, name: "Кубачи — ювелирное искусство", lat: 42.0925, lng: 47.6000, category: "Народный промысел", address: "с. Кубачи, Дахадаевский район", image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&h=400&fit=crop", color: "#4a9e7a", symbol: "✦" },
-            { id: 2, name: "Унцукуль — насечка по дереву", lat: 42.7122, lng: 46.7897, category: "Народный промысел", address: "с. Унцукуль, Унцукульский район", image: "https://images.unsplash.com/photo-1543512601-f0c9b5e1c4e2?w=600&h=400&fit=crop", color: "#5aaa90", symbol: "✦" },
-            { id: 3, name: "Балхарская керамика", lat: 42.3100, lng: 47.1689, category: "Народный промысел", address: "с. Балхар, Акушинский район", image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&h=400&fit=crop", color: "#7dc6b0", symbol: "✦" },
-            { id: 4, name: "Гоцатль — художественный металл", lat: 42.5333, lng: 46.8667, category: "Народный промысел", address: "с. Гоцатль, Хунзахский район", image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=400&fit=crop", color: "#6a9a80", symbol: "✦" },
-            { id: 5, name: "Табасаранские ковры", lat: 41.9833, lng: 48.0000, category: "Ковроткачество", address: "Табасаранский район", image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop", color: "#8ab8a0", symbol: "◈" },
-            { id: 6, name: "Дербент — крепость и ремесла", lat: 42.0575, lng: 48.2873, category: "Культурное наследие", address: "г. Дербент, цитадель Нарын-Кала", image: "https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=600&h=400&fit=crop", color: "#9ab87a", symbol: "◈" },
-            { id: 7, name: "Дагестанский музей изобразительных искусств", lat: 42.9849, lng: 47.5049, category: "Музей / Галерея", address: "г. Махачкала, ул. М. Гамзатова, 21", image: "https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=600&h=400&fit=crop", color: "#d4a08a", symbol: "◈" },
-            { id: 8, name: "Галерея «Ковчег»", lat: 42.9792, lng: 47.4987, category: "Современное искусство", address: "г. Махачкала, пр. Гамидова, 12", image: "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&h=400&fit=crop", color: "#c0806a", symbol: "◈" },
-            { id: 9, name: "Арт-пространство «Артдвор»", lat: 42.9765, lng: 47.5023, category: "Креативный кластер", address: "г. Махачкала, ул. Ярагского, 45", image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop", color: "#5bb8b0", symbol: "◈" },
-            { id: 10, name: "Государственный ансамбль танца «Лезгинка»", lat: 42.9812, lng: 47.5040, category: "Музыка / Танец", address: "г. Махачкала, пр. Ленина, 1", image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&h=400&fit=crop", color: "#b8a8d4", symbol: "♪" },
-            { id: 11, name: "Дагестанская государственная филармония", lat: 42.9830, lng: 47.5075, category: "Концертный зал", address: "г. Махачкала, ул. Дахадаева, 3", image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&h=400&fit=crop", color: "#9a8ab8", symbol: "♪" },
-            { id: 12, name: "Фестиваль «Дербентская крепость»", lat: 42.0590, lng: 48.2885, category: "Фестиваль", address: "г. Дербент, цитадель Нарын-Кала", image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=400&fit=crop", color: "#d4a08a", symbol: "✦" },
-            { id: 13, name: "Дизайн-студии Махачкалы", lat: 42.9835, lng: 47.4960, category: "Дизайн / Медиа", address: "г. Махачкала, пр. Расула Гамзатова", image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop", color: "#5bb8b0", symbol: "◇" },
-            { id: 14, name: "Каспийск — арт-проекты", lat: 42.8817, lng: 47.6392, category: "Современное искусство", address: "г. Каспийск, набережная", image: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&h=400&fit=crop", color: "#7dc6b0", symbol: "◈" },
-            { id: 15, name: "Хасавюрт — культурный центр", lat: 43.2500, lng: 46.5833, category: "Городской досуг", address: "г. Хасавюрт, ул. Грозненская", image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&h=400&fit=crop", color: "#8ab8a0", symbol: "◇" },
-            { id: 16, name: "Буйнакск — творческие объединения", lat: 42.8167, lng: 47.1167, category: "Культура", address: "г. Буйнакск, центр", image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop", color: "#6a9a80", symbol: "◇" },
-            { id: 17, name: "Кизляр — народные промыслы", lat: 43.8467, lng: 46.7125, category: "Культурное наследие", address: "г. Кизляр, центр", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop", color: "#5aaa90", symbol: "◈" },
-            { id: 18, name: "Дагестанское книжное издательство", lat: 42.9801, lng: 47.5002, category: "Издательство / Литература", address: "г. Махачкала, ул. Гамзатова", image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop", color: "#4a9e7a", symbol: "◇" }
-        ];
-
-        // ===== SYMBOLS MAP =====
-        const categorySymbols = {
-            "Народный промысел": "✦",
-            "Ковроткачество": "◈",
-            "Культурное наследие": "◈",
-            "Музей / Галерея": "◈",
-            "Современное искусство": "◈",
-            "Креативный кластер": "◈",
-            "Музыка / Танец": "♪",
-            "Концертный зал": "♪",
-            "Фестиваль": "✦",
-            "Дизайн / Медиа": "◇",
-            "Городской досуг": "◇",
-            "Культура": "◇",
-            "Издательство / Литература": "◇"
+        // ═══════════════════════════════════════════════════════════════
+        // CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        const CONFIG = {
+            bounds: {
+                southWest: [40.8, 45.0],
+                northEast: [44.8, 50.0],
+                center: [42.5, 47.3]
+            },
+            zoom: {
+                initial: 8,
+                min: 7,
+                max: 13,
+                focus: 12
+            },
+            animation: {
+                flyToDuration: 1.2,
+                flyToDelay: 1.3,
+                cardStagger: 0.03
+            },
+            tiles: {
+                url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd'
+            },
+            marker: {
+                width: 36,
+                height: 50,
+                hoverWidth: 42,
+                hoverHeight: 58,
+                anchorX: 18,
+                anchorY: 46,
+                hoverAnchorX: 21,
+                hoverAnchorY: 52
+            }
         };
 
-        // ===== STATE =====
-        let map;
-        let markersMap = new Map();
-        let activeCard = null;
-        let currentFilter = 'all';
+        // ═══════════════════════════════════════════════════════════════
+        // DATA — 18 Creative Objects with REAL Dagestan photos
+        // ═══════════════════════════════════════════════════════════════
+        const OBJECTS_DATA = [
+            {
+                id: 1,
+                name: "Кубачи — ювелирное искусство",
+                shortName: "Кубачи",
+                lat: 42.0925,
+                lng: 47.6000,
+                category: "Народный промысел",
+                address: "с. Кубачи, Дахадаевский район",
+                image: "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/97c60bcb-dbb0-4086-8215-6e8ebd273ab0/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/900x/",
+                color: "#4a9e7a",
+                symbol: "✦",
+                description: "Древний центр ювелирного искусства с уникальными техниками чеканки и гравировки."
+            },
+            {
+                id: 2,
+                name: "Унцукуль — насечка по дереву",
+                shortName: "Унцукуль",
+                lat: 42.7122,
+                lng: 46.7897,
+                category: "Народный промысел",
+                address: "с. Унцукуль, Унцукульский район",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_qLUsssOey_9ntRwExVkcmBVuLeO3xGEzx5T8WBGVn1yXhdkXkKc8E-g&s=10",
+                color: "#5aaa90",
+                symbol: "✦",
+                description: "Уникальная техника художественной насечки по дереву, передающаяся из поколения в поколение."
+            },
+            {
+                id: 3,
+                name: "Балхарская керамика",
+                shortName: "Балхар",
+                lat: 42.3100,
+                lng: 47.1689,
+                category: "Народный промысел",
+                address: "с. Балхар, Акушинский район",
+                image: "https://ic.pics.livejournal.com/islam_dag_mir/60544360/218158/218158_1000.jpg",
+                color: "#7dc6b0",
+                symbol: "✦",
+                description: "Традиционная керамика с характерными орнаментами и глазурью."
+            },
+            {
+                id: 4,
+                name: "Гоцатль — художественный металл",
+                shortName: "Гоцатль",
+                lat: 42.5333,
+                lng: 46.8667,
+                category: "Народный промысел",
+                address: "с. Гоцатль, Хунзахский район",
+                image: "https://chernovik.net/sites/default/files/photo/2014/07/25/img_5349.jpg",
+                color: "#6a9a80",
+                symbol: "✦",
+                description: "Центр художественной обработки металла и ковки."
+            },
+            {
+                id: 5,
+                name: "Табасаранские ковры",
+                shortName: "Табасаранские ковры",
+                lat: 41.9833,
+                lng: 48.0000,
+                category: "Ковроткачество",
+                address: "Табасаранский район",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdU3GDY96UHyaRvZO7c8iwe6tlD1XQo4K6w0iia_ayq1JaTpXqHG2JBs&s=10",
+                color: "#8ab8a0",
+                symbol: "◈",
+                description: "Уникальные ковры с характерными геометрическими узорами табасаранского народа."
+            },
+            {
+                id: 6,
+                name: "Дербент — крепость и ремесла",
+                shortName: "Дербент",
+                lat: 42.0575,
+                lng: 48.2873,
+                category: "Культурное наследие",
+                address: "г. Дербент, цитадель Нарын-Кала",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkBVT0JbvjihxVMfTFzteratj6TZ0URmjTTlMHDPNQ8Io766YU2Pg0b0&s=10",
+                color: "#9ab87a",
+                symbol: "◈",
+                description: "Древнейшая крепость России и центр традиционных ремёсел."
+            },
+            {
+                id: 7,
+                name: "Дагестанский музей изобразительных искусств",
+                shortName: "Музей ИЗО",
+                lat: 42.9849,
+                lng: 47.5049,
+                category: "Музей / Галерея",
+                address: "г. Махачкала, ул. М. Гамзатова, 21",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4ZYrk1BeMLtq52DQSmi2BmHGLwsM6qV3i_Vpnd6Dzw&s=10",
+                color: "#d4a08a",
+                symbol: "◈",
+                description: "Крупнейшее собрание произведений дагестанских художников."
+            },
+            {
+                id: 8,
+                name: "Галерея «Ковчег»",
+                shortName: "Галерея «Ковчег»",
+                lat: 42.9792,
+                lng: 47.4987,
+                category: "Современное искусство",
+                address: "г. Махачкала, пр. Гамидова, 12",
+                image: "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&h=400&fit=crop",
+                color: "#c0806a",
+                symbol: "◈",
+                description: "Современная галерея, представляющая работы молодых дагестанских художников."
+            },
+            {
+                id: 9,
+                name: "Арт-пространство «Артдвор»",
+                shortName: "Артдвор",
+                lat: 42.9765,
+                lng: 47.5023,
+                category: "Креативный кластер",
+                address: "г. Махачкала, ул. Ярагского, 45",
+                image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop",
+                color: "#5bb8b0",
+                symbol: "◈",
+                description: "Креативное пространство для мастерских, выставок и культурных событий."
+            },
+            {
+                id: 10,
+                name: "Гос. ансамбль танца «Лезгинка»",
+                shortName: "Лезгинка",
+                lat: 42.9812,
+                lng: 47.5040,
+                category: "Музыка / Танец",
+                address: "г. Махачкала, пр. Ленина, 1",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1wFGjP9VspoO6d0GuTJlLMOyAx8yko68ATCC_6Mb9--Q_kTV2f62kKZe4&s=10",
+                color: "#b8a8d4",
+                symbol: "♪",
+                description: "Легендарный ансамбль, прославляющий дагестанские танцы на мировой сцене."
+            },
+            {
+                id: 11,
+                name: "Дагестанская филармония",
+                shortName: "Филармония",
+                lat: 42.9830,
+                lng: 47.5075,
+                category: "Концертный зал",
+                address: "г. Махачкала, ул. Дахадаева, 3",
+                image: "https://avatars.mds.yandex.net/get-altay/1363376/2a00000162d25352462636470a8dc4f4f591/L_height",
+                color: "#9a8ab8",
+                symbol: "♪",
+                description: "Главная концертная площадка республики."
+            },
+            {
+                id: 12,
+                name: "Фестиваль «Дербентская крепость»",
+                shortName: "Фестиваль",
+                lat: 42.0590,
+                lng: 48.2885,
+                category: "Фестиваль",
+                address: "г. Дербент, цитадель Нарын-Кала",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiKme-ug68JzwXvC20Z2lf8Ta9_yOU9JOidf0i3GnhKw&s=10",
+                color: "#d4a08a",
+                symbol: "✦",
+                description: "Ежегодный фестиваль культуры и искусств на территории древней крепости."
+            },
+            {
+                id: 13,
+                name: "Дизайн-студии Махачкалы",
+                shortName: "Дизайн-студии",
+                lat: 42.9835,
+                lng: 47.4960,
+                category: "Дизайн / Медиа",
+                address: "г. Махачкала, пр. Расула Гамзатова",
+                image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop",
+                color: "#5bb8b0",
+                symbol: "◇",
+                description: "Кластер современных дизайн-студий и медиа-агентств."
+            },
+            {
+                id: 14,
+                name: "Каспийск — арт-проекты",
+                shortName: "Каспийск",
+                lat: 42.8817,
+                lng: 47.6392,
+                category: "Современное искусство",
+                address: "г. Каспийск, набережная",
+                image: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&h=400&fit=crop",
+                color: "#7dc6b0",
+                symbol: "◈",
+                description: "Уличные арт-инсталляции и современные арт-проекты на набережной."
+            },
+            {
+                id: 15,
+                name: "Хасавюрт — культурный центр",
+                shortName: "Хасавюрт",
+                lat: 43.2500,
+                lng: 46.5833,
+                category: "Городской досуг",
+                address: "г. Хасавюрт, ул. Грозненская",
+                image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&h=400&fit=crop",
+                color: "#8ab8a0",
+                symbol: "◇",
+                description: "Культурный центр с театром, выставочными залами и творческими мастерскими."
+            },
+            {
+                id: 16,
+                name: "Буйнакск — творческие объединения",
+                shortName: "Буйнакск",
+                lat: 42.8167,
+                lng: 47.1167,
+                category: "Культура",
+                address: "г. Буйнакск, центр",
+                image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop",
+                color: "#6a9a80",
+                symbol: "◇",
+                description: "Объединения мастеров народных промыслов и современных художников."
+            },
+            {
+                id: 17,
+                name: "Кизляр — народные промыслы",
+                shortName: "Кизляр",
+                lat: 43.8467,
+                lng: 46.7125,
+                category: "Культурное наследие",
+                address: "г. Кизляр, центр",
+                image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop",
+                color: "#5aaa90",
+                symbol: "◈",
+                description: "Исторический центр традиционных ремёсел и культурного наследия."
+            },
+            {
+                id: 18,
+                name: "Дагестанское книжное издательство",
+                shortName: "Издательство",
+                lat: 42.9801,
+                lng: 47.5002,
+                category: "Издательство / Литература",
+                address: "г. Махачкала, ул. Гамзатова",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK2TXCnxledbC5UneeSESH5cguZlRMheX1gQ4454USUw&s",
+                color: "#4a9e7a",
+                symbol: "◇",
+                description: "Главное издательство республики, издающее книги на языках народов Дагестана."
+            }
+        ];
 
-        // ===== SVG DROP MARKER =====
-        function createDropIcon(color, symbol) {
-            const svg = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="50" viewBox="0 0 36 50">
+        // ═══════════════════════════════════════════════════════════════
+        // SVG MARKER GENERATOR — Teardrop shapes with symbols
+        // ═══════════════════════════════════════════════════════════════
+        const MarkerFactory = {
+            create(color, symbol, isHover = false) {
+                const w = isHover ? CONFIG.marker.hoverWidth : CONFIG.marker.width;
+                const h = isHover ? CONFIG.marker.hoverHeight : CONFIG.marker.height;
+                const shadowBlur = isHover ? 5 : 3;
+                const shadowOpacity = isHover ? 0.3 : 0.2;
+                const strokeWidth = isHover ? 2.5 : 2;
+                const symbolSize = isHover ? 16 : 14;
+
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
                     <defs>
                         <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(0,0,0,0.2)"/>
+                            <feDropShadow dx="0" dy="3" stdDeviation="${shadowBlur}" flood-color="rgba(0,0,0,${shadowOpacity})"/>
                         </filter>
                     </defs>
-                    <path d="M18 2 C18 2, 34 24, 34 32 C34 40.8, 26.8 46, 18 46 C9.2 46, 2 40.8, 2 32 C2 24, 18 2, 18 2 Z" 
+                    <path d="M${w/2} 2 C${w/2} 2, ${w-2} ${h*0.48}, ${w-2} ${h*0.64} C${w-2} ${h*0.816}, ${w*0.775} ${h-4}, ${w/2} ${h-4} C${w*0.225} ${h-4}, 2 ${h*0.816}, 2 ${h*0.64} C2 ${h*0.48}, ${w/2} 2, ${w/2} 2 Z" 
                           fill="${color}" 
                           stroke="white" 
-                          stroke-width="2"
+                          stroke-width="${strokeWidth}"
                           filter="url(#shadow)"/>
-                    <ellipse cx="18" cy="32" rx="12" ry="10" fill="rgba(255,255,255,0.15)"/>
-                    <circle cx="12" cy="26" r="2.5" fill="white" opacity="0.35"/>
-                    <circle cx="9" cy="22" r="1.2" fill="white" opacity="0.2"/>
-                    <text x="18" y="34" text-anchor="middle" fill="white" font-size="14" font-weight="600" font-family="serif">${symbol}</text>
-                </svg>
-            `;
-            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
-        }
+                    <ellipse cx="${w/2}" cy="${h*0.64}" rx="${w*0.33}" ry="${h*0.2}" fill="rgba(255,255,255,0.15)"/>
+                    <circle cx="${w*0.33}" cy="${h*0.52}" r="${isHover ? 3 : 2.5}" fill="white" opacity="0.35"/>
+                    <circle cx="${w*0.25}" cy="${h*0.44}" r="${isHover ? 1.5 : 1.2}" fill="white" opacity="0.2"/>
+                    <text x="${w/2}" y="${h*0.68}" text-anchor="middle" fill="white" font-size="${symbolSize}" font-weight="600" font-family="serif">${symbol}</text>
+                </svg>`;
 
-        function createDropIconHover(color, symbol) {
-            const svg = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="42" height="58" viewBox="0 0 42 58">
-                    <defs>
-                        <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="rgba(0,0,0,0.3)"/>
-                        </filter>
-                    </defs>
-                    <path d="M21 2 C21 2, 40 28, 40 37 C40 47, 31.4 52, 21 52 C10.6 52, 2 47, 2 37 C2 28, 21 2, 21 2 Z" 
-                          fill="${color}" 
-                          stroke="white" 
-                          stroke-width="2.5"
-                          filter="url(#shadow2)"/>
-                    <ellipse cx="21" cy="37" rx="14" ry="12" fill="rgba(255,255,255,0.2)"/>
-                    <circle cx="14" cy="30" r="3" fill="white" opacity="0.4"/>
-                    <circle cx="10" cy="25" r="1.5" fill="white" opacity="0.25"/>
-                    <text x="21" y="39" text-anchor="middle" fill="white" font-size="16" font-weight="600" font-family="serif">${symbol}</text>
-                </svg>
-            `;
-            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
-        }
+                return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+            },
 
-        // ===== INIT MAP =====
-        function initMap() {
-            const dagestanBounds = [[40.8, 45.0], [44.8, 50.0]];
+            createPair(obj) {
+                const normalUrl = this.create(obj.color, obj.symbol, false);
+                const hoverUrl = this.create(obj.color, obj.symbol, true);
 
-            map = L.map('map', {
-                center: [42.5, 47.3],
-                zoom: 8,
-                minZoom: 7,
-                maxZoom: 13,
-                maxBounds: dagestanBounds,
-                maxBoundsViscosity: 1.0,
-                zoomControl: false,
-                attributionControl: false
-            });
+                return {
+                    normal: L.icon({
+                        iconUrl: normalUrl,
+                        iconSize: [CONFIG.marker.width, CONFIG.marker.height],
+                        iconAnchor: [CONFIG.marker.anchorX, CONFIG.marker.anchorY],
+                        popupAnchor: [0, -CONFIG.marker.anchorY]
+                    }),
+                    hover: L.icon({
+                        iconUrl: hoverUrl,
+                        iconSize: [CONFIG.marker.hoverWidth, CONFIG.marker.hoverHeight],
+                        iconAnchor: [CONFIG.marker.hoverAnchorX, CONFIG.marker.hoverAnchorY],
+                        popupAnchor: [0, -CONFIG.marker.hoverAnchorY]
+                    })
+                };
+            }
+        };
 
-            // Add zoom control in top-right
-            L.control.zoom({
-                position: 'topright'
-            }).addTo(map);
+        // ═══════════════════════════════════════════════════════════════
+        // POPUP BUILDER — HTML content for marker popups
+        // ═══════════════════════════════════════════════════════════════
+        const PopupBuilder = {
+            build(obj) {
+                const images = obj.images || [];
+                let imagesHtml = '';
 
-            // Add scale control
-            L.control.scale({
-                position: 'bottomright',
-                metric: true,
-                imperial: false
-            }).addTo(map);
+                if (images.length === 1) {
+                    // Single image
+                    imagesHtml = `<img class="cd-popup__image" 
+                        src="${images[0]}" 
+                        alt="${obj.name}" 
+                        loading="lazy"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.marginTop='0';">`;
+                } else if (images.length === 2) {
+                    // Two images side by side
+                    imagesHtml = `<div class="cd-popup__gallery">
+                        <img class="cd-popup__gallery-img" src="${images[0]}" alt="${obj.name} — 1" loading="lazy">
+                        <img class="cd-popup__gallery-img" src="${images[1]}" alt="${obj.name} — 2" loading="lazy">
+                    </div>`;
+                } else if (images.length > 2) {
+                    // Multiple images - show first two
+                    imagesHtml = `<div class="cd-popup__gallery">
+                        <img class="cd-popup__gallery-img" src="${images[0]}" alt="${obj.name} — 1" loading="lazy">
+                        <img class="cd-popup__gallery-img" src="${images[1]}" alt="${obj.name} — 2" loading="lazy">
+                    </div>`;
+                }
 
-            // Light tile layer
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                subdomains: 'abcd',
-                maxZoom: 18,
-                minZoom: 7
-            }).addTo(map);
-
-            // Hard boundary enforcement
-            map.on('drag', function() {
-                map.panInsideBounds(dagestanBounds, { animate: true });
-            });
-
-            map.on('zoomend', function() {
-                if (map.getZoom() < 7) map.setZoom(7);
-            });
-        }
-
-        // ===== CREATE MARKERS =====
-        function createMarkers() {
-            objectsData.forEach(obj => {
-                const iconUrl = createDropIcon(obj.color, obj.symbol);
-                const iconHoverUrl = createDropIconHover(obj.color, obj.symbol);
-
-                const icon = L.icon({
-                    iconUrl: iconUrl,
-                    iconSize: [36, 50],
-                    iconAnchor: [18, 46],
-                    popupAnchor: [0, -46]
-                });
-
-                const marker = L.marker([obj.lat, obj.lng], { icon: icon });
-
-                // Popup content
-                const popupContent = `
-                    <img class="popup-img" src="${obj.image}" alt="${obj.name}" onerror="this.style.display='none'">
-                    <div class="popup-text">
-                        <h3>${obj.name}</h3>
-                        <div class="popup-address">
-                            <span class="pin-icon">📍</span>
+                return `
+                    ${imagesHtml}
+                    <div class="cd-popup__content">
+                        <h3 class="cd-popup__title">${obj.name}</h3>
+                        <div class="cd-popup__address">
+                            <span class="cd-popup__pin">&#128205;</span>
                             <span>${obj.address}</span>
                         </div>
-                        <span class="popup-badge">${obj.category}</span>
+                        <span class="cd-popup__badge" style="background: ${obj.color}18; color: ${obj.color};">
+                            ${obj.category}
+                        </span>
+                        ${obj.description ? `<p class="cd-popup__desc">${obj.description}</p>` : ''}
                     </div>
                 `;
+            }
+        };
 
-                const popup = L.popup({
-                    className: 'custom-popup',
-                    closeButton: true,
-                    autoPan: true,
-                    autoPanPadding: [20, 20]
-                }).setContent(popupContent);
+        // ═══════════════════════════════════════════════════════════════
+        // SIDEBAR MANAGER — Renders cards, handles filters
+        // ═══════════════════════════════════════════════════════════════
+        const SidebarManager = {
+            elements: {},
+            activeCardId: null,
 
-                marker.bindPopup(popup);
+            init() {
+                this.elements.list = document.getElementById('objectsList');
+                this.elements.filter = document.getElementById('categoryFilter');
+                this.elements.headerCount = document.querySelector('.cd-sidebar__count');
+            },
 
-                // Hover effect
-                marker.on('mouseover', function() {
-                    this.setIcon(L.icon({
-                        iconUrl: iconHoverUrl,
-                        iconSize: [42, 58],
-                        iconAnchor: [21, 52],
-                        popupAnchor: [0, -52]
-                    }));
+            render(filter = 'all') {
+                const filtered = filter === 'all' 
+                    ? OBJECTS_DATA 
+                    : OBJECTS_DATA.filter(o => o.category === filter);
+
+                this.elements.list.innerHTML = '';
+
+                filtered.forEach((obj, index) => {
+                    const card = this.createCard(obj, index);
+                    this.elements.list.appendChild(card);
                 });
 
-                marker.on('mouseout', function() {
-                    this.setIcon(icon);
-                });
+                if (this.elements.headerCount) {
+                    this.elements.headerCount.textContent = `✦ ${filtered.length} объектов`;
+                }
+            },
 
-                marker.on('click', function() {
-                    highlightCard(obj.id);
-                });
-
-                marker.addTo(map);
-                markersMap.set(obj.id, { marker, data: obj });
-            });
-        }
-
-        // ===== RENDER SIDEBAR =====
-        function renderSidebar(filter = 'all') {
-            const list = document.getElementById('objectsList');
-            list.innerHTML = '';
-
-            const filtered = filter === 'all' 
-                ? objectsData 
-                : objectsData.filter(o => o.category === filter);
-
-            filtered.forEach((obj, index) => {
+            createCard(obj, index) {
                 const card = document.createElement('div');
-                card.className = 'object-card';
+                card.className = 'cd-card';
                 card.dataset.id = obj.id;
-                card.style.animationDelay = `${index * 0.03}s`;
+                card.style.animationDelay = `${index * CONFIG.animation.cardStagger}s`;
+
+                const displayName = obj.shortName || obj.name;
 
                 card.innerHTML = `
-                    <div class="object-icon" style="background: ${obj.color}20; color: ${obj.color};">
+                    <div class="cd-card__icon" style="background: ${obj.color}18; color: ${obj.color};">
                         ${obj.symbol}
                     </div>
-                    <div class="object-info">
-                        <div class="object-title">${obj.name}</div>
-                        <span class="object-category">${obj.category}</span>
+                    <div class="cd-card__content">
+                        <div class="cd-card__title" title="${obj.name}">${displayName}</div>
+                        <span class="cd-card__category">${obj.category}</span>
                     </div>
                 `;
 
                 card.addEventListener('click', () => {
-                    flyToObject(obj.id);
+                    App.flyToObject(obj.id);
                 });
 
-                list.appendChild(card);
-            });
-        }
+                return card;
+            },
 
-        // ===== FLY TO OBJECT =====
-        function flyToObject(id) {
-            const { marker, data } = markersMap.get(id);
-
-            // Highlight card
-            highlightCard(id);
-
-            // Fly to location
-            map.flyTo([data.lat, data.lng], 12, {
-                duration: 1.2,
-                easeLinearity: 0.4
-            });
-
-            // Open popup after fly
-            setTimeout(() => {
-                marker.openPopup();
-            }, 1300);
-        }
-
-        // ===== HIGHLIGHT CARD =====
-        function highlightCard(id) {
-            document.querySelectorAll('.object-card').forEach(c => c.classList.remove('active'));
-            const card = document.querySelector(`.object-card[data-id="${id}"]`);
-            if (card) {
-                card.classList.add('active');
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                activeCard = id;
-            }
-        }
-
-        // ===== CATEGORY FILTER =====
-        function initCategoryFilter() {
-            const categories = [...new Set(objectsData.map(o => o.category))];
-            const filterContainer = document.getElementById('categoryFilter');
-
-            categories.forEach(cat => {
-                const chip = document.createElement('div');
-                chip.className = 'filter-chip';
-                chip.dataset.category = cat;
-                chip.textContent = cat;
-                chip.addEventListener('click', () => {
-                    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                    chip.classList.add('active');
-                    currentFilter = cat;
-                    renderSidebar(cat);
-                    updateMarkersVisibility(cat);
-                });
-                filterContainer.appendChild(chip);
-            });
-
-            // "All" chip handler
-            filterContainer.querySelector('[data-category="all"]').addEventListener('click', () => {
-                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                filterContainer.querySelector('[data-category="all"]').classList.add('active');
-                currentFilter = 'all';
-                renderSidebar('all');
-                updateMarkersVisibility('all');
-            });
-        }
-
-        function updateMarkersVisibility(filter) {
-            markersMap.forEach(({ marker, data }) => {
-                if (filter === 'all' || data.category === filter) {
-                    marker.addTo(map);
-                } else {
-                    marker.remove();
+            highlight(id) {
+                document.querySelectorAll('.cd-card').forEach(c => c.classList.remove('cd-card--active'));
+                const card = document.querySelector(`.cd-card[data-id="${id}"]`);
+                if (card) {
+                    card.classList.add('cd-card--active');
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    this.activeCardId = id;
                 }
-            });
-        }
+            },
 
-        // ===== MOBILE TOGGLE =====
-        function initMobileToggle() {
-            const toggle = document.getElementById('mobileToggle');
-            const sidebar = document.getElementById('sidebar');
-            let isOpen = true;
+            initFilters() {
+                const categories = [...new Set(OBJECTS_DATA.map(o => o.category))];
 
-            toggle.addEventListener('click', () => {
-                isOpen = !isOpen;
-                sidebar.style.transform = isOpen ? 'translateY(0)' : 'translateY(100%)';
-                toggle.textContent = isOpen ? '📋' : '🗺️';
-            });
-        }
+                categories.forEach(cat => {
+                    const chip = document.createElement('div');
+                    chip.className = 'cd-filter__chip';
+                    chip.dataset.category = cat;
+                    chip.textContent = cat;
+                    chip.addEventListener('click', () => this.handleFilterClick(chip, cat));
+                    this.elements.filter.appendChild(chip);
+                });
 
-        // ===== INIT =====
-        function init() {
-            initMap();
-            createMarkers();
-            renderSidebar();
-            initCategoryFilter();
-            initMobileToggle();
+                this.elements.filter.querySelector('[data-category="all"]')
+                    .addEventListener('click', () => this.handleFilterClick(
+                        this.elements.filter.querySelector('[data-category="all"]'), 
+                        'all'
+                    ));
+            },
 
-            // Hide loading screen
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-            }, 800);
-        }
+            handleFilterClick(chip, category) {
+                document.querySelectorAll('.cd-filter__chip').forEach(c => c.classList.remove('cd-filter__chip--active'));
+                chip.classList.add('cd-filter__chip--active');
+                this.render(category);
+                App.filterMarkers(category);
+            }
+        };
 
-        // Start
+        // ═══════════════════════════════════════════════════════════════
+        // MAP MANAGER — Leaflet map, markers, interactions
+        // ═══════════════════════════════════════════════════════════════
+        const MapManager = {
+            map: null,
+            markers: new Map(),
+
+            init() {
+                const { bounds, zoom } = CONFIG;
+
+                this.map = L.map('map', {
+                    center: bounds.center,
+                    zoom: zoom.initial,
+                    minZoom: zoom.min,
+                    maxZoom: zoom.max,
+                    maxBounds: [bounds.southWest, bounds.northEast],
+                    maxBoundsViscosity: 1.0,
+                    zoomControl: false,
+                    attributionControl: false
+                });
+
+                L.control.zoom({ position: 'topright' }).addTo(this.map);
+                L.control.scale({ 
+                    position: 'bottomright', 
+                    metric: true, 
+                    imperial: false 
+                }).addTo(this.map);
+
+                L.tileLayer(CONFIG.tiles.url, {
+                    attribution: CONFIG.tiles.attribution,
+                    subdomains: CONFIG.tiles.subdomains,
+                    maxZoom: 18,
+                    minZoom: zoom.min
+                }).addTo(this.map);
+
+                this.enforceBoundaries();
+            },
+
+            enforceBoundaries() {
+                const { bounds } = CONFIG;
+
+                this.map.on('drag', () => {
+                    this.map.panInsideBounds([bounds.southWest, bounds.northEast], { animate: true });
+                });
+
+                this.map.on('zoomend', () => {
+                    if (this.map.getZoom() < CONFIG.zoom.min) {
+                        this.map.setZoom(CONFIG.zoom.min);
+                    }
+                });
+            },
+
+            createMarkers() {
+                OBJECTS_DATA.forEach(obj => {
+                    const icons = MarkerFactory.createPair(obj);
+
+                    const marker = L.marker([obj.lat, obj.lng], { icon: icons.normal });
+
+                    const popup = L.popup({
+                        className: 'cd-popup',
+                        closeButton: true,
+                        autoPan: true,
+                        autoPanPadding: [20, 20]
+                    }).setContent(PopupBuilder.build(obj));
+
+                    marker.bindPopup(popup);
+
+                    marker.on('mouseover', () => marker.setIcon(icons.hover));
+                    marker.on('mouseout', () => marker.setIcon(icons.normal));
+
+                    marker.on('click', () => {
+                        SidebarManager.highlight(obj.id);
+                    });
+
+                    marker.addTo(this.map);
+                    this.markers.set(obj.id, { marker, data: obj, icons });
+                });
+            },
+
+            flyTo(id) {
+                const entry = this.markers.get(id);
+                if (!entry) return;
+
+                const { marker, data } = entry;
+
+                this.map.flyTo([data.lat, data.lng], CONFIG.zoom.focus, {
+                    duration: CONFIG.animation.flyToDuration,
+                    easeLinearity: 0.4
+                });
+
+                setTimeout(() => {
+                    marker.openPopup();
+                }, CONFIG.animation.flyToDelay * 1000);
+            },
+
+            filter(category) {
+                this.markers.forEach(({ marker, data }) => {
+                    const visible = category === 'all' || data.category === category;
+                    if (visible) {
+                        marker.addTo(this.map);
+                    } else {
+                        marker.remove();
+                    }
+                });
+            },
+
+            getMap() {
+                return this.map;
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // MOBILE MANAGER — Toggle button for mobile sidebar
+        // ═══════════════════════════════════════════════════════════════
+        const MobileManager = {
+            isOpen: true,
+
+            init() {
+                const toggle = document.getElementById('mobileToggle');
+                const sidebar = document.getElementById('sidebar');
+
+                if (!toggle || !sidebar) return;
+
+                toggle.addEventListener('click', () => {
+                    this.isOpen = !this.isOpen;
+                    sidebar.style.transform = this.isOpen ? 'translateY(0)' : 'translateY(100%)';
+                    toggle.textContent = this.isOpen ? '📋' : '🗺️';
+                });
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // LOADING SCREEN — Hide after initialization
+        // ═══════════════════════════════════════════════════════════════
+        const LoadingScreen = {
+            hide() {
+                const screen = document.getElementById('loadingScreen');
+                if (screen) {
+                    setTimeout(() => {
+                        screen.classList.add('cd-loading--hidden');
+                    }, 800);
+                }
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // MAIN APPLICATION — Public API
+        // ═══════════════════════════════════════════════════════════════
+        const App = {
+            init() {
+                SidebarManager.init();
+                MapManager.init();
+                MapManager.createMarkers();
+                SidebarManager.render();
+                SidebarManager.initFilters();
+                MobileManager.init();
+                LoadingScreen.hide();
+
+                console.log('🌿 Креативный Дагестан — карта загружена');
+            },
+
+            flyToObject(id) {
+                SidebarManager.highlight(id);
+                MapManager.flyTo(id);
+            },
+
+            filterMarkers(category) {
+                MapManager.filter(category);
+            },
+
+            getObjects() {
+                return OBJECTS_DATA;
+            },
+
+            getMap() {
+                return MapManager.getMap();
+            }
+        };
+
+        // Auto-init on DOM ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
+            document.addEventListener('DOMContentLoaded', () => App.init());
         } else {
-            init();
+            App.init();
         }
 
-    })();
+        // Expose to global scope for console access
+        global.CreativeDagestan = App;
+
+    })(window);
     </script>
 </body>
 </html>
