@@ -21,20 +21,20 @@
             photos: ["https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg"],
             description: "Знаменитый центр ювелирного мастерства, известный с древних времён."
         },
-        {
-            id: 2,
-            name: "Унцукуль — насечка по дереву",
-            shortName: "Унцукуль",
-            lat: 42.7122,
-            lng: 46.7897,
-            category: "Народные художественные промыслы и ремесла",
-            address: "с. Унцукуль, Унцукульский район",
-            photos: [
-  "https://avatars.mds.yandex.net/i?id=0cea8cbdf23bc6ea4dc1ab3a699c5d81_l-9843011-images-thumbs&n=13",
-  "https://пример.com/uncukul-master-2.jpg"
-],
-            description: "Традиционная насечка металлом по дереву, уникальный дагестанский промысел."
-        },
+       {
+    id: 2,
+    name: "Унцукуль — насечка по дереву",
+    shortName: "Унцукуль",
+    lat: 42.7122,
+    lng: 46.7897,
+    category: "Народные художественные промыслы и ремесла",
+    address: "с. Унцукуль, Унцукульский район",
+    photos: [
+        "https://avatars.mds.yandex.net/i?id=83f5f894efa64c88065fa20e2dc0fad6_l-8411743-images-thumbs&n=13",
+        "https://cdn.culture.ru/images/944416d5-01ac-51c3-a800-6d87e5641974"
+    ],
+    description: "Традиционная насечка металлом по дереву, уникальный дагестанский промысел."
+},
         {
             id: 3,
             name: "Балхарская керамика",
