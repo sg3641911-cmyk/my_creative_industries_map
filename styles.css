@@ -1,323 +1,497 @@
-/* ================================================================
-   📄 ФАЙЛ: styles.css
-   📌 НАЗНАЧЕНИЕ: Все стили для карты креативных индустрий Дагестана
-   🎨 СТИЛЬ: Бело-мятная эстетика, мягкие тени, капли с острым кончиком
-   📱 АДАПТИВ: Планшеты, телефоны (панель снизу)
-   ================================================================ */
+/* ============================================================
+   КРЕАТИВНЫЙ ДАГЕСТАН — ПОЛНАЯ СПЕЦИФИКАЦИЯ v3.0
+   Основной CSS-стиль
+   ============================================================ */
 
-/* ================================================================
-   1. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (CSS Custom Properties)
-   ================================================================ */
-:root {
-    /* Основные цвета */
-    --color-bg: #f5f9f7;
-    --color-white: #ffffff;
-    
-    /* Мятная гамма */
-    --color-mint-light: #e8f5f0;
-    --color-mint-medium: #d4ede4;
-    --color-mint-dark: #b8e0d2;
-    --color-mint-accent: #7dc6b0;
-    
-    /* Зелёная гамма */
-    --color-green-dark: #1a3a2e;
-    --color-green-medium: #3a6b5a;
-    --color-green-light: #5a8a78;
-    --color-green-badge: #2a6e3a;
-    
-    /* Границы и тени */
-    --color-border: rgba(184, 224, 210, 0.3);
-    --color-shadow: rgba(0, 0, 0, 0.04);
-    
-    /* Шрифты */
-    --font-family: 'Inter', 'Segoe UI', -apple-system, 'Roboto', sans-serif;
-    
-    /* Размеры */
-    --sidebar-width: 400px;
-    --sidebar-min-width: 320px;
-    --header-padding: 1.4rem 1.5rem 1rem;
-    
-    /* Радиусы */
-    --radius-card: 16px;
-    --radius-popup: 20px;
-    --radius-btn: 20px;
-    --radius-icon: 12px;
-}
-
-/* ================================================================
-   2. ГЛОБАЛЬНЫЕ СБРОСЫ И БАЗОВЫЕ НАСТРОЙКИ
-   ================================================================ */
+/* ---------- ГЛОБАЛЬНЫЕ СБРОСЫ И БАЗОВЫЕ СТИЛИ ---------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,
 body {
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
-    font-family: var(--font-family);
-    background: var(--color-bg);
-    color: var(--color-green-dark);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* ================================================================
-   3. ОСНОВНОЙ КОНТЕЙНЕР (ПАНЕЛЬ + КАРТА)
-   ================================================================ */
-.app {
-    display: flex;
+    font-family: 'Inter', sans-serif;
+    background: #f5f9f7;
     height: 100vh;
-    width: 100%;
     overflow: hidden;
+    color: #1a3a2e;
 }
 
-/* ================================================================
-   4. КАРТА
-   ================================================================ */
-.map-container {
-    flex: 1;
-    position: relative;
-    height: 100%;
-}
-
+/* ---------- КАРТА ---------- */
 #map {
-    height: 100%;
-    width: 100%;
-    background: #e8efe9;
+    height: 100vh;
+    width: 100vw;
+    background: #f5f9f7;
 }
 
-/* ================================================================
-   5. БОКОВАЯ ПАНЕЛЬ
-   ================================================================ */
-.sidebar {
-    width: var(--sidebar-width);
-    min-width: var(--sidebar-min-width);
-    max-width: 100%;
-    background: var(--color-white);
+/* ---------- БОКОВАЯ ПАНЕЛЬ ---------- */
+.panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+    z-index: 1000;
     display: flex;
     flex-direction: column;
-    z-index: 20;
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.04);
-    border-right: 1px solid var(--color-border);
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+    border-right: 1px solid rgba(184, 224, 210, 0.3);
+}
+
+/* ---------- ШАПКА ПАНЕЛИ ---------- */
+.panel-header {
+    background: linear-gradient(145deg, #e8f5f0 0%, #d4ede4 100%);
+    padding: 20px 22px 16px 22px;
+    border-bottom: 1px solid rgba(184, 224, 210, 0.3);
     flex-shrink: 0;
 }
 
-/* ================================================================
-   6. КАСТОМНЫЙ СКРОЛЛБАР ПАНЕЛИ
-   ================================================================ */
-.sidebar::-webkit-scrollbar {
-    width: 4px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: #f0f5f2;
-    border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: var(--color-mint-dark);
-    border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: var(--color-mint-accent);
-}
-
-/* Для Firefox */
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-mint-dark) #f0f5f2;
-}
-
-/* ================================================================
-   7. ШАПКА ПАНЕЛИ (МЯТНЫЙ ГРАДИЕНТ + ИКОНКА ГОР)
-   ================================================================ */
-.sidebar-header {
-    background: linear-gradient(135deg, var(--color-mint-light) 0%, var(--color-mint-medium) 100%);
-    padding: var(--header-padding);
-    border-bottom: 1px solid var(--color-border);
-    position: sticky;
-    top: 0;
-    z-index: 5;
-    flex-shrink: 0;
-}
-
-.sidebar-header .title-row {
+.panel-header-top {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 4px;
 }
 
-.sidebar-header .title-row svg {
+.mountain-icon {
+    width: 32px;
+    height: 32px;
     flex-shrink: 0;
-    display: block;
 }
 
-.sidebar-header h1 {
+.panel-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-green-dark);
-    letter-spacing: -0.5px;
-    line-height: 1.2;
+    color: #1a3a2e;
+    letter-spacing: -0.3px;
 }
 
-.sidebar-header .sub {
+.panel-sub {
     font-size: 0.75rem;
-    color: var(--color-green-medium);
-    margin-top: 6px;
+    color: #3a6b5a;
     font-weight: 400;
-    opacity: 0.85;
-    line-height: 1.4;
+    margin-top: 2px;
+    padding-left: 42px;
+    letter-spacing: 0.2px;
 }
 
-.sidebar-header .sub span {
-    background: rgba(42, 110, 58, 0.08);
+.panel-sub span {
+    background: #eaf5f0;
     padding: 2px 10px;
     border-radius: 30px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--color-green-badge);
+    color: #5a8a78;
+    font-weight: 500;
+    margin-left: 4px;
 }
 
-/* ================================================================
-   8. ФИЛЬТР-КНОПКИ
-   ================================================================ */
-.filter-row {
-    padding: 0.6rem 1.2rem;
+/* ---------- ФИЛЬТРЫ ---------- */
+.filter-wrap {
+    padding: 14px 22px 10px 22px;
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
-    border-bottom: 1px solid rgba(184, 224, 210, 0.15);
-    background: #fafcfa;
+    gap: 8px;
+    border-bottom: 1px solid rgba(184, 224, 210, 0.25);
     flex-shrink: 0;
+    background: #ffffff;
 }
 
 .filter-btn {
-    padding: 3px 12px;
-    border-radius: var(--radius-btn);
-    font-size: 0.65rem;
-    font-weight: 500;
-    border: 1.5px solid var(--color-mint-dark);
-    background: var(--color-white);
-    color: var(--color-green-medium);
+    background: white;
+    border: 1.5px solid #b8e0d2;
+    color: #3a6b5a;
+    padding: 5px 14px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: inherit;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
     white-space: nowrap;
-    user-select: none;
-}
-
-.filter-btn:hover {
-    background: var(--color-mint-light);
-    border-color: var(--color-mint-accent);
+    font-family: 'Inter', sans-serif;
 }
 
 .filter-btn.active {
-    background: linear-gradient(135deg, var(--color-green-badge) 0%, #1a4d2a 100%);
-    color: var(--color-white);
-    border-color: var(--color-green-badge);
+    background: #1a3a2e;
+    border-color: #1a3a2e;
+    color: white;
 }
 
-/* ================================================================
-   9. СПИСОК ОБЪЕКТОВ
-   ================================================================ */
-.objects-list {
-    padding: 0.8rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.filter-btn:hover {
+    transform: scale(0.96);
+    opacity: 0.8;
+}
+
+/* ---------- СПИСОК КАРТОЧЕК ---------- */
+.card-list {
     flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px 20px 16px;
+    background: #ffffff;
 }
 
-/* ================================================================
-   10. КАРТОЧКА ОБЪЕКТА
-   ================================================================ */
-.object-card {
-    background: var(--color-white);
-    border-radius: var(--radius-card);
-    padding: 10px 14px;
-    cursor: pointer;
-    border: 1px solid #eaf3ef;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+/* Кастомный скролл (мятный) */
+.card-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.card-list::-webkit-scrollbar-track {
+    background: #eaf5f0;
+    border-radius: 10px;
+}
+
+.card-list::-webkit-scrollbar-thumb {
+    background: #7dc6b0;
+    border-radius: 10px;
+}
+
+/* Карточка объекта */
+.card-item {
+    background: white;
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.03);
     display: flex;
     align-items: center;
-    gap: 12px;
-    transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    gap: 14px;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+    cursor: pointer;
     opacity: 0;
+    transform: translateY(12px);
     animation: fadeUp 0.35s ease forwards;
 }
 
-.object-card:hover {
-    background: #f3fbf8;
-    border-left: 4px solid var(--color-mint-accent);
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+.card-item:hover {
+    border-left: 4px solid #7dc6b0;
+    transform: translateX(4px) scale(1.01);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    background: #fafdfb;
 }
 
-.object-card.hidden {
-    display: none;
-}
-
-/* ================================================================
-   11. ИКОНКА В КАРТОЧКЕ
-   ================================================================ */
-.object-icon {
+/* Иконка категории в карточке */
+.card-icon {
     width: 42px;
     height: 42px;
-    border-radius: var(--radius-icon);
+    flex-shrink: 0;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 17px;
-    font-weight: 300;
-    flex-shrink: 0;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    font-family: Georgia, serif;
+    background: #7dc6b0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-/* ================================================================
-   12. ТЕКСТОВАЯ ЧАСТЬ КАРТОЧКИ
-   ================================================================ */
-.object-info {
+.card-info {
     flex: 1;
     min-width: 0;
 }
 
-.object-title {
+.card-name {
     font-weight: 600;
-    font-size: 0.88rem;
-    color: var(--color-green-dark);
-    line-height: 1.3;
+    font-size: 0.9rem;
+    color: #1a3a2e;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.object-category {
-    font-size: 0.6rem;
-    color: var(--color-green-light);
-    background: #eaf5f0;
-    padding: 1px 10px;
-    border-radius: 20px;
+.card-badge {
     display: inline-block;
+    background: #eaf5f0;
+    color: #5a8a78;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 30px;
     margin-top: 3px;
-    font-weight: 500;
+    letter-spacing: 0.2px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* ================================================================
-   13. АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК (FADE-UP)
-   ================================================================ */
+/* ---------- АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ---------- */
 @keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- КАСТОМНЫЙ ПОПАП ---------- */
+.custom-popup .leaflet-popup-content-wrapper {
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    overflow: hidden;
+}
+
+.custom-popup .leaflet-popup-content {
+    margin: 0;
+    width: 280px;
+    font-family: 'Inter', sans-serif;
+}
+
+.popup-content {
+    padding: 14px 16px 16px;
+}
+
+/* Фото в попапе */
+.popup-photo-grid {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 10px;
+}
+
+.popup-photo-grid.one-col {
+    grid-template-columns: 1fr;
+}
+
+.popup-photo-grid.two-col {
+    grid-template-columns: 1fr 1fr;
+}
+
+.popup-photo {
+    height: 160px;
+    object-fit: cover;
+    width: 100%;
+    background: #f0f5f2;
+    border-radius: 8px;
+}
+
+/* Текст попапа */
+.popup-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1a3a2e;
+    margin-bottom: 4px;
+}
+
+.popup-address {
+    font-size: 0.75rem;
+    color: #5a8a78;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.popup-cat {
+    background: #eaf5f0;
+    color: #3a6b5a;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 12px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.popup-desc {
+    font-size: 0.8rem;
+    color: #1a3a2e;
+    opacity: 0.75;
+    line-height: 1.4;
+}
+
+.leaflet-popup-tip {
+    background: white;
+}
+
+/* ---------- ЗАГРУЗОЧНЫЙ ЭКРАН ---------- */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #f5f9f7;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+}
+
+#loader.hidden {
+    opacity: 0;
+}
+
+.loader-mountain {
+    width: 70px;
+    height: 70px;
+    opacity: 0.6;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+}
+
+.loader-text {
+    margin-top: 20px;
+    font-weight: 500;
+    color: #3a6b5a;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+/* ---------- АДАПТИВНОСТЬ: ПЛАНШЕТ (до 768px) ---------- */
+@media (max-width: 768px) {
+    .panel {
+        width: 320px;
+    }
+
+    .panel-title {
+        font-size: 1.3rem;
+    }
+
+    .panel-sub {
+        font-size: 0.7rem;
+        padding-left: 38px;
+    }
+
+    .card-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+    }
+
+    .card-name {
+        font-size: 0.8rem;
+    }
+
+    .popup-content {
+        width: 260px;
+    }
+
+    .popup-photo {
+        height: 130px;
+    }
+}
+
+/* ---------- АДАПТИВНОСТЬ: ТЕЛЕФОН (до 500px) ---------- */
+@media (max-width: 500px) {
+    .panel {
+        width: 100%;
+        height: 45vh;
+        top: auto;
+        bottom: 0;
+        border-right: none;
+        border-top: 1px solid rgba(184, 224, 210, 0.3);
+        box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.04);
+        transform: translateY(0);
+    }
+
+    #map {
+        height: 55vh;
+    }
+
+    .panel-header {
+        padding: 14px 18px 10px;
+    }
+
+    .panel-title {
+        font-size: 1.1rem;
+    }
+
+    .panel-sub {
+        font-size: 0.65rem;
+        padding-left: 34px;
+    }
+
+    .filter-wrap {
+        padding: 8px 14px;
+        gap: 5px;
+    }
+
+    .filter-btn {
+        font-size: 0.6rem;
+        padding: 3px 10px;
+    }
+
+    .card-item {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+
+    .card-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .card-name {
+        font-size: 0.75rem;
+    }
+
+    .card-badge {
+        font-size: 0.55rem;
+    }
+
+    .popup-content {
+        width: 240px;
+    }
+
+    .popup-photo {
+        height: 110px;
+    }
+
+    .popup-title {
+        font-size: 0.9rem;
+    }
+}
+
+/* ---------- ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ МАРКЕРОВ ---------- */
+/* Анимация маркеров при наведении через JS, но базовый стиль */
+.custom-drop-icon {
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Убираем стандартный фон и рамку у маркеров Leaflet */
+.leaflet-marker-icon.custom-drop-icon {
+    background: none;
+    border: none;
+}
+
+/* ---------- СТИЛИ ДЛЯ ФИЛЬТРОВ В АКТИВНОМ СОСТОЯНИИ ---------- */
+.filter-btn.active {
+    background: #1a3a2e;
+    border-color: #1a3a2e;
+    color: white;
+}
+
+/* ---------- ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ---------- */
+/* Плавное появление попапа */
+.custom-popup {
+    animation: popupFade 0.25s ease;
+}
+
+@keyframes popupFade {
     from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(-8px);
     }
     to {
         opacity: 1;
@@ -325,465 +499,25 @@ body {
     }
 }
 
-/* Задержки для каждой карточки (18 штук) */
-.object-card:nth-child(1) { animation-delay: 0.02s; }
-.object-card:nth-child(2) { animation-delay: 0.04s; }
-.object-card:nth-child(3) { animation-delay: 0.06s; }
-.object-card:nth-child(4) { animation-delay: 0.08s; }
-.object-card:nth-child(5) { animation-delay: 0.10s; }
-.object-card:nth-child(6) { animation-delay: 0.12s; }
-.object-card:nth-child(7) { animation-delay: 0.14s; }
-.object-card:nth-child(8) { animation-delay: 0.16s; }
-.object-card:nth-child(9) { animation-delay: 0.18s; }
-.object-card:nth-child(10) { animation-delay: 0.20s; }
-.object-card:nth-child(11) { animation-delay: 0.22s; }
-.object-card:nth-child(12) { animation-delay: 0.24s; }
-.object-card:nth-child(13) { animation-delay: 0.26s; }
-.object-card:nth-child(14) { animation-delay: 0.28s; }
-.object-card:nth-child(15) { animation-delay: 0.30s; }
-.object-card:nth-child(16) { animation-delay: 0.32s; }
-.object-card:nth-child(17) { animation-delay: 0.34s; }
-.object-card:nth-child(18) { animation-delay: 0.36s; }
-
-/* ================================================================
-   14. УКАЗАТЕЛЬ-КАПЛЯ (ПЕРЕВЁРНУТАЯ КАПЛЯ С ОСТРЫМ КОНЧИКОМ)
-   ================================================================ */
-.drop-marker {
-    background: transparent;
-    cursor: pointer;
+/* Тень для карточек при наведении */
+.card-item:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 }
 
-.drop-marker svg {
-    transition: all 0.15s ease;
-    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
+/* Стили для скролла в Firefox */
+.card-list {
+    scrollbar-width: thin;
+    scrollbar-color: #7dc6b0 #eaf5f0;
 }
 
-.drop-marker:hover svg {
-    transform: scale(1.12);
-    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.3));
+/* Убираем outline у кнопок */
+button:focus {
+    outline: none;
 }
 
-/* ================================================================
-   15. ПОПАП (ВСПЛЫВАЮЩЕЕ ОКНО)
-   ================================================================ */
-.custom-popup .leaflet-popup-content-wrapper {
-    border-radius: var(--radius-popup);
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.18);
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
-    max-width: 320px;
-}
-
-.custom-popup .leaflet-popup-content {
-    margin: 0;
-    width: 300px !important;
-    max-width: 100%;
-}
-
-.custom-popup .leaflet-popup-tip {
-    background: var(--color-white);
-    box-shadow: -2px -2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* ================================================================
-   16. ФОТОГАЛЕРЕЯ В ПОПАПЕ
-   ================================================================ */
-.popup-gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: #eaf3ef;
-}
-
-.popup-gallery.single {
-    grid-template-columns: 1fr;
-}
-
-.popup-img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-    background: #eaf5f0;
-}
-
-.popup-img.hidden-img {
-    display: none;
-}
-
-/* ================================================================
-   17. ТЕКСТОВАЯ ЧАСТЬ ПОПАПА
-   ================================================================ */
-.popup-text {
-    padding: 14px 18px 18px;
-}
-
-.popup-text h3 {
-    margin: 0 0 4px 0;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--color-green-badge);
-    line-height: 1.3;
-}
-
-.popup-address {
-    font-size: 0.75rem;
-    color: #4a7a68;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 4px;
-}
-
-.popup-address::before {
-    content: "📍";
-    font-size: 0.85rem;
-}
-
-.popup-badge {
-    margin-top: 10px;
-    display: inline-block;
-    background: #eaf5f0;
-    padding: 3px 14px;
-    border-radius: 30px;
-    font-size: 0.62rem;
-    font-weight: 600;
-    color: var(--color-green-badge);
-}
-
-.popup-description {
-    margin-top: 10px;
-    font-size: 0.78rem;
-    color: #4a5a52;
-    line-height: 1.5;
-    border-top: 1px solid rgba(184, 224, 210, 0.2);
-    padding-top: 10px;
-}
-
-/* ================================================================
-   18. ЭКРАН ЗАГРУЗКИ
-   ================================================================ */
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.loading-screen {
-    position: fixed;
-    inset: 0;
-    background: var(--color-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    transition: opacity 0.8s ease;
-}
-
-.loading-screen.hide {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loading-screen svg {
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-.loading-screen p {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: var(--color-green-medium);
-    font-weight: 500;
-}
-
-/* ================================================================
-   19. КНОПКИ УПРАВЛЕНИЯ КАРТОЙ (ЗУМ)
-   ================================================================ */
-.leaflet-control-zoom {
-    border: none !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
-}
-
-.leaflet-control-zoom a {
-    background: var(--color-white) !important;
-    color: #3a8a72 !important;
-    border-radius: 12px !important;
-    margin: 4px !important;
-    width: 34px !important;
-    height: 34px !important;
-    line-height: 34px !important;
-    font-weight: 600 !important;
-    border: 1px solid var(--color-border) !important;
-    transition: 0.1s ease;
-}
-
-.leaflet-control-zoom a:hover {
-    background: var(--color-mint-light) !important;
-    color: #1a5a42 !important;
-}
-
-/* ================================================================
-   20. ШКАЛА МАСШТАБА
-   ================================================================ */
-.leaflet-control-scale {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 16px;
-    padding: 2px 12px;
-    font-size: 9px;
-    font-weight: 500;
-    color: var(--color-green-medium);
-    border: 1px solid var(--color-border);
-}
-
-/* ================================================================
-   21. АДАПТИВНОСТЬ — ПЛАНШЕТЫ (до 768px)
-   ================================================================ */
-@media (max-width: 768px) {
-    :root {
-        --sidebar-width: 320px;
-        --sidebar-min-width: 260px;
-    }
-
-    .sidebar-header h1 {
-        font-size: 1.3rem;
-    }
-
-    .sidebar-header .sub {
-        font-size: 0.7rem;
-    }
-
-    .object-title {
-        font-size: 0.8rem;
-    }
-
-    .object-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 15px;
-        border-radius: 10px;
-    }
-
-    .custom-popup .leaflet-popup-content {
-        width: 260px !important;
-    }
-
-    .popup-img {
-        height: 130px;
-    }
-
-    .filter-btn {
-        font-size: 0.6rem;
-        padding: 2px 10px;
-    }
-
-    .filter-row {
-        padding: 0.5rem 1rem;
-        gap: 4px;
-    }
-
-    .objects-list {
-        padding: 0.6rem 1rem;
-    }
-}
-
-/* ================================================================
-   22. АДАПТИВНОСТЬ — ТЕЛЕФОНЫ (до 500px) — панель СНИЗУ!
-   ================================================================ */
-@media (max-width: 500px) {
-    .app {
-        flex-direction: column-reverse;
-    }
-
-    .sidebar {
-        width: 100%;
-        min-width: unset;
-        max-height: 45vh;
-        border-right: none;
-        border-top: 1px solid var(--color-border);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-        flex-shrink: 0;
-    }
-
-    .map-container {
-        height: 55vh;
-        flex: none;
-    }
-
-    #map {
-        height: 100%;
-    }
-
-    .sidebar-header {
-        padding: 0.8rem 1rem 0.6rem;
-    }
-
-    .sidebar-header h1 {
-        font-size: 1.1rem;
-    }
-
-    .sidebar-header .sub {
-        font-size: 0.6rem;
-    }
-
-    .objects-list {
-        padding: 0.5rem 0.8rem;
-        gap: 5px;
-    }
-
-    .object-card {
-        padding: 7px 10px;
-        gap: 10px;
-        border-radius: 12px;
-    }
-
-    .object-title {
-        font-size: 0.75rem;
-    }
-
-    .object-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 13px;
-        border-radius: 8px;
-    }
-
-    .object-category {
-        font-size: 0.55rem;
-        padding: 1px 8px;
-    }
-
-    .filter-btn {
-        font-size: 0.55rem;
-        padding: 2px 8px;
-    }
-
-    .filter-row {
-        padding: 0.4rem 0.8rem;
-        gap: 3px;
-    }
-
-    .custom-popup .leaflet-popup-content {
-        width: 220px !important;
-    }
-
-    .popup-img {
-        height: 110px;
-    }
-
-    .popup-text {
-        padding: 10px 14px 14px;
-    }
-
-    .popup-text h3 {
-        font-size: 0.9rem;
-    }
-
-    .popup-address {
-        font-size: 0.7rem;
-    }
-
-    .popup-description {
-        font-size: 0.7rem;
-    }
-
-    .leaflet-control-zoom a {
-        width: 28px !important;
-        height: 28px !important;
-        line-height: 28px !important;
-        font-size: 14px !important;
-        margin: 3px !important;
-    }
-
-    .leaflet-control-scale {
-        font-size: 8px;
-        padding: 1px 8px;
-    }
-}
-
-/* ================================================================
-   23. АДАПТИВНОСТЬ — ОЧЕНЬ МАЛЕНЬКИЕ ТЕЛЕФОНЫ (до 380px)
-   ================================================================ */
-@media (max-width: 380px) {
-    .sidebar {
-        max-height: 40vh;
-    }
-
-    .map-container {
-        height: 60vh;
-    }
-
-    .sidebar-header h1 {
-        font-size: 0.95rem;
-    }
-
-    .sidebar-header .sub {
-        font-size: 0.55rem;
-    }
-
-    .object-title {
-        font-size: 0.7rem;
-    }
-
-    .object-icon {
-        width: 28px;
-        height: 28px;
-        font-size: 11px;
-        border-radius: 6px;
-    }
-
-    .filter-btn {
-        font-size: 0.5rem;
-        padding: 1px 6px;
-    }
-
-    .custom-popup .leaflet-popup-content {
-        width: 190px !important;
-    }
-
-    .popup-img {
-        height: 90px;
-    }
-
-    .popup-text h3 {
-        font-size: 0.8rem;
-    }
-}
-
-/* ================================================================
-   24. КОРРЕКЦИЯ ДЛЯ SСREEN READERS (ДОСТУПНОСТЬ)
-   ================================================================ */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* ================================================================
-   25. ПЕЧАТЬ (опционально)
-   ================================================================ */
-@media print {
-    .sidebar {
-        display: none;
-    }
-
-    .map-container {
-        height: 100vh !important;
-    }
-
-    .leaflet-control-zoom,
-    .leaflet-control-scale {
-        display: none !important;
+/* Дополнительные стили для адаптивности контента попапа */
+@media (max-width: 400px) {
+    .popup-photo-grid.two-col {
+        grid-template-columns: 1fr;
     }
 }
