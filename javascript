@@ -11,18 +11,18 @@
     // ------------------------------------------------------------
     const DATA = [
         {
-        id: 1,
-        name: "Кубачи — ювелирное искусство",
-        shortName: "Кубачи",
-        lat: 42.0925,
-        lng: 47.6000,
-        category: "Народные художественные промыслы и ремесла",
-        address: "с. Кубачи, Дахадаевский район",
-        photos: [
-            "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/97c60bcb-dbb0-4086-8215-6e8ebd273ab0/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/900x/",
-            "https://avatars.mds.yandex.net/i?id=51237fce3d9442724f62b4ce060d5ae4_l-13054237-images-thumbs&n=13"
-        ],
-        description: "Знаменитый центр ювелирного мастерства, известный с древних времён."
+       id: 1, 
+    name: "Кубачи — ювелирное искусство", 
+    short: "Кубачи", 
+    lat: 42.0925, 
+    lng: 47.6000, 
+    cat: "Народные художественные промыслы и ремесла", 
+    addr: "с. Кубачи, Дахадаевский район", 
+    photos: [
+        "https://avatars.mds.yandex.net/i?id=51237fce3d9442724f62b4ce060d5ae4_l-13054237-images-thumbs&n=13",
+        "https://www.pnp.ru/upload/entities/2022/04/04/15/article/detailPicture/01/c7/cc/c1/edd7d5a7be876fd8467665072066e251.jpg"
+    ], 
+    desc: "Знаменитый центр ювелирного мастерства." 
     },
     {
         id: 2,
