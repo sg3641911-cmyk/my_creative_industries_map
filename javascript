@@ -11,209 +11,244 @@
     // ------------------------------------------------------------
     const DATA = [
         {
-            id: 1,
-            name: "Кубачи — ювелирное искусство",
-            shortName: "Кубачи",
-            lat: 42.0925,
-            lng: 47.6000,
-            category: "Народные художественные промыслы и ремесла",
-            address: "с. Кубачи, Дахадаевский район",
-            photos: ["https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg"],
-            description: "Знаменитый центр ювелирного мастерства, известный с древних времён."
-        },
-       {
-    id: 2,
-    name: "Унцукуль — насечка по дереву",
-    shortName: "Унцукуль",
-    lat: 42.7122,
-    lng: 46.7897,
-    category: "Народные художественные промыслы и ремесла",
-    address: "с. Унцукуль, Унцукульский район",
-    photos: [
-        "https://avatars.mds.yandex.net/i?id=83f5f894efa64c88065fa20e2dc0fad6_l-8411743-images-thumbs&n=13",
-        "https://cdn.culture.ru/images/944416d5-01ac-51c3-a800-6d87e5641974"
-    ],
-    description: "Традиционная насечка металлом по дереву, уникальный дагестанский промысел."
-},
-        {
-            id: 3,
-            name: "Балхарская керамика",
-            shortName: "Балхар",
-            lat: 42.3100,
-            lng: 47.1689,
-            category: "Народные художественные промыслы и ремесла",
-            address: "с. Балхар, Акушинский район",
-            photos: ["https://cdn.culture.ru/images/f28d8f6e-ddf0-5885-9576-a89480349b21"],
-            description: "Древний центр керамического производства с многовековой историей."
-        },
-        {
-            id: 4,
-            name: "Гоцатль — художественный металл",
-            shortName: "Гоцатль",
-            lat: 42.5333,
-            lng: 46.8667,
-            category: "Народные художественные промыслы и ремесла",
-            address: "с. Гоцатль, Хунзахский район",
-            photos: [],
-            description: "Изделия из металла с филигранью и чеканкой."
-        },
-        {
-            id: 5,
-            name: "Табасаранские ковры",
-            shortName: "Табасаранские ковры",
-            lat: 41.9833,
-            lng: 48.0000,
-            category: "Мода и текстильный дизайн",
-            address: "Табасаранский район",
-            photos: ["https://i.ytimg.com/vi/Im5IrdaRvAM/hqdefault.jpg"],
-            description: "Ручные ворсовые ковры, известные далеко за пределами Дагестана."
-        },
-        {
-            id: 6,
-            name: "Дербент — крепость и ремесла",
-            shortName: "Дербент",
-            lat: 42.0575,
-            lng: 48.2873,
-            category: "Народные художественные промыслы и ремесла",
-            address: "г. Дербент, цитадель Нарын-Кала",
-            photos: [],
-            description: "Древняя крепость и центр ремесленных традиций."
-        },
-        {
-            id: 7,
-            name: "Дагестанский музей изобразительных искусств",
-            shortName: "Музей ИЗО",
-            lat: 42.9849,
-            lng: 47.5049,
-            category: "Изобразительное искусство и галерейная деятельность",
-            address: "г. Махачкала, ул. М. Гамзатова, 21",
-            photos: ["https://2gis.ru/makhachkala/gallery/geo/70000001021633171/photoId/30258560051696102"],
-            description: "Крупнейшее собрание изобразительного искусства в регионе."
-        },
-        {
-            id: 8,
-            name: "Галерея «Ковчег»",
-            shortName: "Галерея «Ковчег»",
-            lat: 42.9792,
-            lng: 47.4987,
-            category: "Изобразительное искусство и галерейная деятельность",
-            address: "г. Махачкала, пр. Гамидова, 12",
-            photos: [],
-            description: "Современная галерея с акцентом на дагестанских художников."
-        },
-        {
-            id: 9,
-            name: "Арт-пространство «Артдвор»",
-            shortName: "Артдвор",
-            lat: 42.9765,
-            lng: 47.5023,
-            category: "Изобразительное искусство и галерейная деятельность",
-            address: "г. Махачкала, ул. Ярагского, 45",
-            photos: [],
-            description: "Креативный кластер и площадка для современных художников."
-        },
-        {
-            id: 10,
-            name: "Гос. ансамбль танца «Лезгинка»",
-            shortName: "Лезгинка",
-            lat: 42.9812,
-            lng: 47.5040,
-            category: "Музыка и исполнительские искусства",
-            address: "г. Махачкала, пр. Ленина, 1",
-            photos: [
-                "https://sun9-2.userapi.com/impg/.../wall-99465089_5383.jpg?size=1280x720...",
-                "https://i.ytimg.com/vi/Im5IrdaRvAM/hqdefault.jpg"
-            ],
-            description: "Легендарный танцевальный ансамбль, визитная карточка Дагестана."
-        },
-        {
-            id: 11,
-            name: "Дагестанская филармония",
-            shortName: "Филармония",
-            lat: 42.9830,
-            lng: 47.5075,
-            category: "Музыка и исполнительские искусства",
-            address: "г. Махачкала, ул. Дахадаева, 3",
-            photos: [],
-            description: "Главная концертная площадка республики."
-        },
-        {
-            id: 12,
-            name: "Фестиваль «Дербентская крепость»",
-            shortName: "Фестиваль",
-            lat: 42.0590,
-            lng: 48.2885,
-            category: "Музыка и исполнительские искусства",
-            address: "г. Дербент, цитадель Нарын-Кала",
-            photos: [],
-            description: "Ежегодный музыкальный фестиваль на территории древней крепости."
-        },
-        {
-            id: 13,
-            name: "Дизайн-студии Махачкалы",
-            shortName: "Дизайн-студии",
-            lat: 42.9835,
-            lng: 47.4960,
-            category: "Дизайн и архитектура",
-            address: "г. Махачкала, пр. Расула Гамзатова",
-            photos: [],
-            description: "Современные дизайн-бюро и архитектурные мастерские."
-        },
-        {
-            id: 14,
-            name: "Каспийск — арт-проекты",
-            shortName: "Каспийск",
-            lat: 42.8817,
-            lng: 47.6392,
-            category: "Изобразительное искусство и галерейная деятельность",
-            address: "г. Каспийск, набережная",
-            photos: [],
-            description: "Арт-объекты и галереи на набережной Каспийска."
-        },
-        {
-            id: 15,
-            name: "Хасавюрт — культурный центр",
-            shortName: "Хасавюрт",
-            lat: 43.2500,
-            lng: 46.5833,
-            category: "Цифровой контент и медиа",
-            address: "г. Хасавюрт, ул. Грозненская",
-            photos: [],
-            description: "Центр медиа и цифрового контента в северном Дагестане."
-        },
-        {
-            id: 16,
-            name: "Буйнакск — творческие объединения",
-            shortName: "Буйнакск",
-            lat: 42.8167,
-            lng: 47.1167,
-            category: "Цифровой контент и медиа",
-            address: "г. Буйнакск, центр",
-            photos: [],
-            description: "Творческие объединения и медиа-пространства."
-        },
-        {
-            id: 17,
-            name: "Кизляр — народные промыслы",
-            shortName: "Кизляр",
-            lat: 43.8467,
-            lng: 46.7125,
-            category: "Народные художественные промыслы и ремесла",
-            address: "г. Кизляр, центр",
-            photos: [],
-            description: "Традиционные ремесла и промыслы Кизляра."
-        },
-        {
-            id: 18,
-            name: "Дагестанское книжное издательство",
-            shortName: "Издательство",
-            lat: 42.9801,
-            lng: 47.5002,
-            category: "Издательская деятельность и литература",
-            address: "г. Махачкала, ул. Гамзатова",
-            photos: [],
-            description: "Крупнейшее книжное издательство республики."
-        }
+        id: 1,
+        name: "Кубачи — ювелирное искусство",
+        shortName: "Кубачи",
+        lat: 42.0925,
+        lng: 47.6000,
+        category: "Народные художественные промыслы и ремесла",
+        address: "с. Кубачи, Дахадаевский район",
+        photos: [
+            "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/97c60bcb-dbb0-4086-8215-6e8ebd273ab0/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/900x/",
+            "https://avatars.mds.yandex.net/i?id=51237fce3d9442724f62b4ce060d5ae4_l-13054237-images-thumbs&n=13"
+        ],
+        description: "Знаменитый центр ювелирного мастерства, известный с древних времён."
+    },
+    {
+        id: 2,
+        name: "Унцукуль — насечка по дереву",
+        shortName: "Унцукуль",
+        lat: 42.7122,
+        lng: 46.7897,
+        category: "Народные художественные промыслы и ремесла",
+        address: "с. Унцукуль, Унцукульский район",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_qLUsssOey_9ntRwExVkcmBVuLeO3xGEzx5T8WBGVn1yXhdkXkKc8E-g&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROcLkT2PFiyuKVUrvUz1B4nB6Q9wE3dmzSpdBM9tmduQ6shv130X4fMsA&s=10"
+        ],
+        description: "Традиционная насечка металлом по дереву, уникальный дагестанский промысел."
+    },
+    {
+        id: 3,
+        name: "Балхарская керамика",
+        shortName: "Балхар",
+        lat: 42.3100,
+        lng: 47.1689,
+        category: "Народные художественные промыслы и ремесла",
+        address: "с. Балхар, Акушинский район",
+        photos: [
+            "https://ic.pics.livejournal.com/islam_dag_mir/60544360/218158/218158_1000.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHOn3eD3cEGRKSowJ0fUZmVAtRyuGPT-Ucai5tpbvG8fTER0KDwBiNCXOI&s=10"
+        ],
+        description: "Древний центр керамического производства с многовековой историей."
+    },
+    {
+        id: 4,
+        name: "Гоцатль — художественный металл",
+        shortName: "Гоцатль",
+        lat: 42.5333,
+        lng: 46.8667,
+        category: "Народные художественные промыслы и ремесла",
+        address: "с. Гоцатль, Хунзахский район",
+        photos: [
+            "https://chernovik.net/sites/default/files/photo/2014/07/25/img_5349.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBVKty50sbnZYkuuiOVwyByJte4SzdGP-9DKOPVCcKjA&s=10"
+        ],
+        description: "Изделия из металла с филигранью и чеканкой."
+    },
+    {
+        id: 5,
+        name: "Табасаранские ковры",
+        shortName: "Табасаранские ковры",
+        lat: 41.9833,
+        lng: 48.0000,
+        category: "Мода и текстильный дизайн",
+        address: "Табасаранский район",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdU3GDY96UHyaRvZO7c8iwe6tlD1XQo4K6w0iia_ayq1JaTpXqHG2JBs&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW6xgAvsWLy43T7T4xcx055fXpSjyLVPNVyGm-kv9Gig&s=10"
+        ],
+        description: "Ручные ворсовые ковры, известные далеко за пределами Дагестана."
+    },
+    {
+        id: 6,
+        name: "Дербент — крепость и ремесла",
+        shortName: "Дербент",
+        lat: 42.0575,
+        lng: 48.2873,
+        category: "Народные художественные промыслы и ремесла",
+        address: "г. Дербент, цитадель Нарын-Кала",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkBVT0JbvjihxVMfTFzteratj6TZ0URmjTTlMHDPNQ8Io766YU2Pg0b0&s=10"
+        ],
+        description: "Древняя крепость и центр ремесленных традиций."
+    },
+    {
+        id: 7,
+        name: "Дагестанский музей изобразительных искусств",
+        shortName: "Музей ИЗО",
+        lat: 42.9849,
+        lng: 47.5049,
+        category: "Изобразительное искусство и галерейная деятельность",
+        address: "г. Махачкала, ул. М. Гамзатова, 21",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4ZYrk1BeMLtq52DQSmi2BmHGLwsM6qV3i_Vpnd6Dzw&s=10"
+        ],
+        description: "Крупнейшее собрание изобразительного искусства в регионе."
+    },
+    {
+        id: 8,
+        name: "Галерея «Ковчег»",
+        shortName: "Галерея «Ковчег»",
+        lat: 42.9792,
+        lng: 47.4987,
+        category: "Изобразительное искусство и галерейная деятельность",
+        address: "г. Махачкала, пр. Гамидова, 12",
+        photos: [
+            "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&h=400&fit=crop"
+        ],
+        description: "Современная галерея с акцентом на дагестанских художников."
+    },
+    {
+        id: 9,
+        name: "Арт-пространство «Артдвор»",
+        shortName: "Артдвор",
+        lat: 42.9765,
+        lng: 47.5023,
+        category: "Изобразительное искусство и галерейная деятельность",
+        address: "г. Махачкала, ул. Ярагского, 45",
+        photos: [
+            "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop"
+        ],
+        description: "Креативный кластер и площадка для современных художников."
+    },
+    {
+        id: 10,
+        name: "Гос. ансамбль танца «Лезгинка»",
+        shortName: "Лезгинка",
+        lat: 42.9812,
+        lng: 47.5040,
+        category: "Музыка и исполнительские искусства",
+        address: "г. Махачкала, пр. Ленина, 1",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1wFGjP9VspoO6d0GuTJlLMOyAx8yko68ATCC_6Mb9--Q_kTV2f62kKZe4&s=10"
+        ],
+        description: "Легендарный танцевальный ансамбль, визитная карточка Дагестана."
+    },
+    {
+        id: 11,
+        name: "Дагестанская филармония",
+        shortName: "Филармония",
+        lat: 42.9830,
+        lng: 47.5075,
+        category: "Музыка и исполнительские искусства",
+        address: "г. Махачкала, ул. Дахадаева, 3",
+        photos: [
+            "https://avatars.mds.yandex.net/get-altay/1363376/2a00000162d25352462636470a8dc4f4f591/L_height"
+        ],
+        description: "Главная концертная площадка республики."
+    },
+    {
+        id: 12,
+        name: "Фестиваль «Дербентская крепость»",
+        shortName: "Фестиваль",
+        lat: 42.0590,
+        lng: 48.2885,
+        category: "Музыка и исполнительские искусства",
+        address: "г. Дербент, цитадель Нарын-Кала",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiKme-ug68JzwXvC20Z2lf8Ta9_yOU9JOidf0i3GnhKw&s=10"
+        ],
+        description: "Ежегодный музыкальный фестиваль на территории древней крепости."
+    },
+    {
+        id: 13,
+        name: "Дизайн-студии Махачкалы",
+        shortName: "Дизайн-студии",
+        lat: 42.9835,
+        lng: 47.4960,
+        category: "Дизайн и архитектура",
+        address: "г. Махачкала, пр. Расула Гамзатова",
+        photos: [
+            "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop"
+        ],
+        description: "Современные дизайн-бюро и архитектурные мастерские."
+    },
+    {
+        id: 14,
+        name: "Каспийск — арт-проекты",
+        shortName: "Каспийск",
+        lat: 42.8817,
+        lng: 47.6392,
+        category: "Изобразительное искусство и галерейная деятельность",
+        address: "г. Каспийск, набережная",
+        photos: [
+            "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&h=400&fit=crop"
+        ],
+        description: "Арт-объекты и галереи на набережной Каспийска."
+    },
+    {
+        id: 15,
+        name: "Хасавюрт — культурный центр",
+        shortName: "Хасавюрт",
+        lat: 43.2500,
+        lng: 46.5833,
+        category: "Цифровой контент и медиа",
+        address: "г. Хасавюрт, ул. Грозненская",
+        photos: [
+            "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&h=400&fit=crop"
+        ],
+        description: "Центр медиа и цифрового контента в северном Дагестане."
+    },
+    {
+        id: 16,
+        name: "Буйнакск — творческие объединения",
+        shortName: "Буйнакск",
+        lat: 42.8167,
+        lng: 47.1167,
+        category: "Цифровой контент и медиа",
+        address: "г. Буйнакск, центр",
+        photos: [
+            "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop"
+        ],
+        description: "Творческие объединения и медиа-пространства."
+    },
+    {
+        id: 17,
+        name: "Кизляр — народные промыслы",
+        shortName: "Кизляр",
+        lat: 43.8467,
+        lng: 46.7125,
+        category: "Народные художественные промыслы и ремесла",
+        address: "г. Кизляр, центр",
+        photos: [
+            "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop"
+        ],
+        description: "Традиционные ремесла и промыслы Кизляра."
+    },
+    {
+        id: 18,
+        name: "Дагестанское книжное издательство",
+        shortName: "Издательство",
+        lat: 42.9801,
+        lng: 47.5002,
+        category: "Издательская деятельность и литература",
+        address: "г. Махачкала, ул. Гамзатова",
+        photos: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK2TXCnxledbC5UneeSESH5cguZlRMheX1gQ4454USUw&s"
+        ],
+        description: "Крупнейшее книжное издательство республики."
+    }
     ];
 
     // ------------------------------------------------------------
