@@ -30,7 +30,7 @@
             category: "Народные художественные промыслы и ремесла",
             address: "с. Унцукуль, Унцукульский район",
             photos: [
-                "https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg",
+                "https://ya.ru/images/search?pos=21&from=tabbar&img_url=https%3A%2F%2Fcdn.culture.ru%2Fimages%2F944416d5-01ac-51c3-a800-6d87e5641974&text=унцукульская+насечка+по+дереву+в+дагестане&rpt=simage&lr=28",
                 "https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg"
             ],
             description: "Традиционная насечка металлом по дереву, уникальный дагестанский промысел."
