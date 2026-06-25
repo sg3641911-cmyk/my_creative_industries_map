@@ -1,887 +1,539 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Креативный Дагестан</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        /* ============================================
-           ГЛОБАЛЬНЫЕ СТИЛИ
-           ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --color-bg: #f5f9f7;
-            --color-white: #ffffff;
-            --color-mint-light: #e8f5f0;
-            --color-mint-medium: #d4ede4;
-            --color-mint-dark: #b8e0d2;
-            --color-mint-accent: #7dc6b0;
-            --color-green-dark: #1a3a2e;
-            --color-green-medium: #3a6b5a;
-            --color-green-light: #5a8a78;
-            --color-green-badge: #2a6e3a;
-            --color-border: rgba(184, 224, 210, 0.3);
-            --color-shadow: rgba(0, 0, 0, 0.04);
-            --font-family: 'Inter', 'Segoe UI', -apple-system, 'Roboto', sans-serif;
-            --sidebar-width: 400px;
-        }
-
-        html,
-        body {
-            height: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            font-family: var(--font-family);
-            background: var(--color-bg);
-            color: var(--color-green-dark);
-        }
-
-        /* ============================================
-           ОСНОВНОЙ КОНТЕЙНЕР
-           ============================================ */
-        .app {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        /* ============================================
-           КАРТА
-           ============================================ */
-        .map-container {
-            flex: 1;
-            position: relative;
-            height: 100%;
-        }
-
-        #map {
-            height: 100%;
-            width: 100%;
-            background: #e8efe9;
-        }
-
-        /* ============================================
-           БОКОВАЯ ПАНЕЛЬ
-           ============================================ */
-        .sidebar {
-            width: var(--sidebar-width);
-            min-width: 320px;
-            max-width: 100%;
-            background: var(--color-white);
-            display: flex;
-            flex-direction: column;
-            z-index: 20;
-            overflow-y: auto;
-            overflow-x: hidden;
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.04);
-            border-right: 1px solid var(--color-border);
-            flex-shrink: 0;
-        }
-
-        /* Кастомный скроллбар */
-        .sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .sidebar::-webkit-scrollbar-track {
-            background: #f0f5f2;
-            border-radius: 10px;
-        }
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--color-mint-dark);
-            border-radius: 10px;
-        }
-        .sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--color-mint-accent);
-        }
-
-        /* ============================================
-           ШАПКА ПАНЕЛИ
-           ============================================ */
-        .sidebar-header {
-            background: linear-gradient(135deg, var(--color-mint-light) 0%, var(--color-mint-medium) 100%);
-            padding: 1.4rem 1.5rem 1rem;
-            border-bottom: 1px solid var(--color-border);
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            flex-shrink: 0;
-        }
-
-        .sidebar-header .title-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .sidebar-header .title-row svg {
-            flex-shrink: 0;
-        }
-
-        .sidebar-header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-green-dark);
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-
-        .sidebar-header .sub {
-            font-size: 0.75rem;
-            color: var(--color-green-medium);
-            margin-top: 6px;
-            font-weight: 400;
-            opacity: 0.85;
-            line-height: 1.4;
-        }
-
-        .sidebar-header .sub span {
-            background: rgba(42, 110, 58, 0.08);
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--color-green-badge);
-        }
-
-        /* ============================================
-           ФИЛЬТР-КНОПКИ
-           ============================================ */
-        .filter-row {
-            padding: 0.6rem 1.2rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            border-bottom: 1px solid rgba(184, 224, 210, 0.15);
-            background: #fafcfa;
-            flex-shrink: 0;
-        }
-
-        .filter-btn {
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 500;
-            border: 1.5px solid var(--color-mint-dark);
-            background: white;
-            color: var(--color-green-medium);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
-            white-space: nowrap;
-        }
-
-        .filter-btn:hover {
-            background: var(--color-mint-light);
-            border-color: var(--color-mint-accent);
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(135deg, var(--color-green-badge) 0%, #1a4d2a 100%);
-            color: white;
-            border-color: var(--color-green-badge);
-        }
-
-        /* ============================================
-           СПИСОК ОБЪЕКТОВ
-           ============================================ */
-        .objects-list {
-            padding: 0.8rem 1.2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-        }
-
-        /* ============================================
-           КАРТОЧКА ОБЪЕКТА
-           ============================================ */
-        .object-card {
-            background: var(--color-white);
-            border-radius: 16px;
-            padding: 10px 14px;
-            cursor: pointer;
-            border: 1px solid #eaf3ef;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            opacity: 0;
-            animation: fadeUp 0.35s ease forwards;
-        }
-
-        .object-card:hover {
-            background: #f3fbf8;
-            border-left: 4px solid var(--color-mint-accent);
-            transform: translateX(4px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        }
-
-        .object-card.hidden {
-            display: none;
-        }
-
-        .object-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 17px;
-            font-weight: 300;
-            flex-shrink: 0;
-            font-family: Georgia, 'Times New Roman', serif;
-        }
-
-        .object-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .object-title {
-            font-weight: 600;
-            font-size: 0.88rem;
-            color: var(--color-green-dark);
-            line-height: 1.3;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .object-category {
-            font-size: 0.6rem;
-            color: var(--color-green-light);
-            background: #eaf5f0;
-            padding: 1px 10px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 3px;
-            font-weight: 500;
-        }
-
-        /* ============================================
-           АНИМАЦИЯ КАРТОЧЕК
-           ============================================ */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Задержки для 18 карточек */
-        .object-card:nth-child(1) {
-            animation-delay: 0.02s;
-        }
-        .object-card:nth-child(2) {
-            animation-delay: 0.04s;
-        }
-        .object-card:nth-child(3) {
-            animation-delay: 0.06s;
-        }
-        .object-card:nth-child(4) {
-            animation-delay: 0.08s;
-        }
-        .object-card:nth-child(5) {
-            animation-delay: 0.10s;
-        }
-        .object-card:nth-child(6) {
-            animation-delay: 0.12s;
-        }
-        .object-card:nth-child(7) {
-            animation-delay: 0.14s;
-        }
-        .object-card:nth-child(8) {
-            animation-delay: 0.16s;
-        }
-        .object-card:nth-child(9) {
-            animation-delay: 0.18s;
-        }
-        .object-card:nth-child(10) {
-            animation-delay: 0.20s;
-        }
-        .object-card:nth-child(11) {
-            animation-delay: 0.22s;
-        }
-        .object-card:nth-child(12) {
-            animation-delay: 0.24s;
-        }
-        .object-card:nth-child(13) {
-            animation-delay: 0.26s;
-        }
-        .object-card:nth-child(14) {
-            animation-delay: 0.28s;
-        }
-        .object-card:nth-child(15) {
-            animation-delay: 0.30s;
-        }
-        .object-card:nth-child(16) {
-            animation-delay: 0.32s;
-        }
-        .object-card:nth-child(17) {
-            animation-delay: 0.34s;
-        }
-        .object-card:nth-child(18) {
-            animation-delay: 0.36s;
-        }
-
-        /* ============================================
-           ПОПАП (КАСТОМНЫЙ)
-           ============================================ */
-        .custom-popup .leaflet-popup-content-wrapper {
-            border-radius: 20px;
-            padding: 0;
-            overflow: hidden;
-            box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.18);
-            background: white;
-            border: 1px solid var(--color-border);
-            max-width: 320px;
-        }
-
-        .custom-popup .leaflet-popup-content {
-            margin: 0;
-            width: 300px !important;
-            max-width: 100%;
-        }
-
-        .custom-popup .leaflet-popup-tip {
-            background: white;
-            box-shadow: -2px -2px 8px rgba(0, 0, 0, 0.04);
-        }
-
-        .popup-gallery {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px;
-            background: #eaf3ef;
-        }
-
-        .popup-gallery.single {
-            grid-template-columns: 1fr;
-        }
-
-        .popup-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            display: block;
-            background: #eaf5f0;
-        }
-
-        .popup-img.hidden-img {
-            display: none;
-        }
-
-        .popup-text {
-            padding: 14px 18px 18px;
-        }
-
-        .popup-text h3 {
-            margin: 0 0 4px 0;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--color-green-badge);
-            line-height: 1.3;
-        }
-
-        .popup-address {
-            font-size: 0.75rem;
-            color: #4a7a68;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 4px;
-        }
-
-        .popup-badge {
-            margin-top: 10px;
-            display: inline-block;
-            background: #eaf5f0;
-            padding: 3px 14px;
-            border-radius: 30px;
-            font-size: 0.62rem;
-            font-weight: 600;
-            color: var(--color-green-badge);
-        }
-
-        .popup-description {
-            margin-top: 10px;
-            font-size: 0.78rem;
-            color: #4a5a52;
-            line-height: 1.5;
-            border-top: 1px solid rgba(184, 224, 210, 0.2);
-            padding-top: 10px;
-        }
-
-        /* ============================================
-           ЭКРАН ЗАГРУЗКИ
-           ============================================ */
-        @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .loading-screen {
-            position: fixed;
-            inset: 0;
-            background: var(--color-bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.8s ease;
-        }
-
-        .loading-screen.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loading-screen svg {
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        .loading-screen p {
-            margin-top: 20px;
-            font-size: 1rem;
-            color: var(--color-green-medium);
-            font-weight: 500;
-        }
-
-        /* ============================================
-           КНОПКИ УПРАВЛЕНИЯ КАРТОЙ
-           ============================================ */
-        .leaflet-control-zoom {
-            border: none !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
-        }
-
-        .leaflet-control-zoom a {
-            background: white !important;
-            color: #3a8a72 !important;
-            border-radius: 12px !important;
-            margin: 4px !important;
-            width: 34px !important;
-            height: 34px !important;
-            line-height: 34px !important;
-            font-weight: 600 !important;
-            border: 1px solid var(--color-border) !important;
-            transition: 0.1s ease;
-        }
-
-        .leaflet-control-zoom a:hover {
-            background: var(--color-mint-light) !important;
-            color: #1a5a42 !important;
-        }
-
-        .leaflet-control-scale {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(4px);
-            border-radius: 16px;
-            padding: 2px 12px;
-            font-size: 9px;
-            font-weight: 500;
-            color: var(--color-green-medium);
-            border: 1px solid var(--color-border);
-        }
-
-        /* ============================================
-           АДАПТИВНОСТЬ
-           ============================================ */
-
-        /* Планшеты */
-        @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 320px;
-            }
-
-            .sidebar {
-                min-width: 260px;
-            }
-
-            .sidebar-header h1 {
-                font-size: 1.3rem;
-            }
-
-            .sidebar-header .sub {
-                font-size: 0.7rem;
-            }
-
-            .object-title {
-                font-size: 0.8rem;
-            }
-
-            .object-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 15px;
-            }
-
-            .custom-popup .leaflet-popup-content {
-                width: 260px !important;
-            }
-
-            .popup-img {
-                height: 130px;
-            }
-
-            .filter-btn {
-                font-size: 0.6rem;
-                padding: 2px 10px;
-            }
-
-            .filter-row {
-                padding: 0.5rem 1rem;
-                gap: 4px;
-            }
-        }
-
-        /* Телефоны — панель СНИЗУ */
-        @media (max-width: 500px) {
-            .app {
-                flex-direction: column-reverse;
-            }
-
-            .sidebar {
-                width: 100%;
-                min-width: unset;
-                max-height: 45vh;
-                border-right: none;
-                border-top: 1px solid var(--color-border);
-                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-                flex-shrink: 0;
-            }
-
-            .map-container {
-                height: 55vh;
-                flex: none;
-            }
-
-            #map {
-                height: 100%;
-            }
-
-            .sidebar-header {
-                padding: 0.8rem 1rem 0.6rem;
-            }
-
-            .sidebar-header h1 {
-                font-size: 1.1rem;
-            }
-
-            .sidebar-header .sub {
-                font-size: 0.6rem;
-            }
-
-            .objects-list {
-                padding: 0.5rem 0.8rem;
-                gap: 5px;
-            }
-
-            .object-card {
-                padding: 7px 10px;
-                gap: 10px;
-            }
-
-            .object-title {
-                font-size: 0.75rem;
-            }
-
-            .object-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 13px;
-                border-radius: 10px;
-            }
-
-            .object-category {
-                font-size: 0.55rem;
-                padding: 1px 8px;
-            }
-
-            .filter-btn {
-                font-size: 0.55rem;
-                padding: 2px 8px;
-            }
-
-            .filter-row {
-                padding: 0.4rem 0.8rem;
-                gap: 3px;
-            }
-
-            .custom-popup .leaflet-popup-content {
-                width: 220px !important;
-            }
-
-            .popup-img {
-                height: 110px;
-            }
-
-            .popup-text {
-                padding: 10px 14px 14px;
-            }
-
-            .popup-text h3 {
-                font-size: 0.9rem;
-            }
-
-            .leaflet-control-zoom a {
-                width: 28px !important;
-                height: 28px !important;
-                line-height: 28px !important;
-                font-size: 14px !important;
-                margin: 3px !important;
-            }
-        }
-
-        /* Очень маленькие телефоны */
-        @media (max-width: 380px) {
-            .sidebar {
-                max-height: 40vh;
-            }
-            .map-container {
-                height: 60vh;
-            }
-            .sidebar-header h1 {
-                font-size: 0.95rem;
-            }
-            .object-title {
-                font-size: 0.7rem;
-            }
-            .object-icon {
-                width: 28px;
-                height: 28px;
-                font-size: 11px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Креативный Дагестан</title>
+  <!-- Leaflet CSS + JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f9f7;
+      height: 100vh;
+      overflow: hidden;
+      color: #1a3a2e;
+    }
+    #map { height: 100vh; width: 100vw; background: #f5f9f7; }
+    /* Стили панели */
+    .panel {
+      position: absolute;
+      top: 0; left: 0;
+      width: 400px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.06);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+      transition: transform 0.3s ease;
+      border-right: 1px solid rgba(184, 224, 210, 0.3);
+    }
+    .panel-header {
+      background: linear-gradient(145deg, #e8f5f0 0%, #d4ede4 100%);
+      padding: 20px 22px 16px 22px;
+      border-bottom: 1px solid rgba(184, 224, 210, 0.3);
+      flex-shrink: 0;
+    }
+    .panel-header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .mountain-icon {
+      width: 32px; height: 32px;
+      flex-shrink: 0;
+    }
+    .panel-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a3a2e;
+      letter-spacing: -0.3px;
+    }
+    .panel-sub {
+      font-size: 0.75rem;
+      color: #3a6b5a;
+      font-weight: 400;
+      margin-top: 2px;
+      padding-left: 42px;
+      letter-spacing: 0.2px;
+    }
+    .panel-sub span {
+      background: #eaf5f0;
+      padding: 2px 10px;
+      border-radius: 30px;
+      color: #5a8a78;
+      font-weight: 500;
+      margin-left: 4px;
+    }
+    .filter-wrap {
+      padding: 14px 22px 10px 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 1px solid rgba(184, 224, 210, 0.25);
+      flex-shrink: 0;
+      background: #ffffff;
+    }
+    .filter-btn {
+      background: white;
+      border: 1.5px solid #b8e0d2;
+      color: #3a6b5a;
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .filter-btn.active {
+      background: #1a3a2e;
+      border-color: #1a3a2e;
+      color: white;
+    }
+    .filter-btn:hover { transform: scale(0.96); opacity: 0.8; }
+    .card-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px 20px 16px;
+      background: #ffffff;
+    }
+    .card-list::-webkit-scrollbar { width: 4px; }
+    .card-list::-webkit-scrollbar-track { background: #eaf5f0; border-radius: 10px; }
+    .card-list::-webkit-scrollbar-thumb { background: #7dc6b0; border-radius: 10px; }
+
+    .card-item {
+      background: white;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.35s ease forwards;
+    }
+    .card-item:hover {
+      border-left: 4px solid #7dc6b0;
+      transform: translateX(4px) scale(1.01);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+      background: #fafdfb;
+    }
+    .card-icon {
+      width: 42px; height: 42px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      font-weight: 600;
+      font-family: Georgia, serif;
+      background: #7dc6b0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .card-info { flex: 1; min-width: 0; }
+    .card-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1a3a2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-badge {
+      display: inline-block;
+      background: #eaf5f0;
+      color: #5a8a78;
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 30px;
+      margin-top: 3px;
+      letter-spacing: 0.2px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* кастомный попап */
+    .custom-popup .leaflet-popup-content-wrapper {
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+      padding: 0;
+      overflow: hidden;
+    }
+    .custom-popup .leaflet-popup-content {
+      margin: 0;
+      width: 280px;
+      font-family: 'Inter', sans-serif;
+    }
+    .popup-content {
+      padding: 14px 16px 16px;
+    }
+    .popup-photo-grid {
+      display: grid;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .popup-photo-grid.one-col { grid-template-columns: 1fr; }
+    .popup-photo-grid.two-col { grid-template-columns: 1fr 1fr; }
+    .popup-photo {
+      height: 160px;
+      object-fit: cover;
+      width: 100%;
+      background: #f0f5f2;
+      border-radius: 8px;
+    }
+    .popup-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1a3a2e;
+      margin-bottom: 4px;
+    }
+    .popup-address {
+      font-size: 0.75rem;
+      color: #5a8a78;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .popup-cat {
+      background: #eaf5f0;
+      color: #3a6b5a;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 12px;
+      border-radius: 30px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    .popup-desc {
+      font-size: 0.8rem;
+      color: #1a3a2e;
+      opacity: 0.75;
+      line-height: 1.4;
+    }
+    .leaflet-popup-tip { background: white; }
+
+    /* Загрузочный экран */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #f5f9f7;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+    #loader.hidden { opacity: 0; }
+    .loader-mountain {
+      width: 70px; height: 70px;
+      opacity: 0.6;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.5; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 0.5; transform: scale(0.98); }
+    }
+    .loader-text {
+      margin-top: 20px;
+      font-weight: 500;
+      color: #3a6b5a;
+      letter-spacing: 0.5px;
+      font-size: 0.9rem;
+    }
+
+    /* адаптив */
+    @media (max-width: 768px) {
+      .panel { width: 320px; }
+      .panel-title { font-size: 1.3rem; }
+      .panel-sub { font-size: 0.7rem; padding-left: 38px; }
+      .card-icon { width: 36px; height: 36px; font-size: 17px; }
+      .card-name { font-size: 0.8rem; }
+      .popup-content { width: 260px; }
+      .popup-photo { height: 130px; }
+    }
+    @media (max-width: 500px) {
+      .panel {
+        width: 100%;
+        height: 45vh;
+        top: auto;
+        bottom: 0;
+        border-right: none;
+        border-top: 1px solid rgba(184,224,210,0.3);
+        box-shadow: 0 -6px 20px rgba(0,0,0,0.04);
+        transform: translateY(0);
+      }
+      #map { height: 55vh; }
+      .panel-header { padding: 14px 18px 10px; }
+      .panel-title { font-size: 1.1rem; }
+      .panel-sub { font-size: 0.65rem; padding-left: 34px; }
+      .filter-wrap { padding: 8px 14px; gap: 5px; }
+      .filter-btn { font-size: 0.6rem; padding: 3px 10px; }
+      .card-item { padding: 8px 10px; gap: 10px; }
+      .card-icon { width: 32px; height: 32px; font-size: 14px; }
+      .card-name { font-size: 0.75rem; }
+      .card-badge { font-size: 0.55rem; }
+      .popup-content { width: 240px; }
+      .popup-photo { height: 110px; }
+      .popup-title { font-size: 0.9rem; }
+    }
+  </style>
 </head>
 <body>
+  <div id="loader">
+    <svg class="loader-mountain" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 54 L28 26 L40 38 L54 18 L72 54" stroke="#3a6b5a" stroke-width="3" stroke-linejoin="round" fill="none"/>
+      <path d="M28 26 L40 38 L54 18" stroke="#7dc6b0" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+      <circle cx="66" cy="14" r="4" fill="#e8c9a0" opacity="0.5"/>
+      <path d="M20 32 L32 20 L44 32 L32 42 L20 32Z" fill="#d4ede4" opacity="0.3"/>
+    </svg>
+    <div class="loader-text">Загрузка карты...</div>
+  </div>
 
-    <!-- ===== ЭКРАН ЗАГРУЗКИ ===== -->
-    <div class="loading-screen" id="loadingScreen">
-        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-            <circle cx="30" cy="30" r="28" stroke="#b8e0d2" stroke-width="2"/>
-            <circle cx="30" cy="30" r="20" stroke="#4a9e7a" stroke-width="2" stroke-dasharray="30 80" stroke-linecap="round"/>
-            <path d="M30 6 L30 14 M30 46 L30 54 M6 30 L14 30 M46 30 L54 30 M12 12 L18 18 M42 42 L48 48 M12 48 L18 42 M42 18 L48 12" stroke="#7dc6b0" stroke-width="1.5" stroke-linecap="round"/>
+  <div id="map"></div>
+
+  <div class="panel" id="panel">
+    <div class="panel-header">
+      <div class="panel-header-top">
+        <svg class="mountain-icon" viewBox="0 0 40 40" fill="none">
+          <path d="M6 34 L16 16 L24 24 L34 8 L38 34" stroke="#1a3a2e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 16 L24 24 L34 8" stroke="#7dc6b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="34" cy="6" r="3" fill="#e8c9a0" opacity="0.6"/>
+          <path d="M12 22 L18 16 L24 22 L18 28 L12 22Z" fill="#d4ede4" opacity="0.4"/>
         </svg>
-        <p>🏔️ Загрузка карты...</p>
+        <span class="panel-title">Креативный Дагестан</span>
+      </div>
+      <div class="panel-sub">✦ <span id="objectCount">18</span> объектов · нажми на название — карта покажет место</div>
     </div>
+    <div class="filter-wrap" id="filterWrap"></div>
+    <div class="card-list" id="cardList"></div>
+  </div>
 
-    <!-- ===== ОСНОВНОЙ КОНТЕЙНЕР ===== -->
-    <div class="app">
+  <script>
+    (function() {
+      // ---------- ДАННЫЕ ----------
+      const CATEGORIES = [
+        "Народные художественные промыслы и ремесла",
+        "Изобразительное искусство и галерейная деятельность",
+        "Дизайн и архитектура",
+        "Музыка и исполнительские искусства",
+        "Кино и видеопроизводство",
+        "Издательская деятельность и литература",
+        "Мода и текстильный дизайн",
+        "Цифровой контент и медиа"
+      ];
+      const COLOR_MAP = {
+        "Народные художественные промыслы и ремесла": "#4a9e7a",
+        "Изобразительное искусство и галерейная деятельность": "#d4a08a",
+        "Дизайн и архитектура": "#5bb8b0",
+        "Музыка и исполнительские искусства": "#b8a8d4",
+        "Кино и видеопроизводство": "#c0806a",
+        "Издательская деятельность и литература": "#4a9e7a",
+        "Мода и текстильный дизайн": "#8ab8a0",
+        "Цифровой контент и медиа": "#5bb8b0"
+      };
+      const SYMBOL_MAP = {
+        "Народные художественные промыслы и ремесла": "✦",
+        "Изобразительное искусство и галерейная деятельность": "◈",
+        "Дизайн и архитектура": "◇",
+        "Музыка и исполнительские искусства": "♪",
+        "Кино и видеопроизводство": "◈",
+        "Издательская деятельность и литература": "◇",
+        "Мода и текстильный дизайн": "◈",
+        "Цифровой контент и медиа": "◇"
+      };
 
-        <!-- ===== БОКОВАЯ ПАНЕЛЬ ===== -->
-        <aside class="sidebar" id="sidebar">
-            <!-- Шапка -->
-            <div class="sidebar-header">
-                <div class="title-row">
-                    <!-- Иконка гор (SVG) -->
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect x="0" y="0" width="32" height="32" rx="6" fill="#e8f5f0"/>
-                        <circle cx="26" cy="6" r="3.5" fill="#f5d742" opacity="0.8"/>
-                        <path d="M0 32 L7 14 L14 24 L21 12 L28 26 L32 32" fill="#2a6e3a" opacity="0.5"/>
-                        <path d="M0 32 L8 16 L16 26 L24 14 L32 32" fill="#4a9e7a"/>
-                        <path d="M24 14 L27 19 L22 19 Z" fill="white" opacity="0.7"/>
-                        <path d="M8 16 L11 21 L6 21 Z" fill="white" opacity="0.6"/>
-                        <path d="M16 26 L19 32 L13 32 Z" fill="#3a8a6a" opacity="0.25"/>
-                        <circle cx="9" cy="9" r="1.5" fill="white" opacity="0.4"/>
-                    </svg>
-                    <h1>Креативный Дагестан</h1>
-                </div>
-                <div class="sub">
-                    <span>✦ 18 объектов</span> &nbsp;·&nbsp; нажми на название — карта покажет место
-                </div>
+      const data = [
+        { id:1, name:"Кубачи — ювелирное искусство", short:"Кубачи", lat:42.0925, lng:47.6000, cat:"Народные художественные промыслы и ремесла", addr:"с. Кубачи, Дахадаевский район", photos:["https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg"], desc:"Знаменитый центр ювелирного мастерства." },
+        { id:2, name:"Унцукуль — насечка по дереву", short:"Унцукуль", lat:42.7122, lng:46.7897, cat:"Народные художественные промыслы и ремесла", addr:"с. Унцукуль, Унцукульский район", photos:["https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg","https://i.ytimg.com/vi/RFH0NTVQm7c/maxresdefault.jpg"], desc:"Традиционная насечка металлом по дереву." },
+        { id:3, name:"Балхарская керамика", short:"Балхар", lat:42.3100, lng:47.1689, cat:"Народные художественные промыслы и ремесла", addr:"с. Балхар, Акушинский район", photos:["https://cdn.culture.ru/images/f28d8f6e-ddf0-5885-9576-a89480349b21"], desc:"Древний центр керамического производства." },
+        { id:4, name:"Гоцатль — художественный металл", short:"Гоцатль", lat:42.5333, lng:46.8667, cat:"Народные художественные промыслы и ремесла", addr:"с. Гоцатль, Хунзахский район", photos:[], desc:"Изделия из металла с филигранью." },
+        { id:5, name:"Табасаранские ковры", short:"Табасаранские ковры", lat:41.9833, lng:48.0000, cat:"Мода и текстильный дизайн", addr:"Табасаранский район", photos:["https://i.ytimg.com/vi/Im5IrdaRvAM/hqdefault.jpg"], desc:"Ручные ворсовые ковры." },
+        { id:6, name:"Дербент — крепость и ремесла", short:"Дербент", lat:42.0575, lng:48.2873, cat:"Народные художественные промыслы и ремесла", addr:"г. Дербент, цитадель Нарын-Кала", photos:[], desc:"Древняя крепость и ремесленные традиции." },
+        { id:7, name:"Дагестанский музей изобразительных искусств", short:"Музей ИЗО", lat:42.9849, lng:47.5049, cat:"Изобразительное искусство и галерейная деятельность", addr:"г. Махачкала, ул. М. Гамзатова, 21", photos:["https://2gis.ru/makhachkala/gallery/geo/70000001021633171/photoId/30258560051696102"], desc:"Крупнейшее собрание изобразительного искусства." },
+        { id:8, name:"Галерея «Ковчег»", short:"Галерея «Ковчег»", lat:42.9792, lng:47.4987, cat:"Изобразительное искусство и галерейная деятельность", addr:"г. Махачкала, пр. Гамидова, 12", photos:[], desc:"Современная галерея." },
+        { id:9, name:"Арт-пространство «Артдвор»", short:"Артдвор", lat:42.9765, lng:47.5023, cat:"Изобразительное искусство и галерейная деятельность", addr:"г. Махачкала, ул. Ярагского, 45", photos:[], desc:"Креативный кластер." },
+        { id:10, name:"Гос. ансамбль танца «Лезгинка»", short:"Лезгинка", lat:42.9812, lng:47.5040, cat:"Музыка и исполнительские искусства", addr:"г. Махачкала, пр. Ленина, 1", photos:["https://sun9-2.userapi.com/impg/.../wall-99465089_5383.jpg?size=1280x720...", "https://i.ytimg.com/vi/Im5IrdaRvAM/hqdefault.jpg"], desc:"Легендарный танцевальный ансамбль." },
+        { id:11, name:"Дагестанская филармония", short:"Филармония", lat:42.9830, lng:47.5075, cat:"Музыка и исполнительские искусства", addr:"г. Махачкала, ул. Дахадаева, 3", photos:[], desc:"Концертный зал." },
+        { id:12, name:"Фестиваль «Дербентская крепость»", short:"Фестиваль", lat:42.0590, lng:48.2885, cat:"Музыка и исполнительские искусства", addr:"г. Дербент, цитадель Нарын-Кала", photos:[], desc:"Музыкальный фестиваль." },
+        { id:13, name:"Дизайн-студии Махачкалы", short:"Дизайн-студии", lat:42.9835, lng:47.4960, cat:"Дизайн и архитектура", addr:"г. Махачкала, пр. Расула Гамзатова", photos:[], desc:"Современные дизайн-бюро." },
+        { id:14, name:"Каспийск — арт-проекты", short:"Каспийск", lat:42.8817, lng:47.6392, cat:"Изобразительное искусство и галерейная деятельность", addr:"г. Каспийск, набережная", photos:[], desc:"Арт-объекты на набережной." },
+        { id:15, name:"Хасавюрт — культурный центр", short:"Хасавюрт", lat:43.2500, lng:46.5833, cat:"Цифровой контент и медиа", addr:"г. Хасавюрт, ул. Грозненская", photos:[], desc:"Центр медиа и цифрового контента." },
+        { id:16, name:"Буйнакск — творческие объединения", short:"Буйнакск", lat:42.8167, lng:47.1167, cat:"Цифровой контент и медиа", addr:"г. Буйнакск, центр", photos:[], desc:"Творческие объединения." },
+        { id:17, name:"Кизляр — народные промыслы", short:"Кизляр", lat:43.8467, lng:46.7125, cat:"Народные художественные промыслы и ремесла", addr:"г. Кизляр, центр", photos:[], desc:"Традиционные ремесла." },
+        { id:18, name:"Дагестанское книжное издательство", short:"Издательство", lat:42.9801, lng:47.5002, cat:"Издательская деятельность и литература", addr:"г. Махачкала, ул. Гамзатова", photos:[], desc:"Книжное издательство." }
+      ];
+
+      // ---------- КАРТА ----------
+      const map = L.map('map', { 
+        center: [42.5, 47.3], 
+        zoom: 8,
+        minZoom: 7,
+        maxZoom: 13,
+        zoomControl: true,
+        fadeAnimation: true,
+      });
+      const dagestanBounds = [[40.8, 45.0], [44.8, 50.0]];
+      map.setMaxBounds(dagestanBounds);
+      map.on('drag', function() { map.panInsideBounds(dagestanBounds, { animate: true }); });
+      map.on('zoomend', function() { if (map.getZoom() < 7) map.setZoom(7); if (map.getZoom() > 13) map.setZoom(13); });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap © CartoDB',
+        subdomains: 'abcd',
+        maxZoom: 18,
+        minZoom: 7
+      }).addTo(map);
+
+      // ---------- КАПЛИ (маркеры) ----------
+      function createDropIcon(color, symbol) {
+        const svg = `
+          <svg width="36" height="50" viewBox="0 0 36 50" xmlns="http://www.w3.org/2000/svg">
+            <defs><filter id="shadow" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.15"/></filter></defs>
+            <path d="M18 2 C18 2, 34 24, 34 32 C34 40.8, 26.8 46, 18 46 C9.2 46, 2 40.8, 2 32 C2 24, 18 2, 18 2 Z" 
+                  fill="${color}" stroke="white" stroke-width="2" filter="url(#shadow)"/>
+            <ellipse cx="18" cy="32" rx="12" ry="10" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="12" cy="26" r="2.5" fill="white" opacity="0.35"/>
+            <circle cx="9" cy="22" r="1.2" fill="white" opacity="0.2"/>
+            <text x="18" y="34" text-anchor="middle" fill="white" font-size="15" font-weight="600" font-family="Georgia, serif">${symbol}</text>
+          </svg>
+        `;
+        return L.divIcon({
+          html: svg,
+          className: 'custom-drop-icon',
+          iconSize: [36, 50],
+          iconAnchor: [18, 46],
+          popupAnchor: [0, -46],
+        });
+      }
+
+      const markers = [];
+      data.forEach(item => {
+        const color = COLOR_MAP[item.cat] || '#7dc6b0';
+        const symbol = SYMBOL_MAP[item.cat] || '✦';
+        const icon = createDropIcon(color, symbol);
+        const marker = L.marker([item.lat, item.lng], { icon, riseOnHover: true })
+          .bindPopup(createPopupContent(item), { className: 'custom-popup', maxWidth: 300 });
+        marker.on('mouseover', function(e) { this._icon.style.transform = 'scale(1.12)'; this._icon.style.filter = 'drop-shadow(0 8px 12px rgba(0,0,0,0.15))'; });
+        marker.on('mouseout', function(e) { this._icon.style.transform = 'scale(1)'; this._icon.style.filter = ''; });
+        marker.addTo(map);
+        markers.push(marker);
+      });
+
+      function createPopupContent(item) {
+        const color = COLOR_MAP[item.cat] || '#7dc6b0';
+        const photos = item.photos && item.photos.length ? item.photos : [];
+        const gridClass = photos.length === 2 ? 'two-col' : 'one-col';
+        let photoHtml = '';
+        if (photos.length) {
+          photoHtml = `<div class="popup-photo-grid ${gridClass}">`;
+          photos.forEach(url => {
+            photoHtml += `<img class="popup-photo" src="${url}" alt="фото" onerror="this.style.display='none'" />`;
+          });
+          photoHtml += `</div>`;
+        }
+        return `
+          <div class="popup-content">
+            ${photoHtml}
+            <div class="popup-title">${item.name}</div>
+            <div class="popup-address"><span>📍</span> ${item.addr}</div>
+            <span class="popup-cat" style="background:${color}20; color:${color};">${item.cat}</span>
+            <div class="popup-desc">${item.desc || ''}</div>
+          </div>
+        `;
+      }
+
+      // ---------- ПАНЕЛЬ (фильтры + карточки) ----------
+      const filterWrap = document.getElementById('filterWrap');
+      const cardList = document.getElementById('cardList');
+      let activeFilter = 'Все';
+
+      function renderFilters() {
+        const cats = ['Все', ...new Set(data.map(d => d.cat))];
+        filterWrap.innerHTML = '';
+        cats.forEach(cat => {
+          const btn = document.createElement('button');
+          btn.className = 'filter-btn' + (cat === activeFilter ? ' active' : '');
+          btn.textContent = cat;
+          btn.dataset.cat = cat;
+          btn.addEventListener('click', () => {
+            activeFilter = cat;
+            renderFilters();
+            renderCards();
+          });
+          filterWrap.appendChild(btn);
+        });
+      }
+
+      function renderCards() {
+        const filtered = activeFilter === 'Все' ? data : data.filter(d => d.cat === activeFilter);
+        cardList.innerHTML = '';
+        filtered.forEach((item, idx) => {
+          const color = COLOR_MAP[item.cat] || '#7dc6b0';
+          const symbol = SYMBOL_MAP[item.cat] || '✦';
+          const div = document.createElement('div');
+          div.className = 'card-item';
+          div.style.animationDelay = (0.02 + idx * 0.02) + 's';
+          div.innerHTML = `
+            <div class="card-icon" style="background:${color};">${symbol}</div>
+            <div class="card-info">
+              <div class="card-name">${item.short}</div>
+              <div class="card-badge">${item.cat}</div>
             </div>
+          `;
+          div.addEventListener('click', () => {
+            const marker = markers.find((m, i) => data[i].id === item.id);
+            if (marker) {
+              map.flyTo([item.lat, item.lng], 12, { duration: 1.2, easeLinearity: 0.35 });
+              setTimeout(() => marker.openPopup(), 200);
+            }
+          });
+          cardList.appendChild(div);
+        });
+        document.getElementById('objectCount').textContent = filtered.length;
+      }
 
-            <!-- Фильтр-кнопки -->
-            <div class="filter-row" id="filterRow">
-                <button class="filter-btn active" data-category="Все">Все</button>
-                <button class="filter-btn" data-category="Народный промысел">✦ Промыслы</button>
-                <button class="filter-btn" data-category="Ковроткачество">◈ Ковры</button>
-                <button class="filter-btn" data-category="Культурное наследие">◈ Наследие</button>
-                <button class="filter-btn" data-category="Музей / Галерея">◈ Музеи</button>
-                <button class="filter-btn" data-category="Современное искусство">◈ Совр. искусство</button>
-                <button class="filter-btn" data-category="Креативный кластер">◈ Кластеры</button>
-                <button class="filter-btn" data-category="Музыка / Танец">♪ Музыка</button>
-                <button class="filter-btn" data-category="Концертный зал">♪ Концерты</button>
-                <button class="filter-btn" data-category="Фестиваль">✦ Фестивали</button>
-                <button class="filter-btn" data-category="Дизайн / Медиа">◇ Дизайн</button>
-                <button class="filter-btn" data-category="Городской досуг">◇ Досуг</button>
-                <button class="filter-btn" data-category="Культура">◇ Культура</button>
-                <button class="filter-btn" data-category="Издательство / Литература">◇ Издательства</button>
-            </div>
+      renderFilters();
+      renderCards();
 
-            <!-- Список объектов -->
-            <div class="objects-list" id="objectsList"></div>
-        </aside>
+      // ---------- ЗАГРУЗОЧНЫЙ ЭКРАН ----------
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 1200);
 
-        <!-- ===== КАРТА ===== -->
-        <div class="map-container">
-            <div id="map"></div>
-        </div>
-
-    </div>
-
-    <script>
-        // ============================================================
-        // 1. ДАННЫЕ ОБЪЕКТОВ (18)
-        // ============================================================
-        const objectsData = [{
-            id: 1,
-            name: "Кубачи — ювелирное искусство",
-            shortName: "Кубачи",
-            lat: 42.0925,
-            lng: 47.6000,
-            category: "Народный промысел",
-            address: "с. Кубачи, Дахадаевский район",
-            image: [
-                "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/97c60bcb-dbb0-4086-8215-6e8ebd273ab0/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/900x/",
-                "https://kulturologia.ru/blogs/211118/41378/"
-            ],
-            symbol: "✦",
-            color: "#4a9e7a",
-            description: "Всемирно известное село мастеров серебряного дела. Уникальная техника гравировки и чернения по металлу."
-        }, {
-            id: 2,
-            name: "Унцукуль — насечка по дереву",
-            shortName: "Унцукуль",
-            lat: 42.7122,
-            lng: 46.7897,
-            category: "Народный промысел",
-            address: "с. Унцукуль, Унцукульский район",
-            image: [
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_qLUsssOey_9ntRwExVkcmBVuLeO3xGEzx5T8WBGVn1yXhdkXkKc8E-g&s=10",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROcLkT2PFiyuKVUrvUz1B4nB6Q9wE3dmzSpdBM9tmduQ6shv130X4fMsA&s=10"
-            ],
-            symbol: "✦",
-            color: "#5aaa90",
-            description: "Уникальная техника инкрустации металлом и перламутром по дереву. Традиционный промысел Дагестана."
-        }, {
-            id: 3,
-            name: "Балхарская керамика",
-            shortName: "Балхар",
-            lat: 42.3100,
-            lng: 47.1689,
-            category: "Народный промысел",
-            address: "с. Балхар, Акушинский район",
-            image: [
-                "https://ic.pics.livejournal.com/islam_dag_mir/60544360/218158/218158_1000.jpg",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHOn3eD3cEGRKSowJ0fUZmVAtRyuGPT-Ucai5tpbvG8fTER0KDwBiNCXOI&s=10"
-            ],
-            symbol: "✦",
-            color: "#7dc6b0",
-            description: "Архаичная керамика ручной лепки без использования гончарного круга. Уникальная технология, передаваемая из поколения в поколение."
-        }, {
-            id: 4,
-            name: "Гоцатль — художественный металл",
-            shortName: "Гоцатль",
-            lat: 42.5333,
-            lng: 46.8667,
-            category: "Народный промысел",
-            address: "с. Гоцатль, Хунзахский район",
-            image: [
-                "https://chernovik.net/sites/default/files/photo/2014/07/25/img_5349.jpg",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBVKty50sbnZYkuuiOVwyByJte4SzdGP-9DKOPVCcKjA&s=10"
-            ],
-            symbol: "✦",
-            color: "#6a9a80",
-            description: "Центр обработки металла, чеканка, художественная ковка. Древние традиции металлообработки."
-        }, {
-            id: 5,
-            name: "Табасаранские ковры",
-            shortName: "Табасаранские ковры",
-            lat: 41.9833,
-            lng: 48.0000,
-            category: "Ковроткачество",
-            address: "Табасаранский район",
-            image: [
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdU3GDY96UHyaRvZO7c8iwe6tlD1XQo4K6w0iia_ayq1JaTpXqHG2JBs&s=10",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW6xgAvsWLy43T7T4xcx055fXpSjyLVPNVyGm-kv9Gig&s=10"
-            ],
-            symbol: "◈",
-            color: "#8ab8a0",
-            description: "Знаменитые табасаранские ковры с уникальными орнаментами и яркими красками. Ручное ковроткачество."
-        }, {
-            id: 6,
-            name: "Дербент — крепость и ремесла",
-            shortName: "Дербент",
-            lat: 42.0575,
-            lng: 48.2873,
-            category: "Культурное наследие",
-            address: "г. Дербент, цитадель Нарын-Кала",
-            image: [
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkBVT0JbvjihxVMfTFzteratj6TZ0URmjTTlMHDPNQ8Io766YU2Pg0b0&s=10"
-            ],
-            symbol: "◈",
-            color: "#9ab87a",
-            description: "Объект Всемирного наследия ЮНЕСКО. Древнейший город России, центр ремесел и культурного наследия."
-        }, {
-            id: 7,
-            name: "Дагестанский музей изобразительных искусств",
-            shortName: "Музей ИЗО",
-            lat: 42.9849,
-            lng: 47.5049,
-            category: "Музей / Галерея",
-            address: "г. Махачкала, ул. М. Гамзатова, 21",
-            image: [
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4ZYrk1BeMLtq52DQSmi2BmHGLwsM6qV3i_Vpnd6Dzw&s=10"
-            ],
-            symbol: "◈",
-            color: "#d4a08a",
-            description: "Крупнейший художественный музей Дагестана. Площадка для современного искусства и выставок."
-        }, {
-            id: 8,
-            name: "Галерея «Ковчег»",
-            shortName: "Галерея «Ковчег»",
-            lat: 42.9792,
-            lng: 47.4987,
-            category: "Современное искусство",
-            address: "г. Махачкала, пр. Гамидова, 12",
-            image: [
-                "https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&h=400&fit=crop"
-            ],
-            symbol: "◈",
-            color: "#c0806a",
-            description: "Частная галерея современного дагестанского искусства. Площадка для молодых художников."
-        }, {
-            id: 9,
-            name: "Арт-пространство «Артдвор»",
-            shortName: "Артдвор",
-            lat: 42.9765,
-            lng: 47.5023,
-            category: "Креативный кластер",
-            address: "г. Махачкала, ул. Ярагского, 45",
-            image: [
-                "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=400&fit=crop"
-            ],
-            symbol: "◈",
-            color: "#5bb8b0",
-            description: "Галерея, мастерские и коворкинг для креативных индустрий. Пространство для творчества и коллабораций."
-        }, {
-            id: 10,
-            name
+      // ---------- ПОДГОНКА ПАНЕЛИ ПРИ РЕСАЙЗЕ ----------
+      window.addEventListener('resize', () => {
+        // адаптив уже через CSS
+      });
+    })();
+  </script>
+</body>
+</html>
